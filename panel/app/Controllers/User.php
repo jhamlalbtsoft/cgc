@@ -39,22 +39,19 @@ class User extends BaseController
             $data['username'] = $myrequest->getPost('username');
             $data['password'] = $myrequest->getPost('password');
             $data['password'] = hash('md5', $data['password']);
-            $allUsers = $users->select('m_user.*')->where('username', $data['username'])->findAll();
+            $allUsers = $users->select('user.*')->where('LoginName', $data['username'])->findAll();
             if (count($allUsers) > 0) {
-                if ($data['password'] == $allUsers[0]['password']) {
-                    $sessionData['id'] = $allUsers[0]['id'];
-                    $sessionData['username'] = $allUsers[0]['username'];
-                    $sessionData['locationid'] = $allUsers[0]['location_id'];
-                    $sessionData['usertype'] = $allUsers[0]['usertype'];
-                    $sessionData['sidebar'] = $allUsers[0]['sidebar'];
-                    $sessionData['gh_id'] = $allUsers[0]['guesthouse_id'];
+                if ($data['password'] == $allUsers[0]['Password']) {
+                    $sessionData['id'] = $allUsers[0]['UserId'];
+                    $sessionData['username'] = $allUsers[0]['LoginName'];
+                    $sessionData['usertype'] = $allUsers[0]['UserTypeId'];
                     $session->set($sessionData);
 
                     helper('cookie');
 
                     set_cookie([
                         'name' => 'username',
-                        'value' => $allUsers[0]['username'],
+                        'value' => $allUsers[0]['LoginName'],
                         'expire' => time() + 1000,
                         'domain' => '',
                         'secure' => false,
@@ -65,7 +62,7 @@ class User extends BaseController
 
                     set_cookie([
                         'name' => 'id',
-                        'value' => $allUsers[0]['id'],
+                        'value' => $allUsers[0]['UserId'],
                         'expire' => time() + 1000,
                         'domain' => '',
                         'secure' => false,
@@ -78,15 +75,15 @@ class User extends BaseController
                         return redirect()->to(site_url('dashboard'));
                     } else {
                         $session->setFlashdata('message', '<div class="alert alert-warning" role="alert">You can\'t login, please try again.</div>');
-                        return redirect()->to(site_url('admin'));
+                        return redirect()->to(site_url('/'));
                     }
                 } else {
                     $session->setFlashdata('message', '<div class="alert alert-warning" role="alert">The password is invalid, please check your password.</div>');
-                    return redirect()->to(site_url('admin'));
+                    return redirect()->to(site_url('/'));
                 }
             } else {
                 $session->setFlashdata('message', '<div class="alert alert-warning" role="alert">The user is not available in the system.</div>');
-                return redirect()->to(site_url('admin'));
+                return redirect()->to(site_url('/'));
             }
         }
     }

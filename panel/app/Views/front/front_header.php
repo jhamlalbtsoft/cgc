@@ -127,7 +127,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12 col-md-12">
                         <div class="header-left-content text-center">
-                            <h5 style="color: white !important;">PWD Rest House Booking Portal - Mahasamund</h5>
+                            <h5 style="color: white !important;">CGC</h5>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 d-none">
@@ -166,8 +166,8 @@
                             <img src="assets/images/logo.png" class="main-logo" lt="logo" />   
                         </a>
                         <div class="logo-text mt-2">
-                            <strong lang="hi" class="site_name_regional">महासमुंद</strong>
-                            <h4>MAHASAMUND </h4>
+                            <strong lang="hi" class="site_name_regional">CGC</strong>
+                            <h4>CGC </h4>
                         </div>
                         <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto">

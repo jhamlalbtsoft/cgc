@@ -479,25 +479,25 @@ class Home extends BaseController
 
     public function printBookingSlip()
     {
-        $security = \Config\Services::security();
-        $session = \Config\Services::session();
-        $db      = \Config\Database::connect();
-        $myrequest = \Config\Services::request();
-        $data['message'] = $session->getFlashdata('message');
-        $session->set('menuname', 'printBookingSlip');
-        if ($session->get('sid'))
-        {
-            $query = $db->query('select p.*,c.name as guesthouse,c.address,c.contact_person,gr.room_type from tbl_booking p left join m_guesthouse c on p.guesthouse_id=c.id left join m_guesthouse_room gr on p.room_type=gr.id where p.register_id='.$session->get('sid').'');
+        // $security = \Config\Services::security();
+        // $session = \Config\Services::session();
+        // $db      = \Config\Database::connect();
+        // $myrequest = \Config\Services::request();
+        // $data['message'] = $session->getFlashdata('message');
+        // $session->set('menuname', 'printBookingSlip');
+        // if ($session->get('sid'))
+        // {
+        //     $query = $db->query('select p.*,c.name as guesthouse,c.address,c.contact_person,gr.room_type from tbl_booking p left join m_guesthouse c on p.guesthouse_id=c.id left join m_guesthouse_room gr on p.room_type=gr.id where p.register_id='.$session->get('sid').'');
 
-            $data['booking_list'] = $query->getResult();
-            echo view('header_home',$data);
-            echo view('print_booking_slip',$data);
-            echo view('footer_home',$data);                  
-        }
-        else
-        {
-            return redirect()->to(site_url('Home/login'));
-        }       
+        //     $data['booking_list'] = $query->getResult();
+        //     echo view('header_home',$data);
+        //     echo view('print_booking_slip',$data);
+        //     echo view('footer_home',$data);                  
+        // }
+        // else
+        // {
+        //     return redirect()->to(site_url('Home/login'));
+        // }       
     }
 
     public function booking_print($booking_id)

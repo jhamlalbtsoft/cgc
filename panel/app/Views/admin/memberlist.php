@@ -53,36 +53,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <label class="col-sm-1 col-form-label text-lg-right" for="exampleInputEmail1">Guest Name </label>
-                                            <div class="col-sm-3">
-                                                <input type="text" name="sname" id="sname" class="form-control" placeholder="Search Guest Name or Mobile No.">
-                                            </div>      
-                                        </div>
-                                        <div class="form-group row">  
-
-                                            <?php if(get_guesthouse_id()==0) { ?>
-                                                <label class="col-sm-1 col-form-label text-lg-right" for="exampleInputEmail1">Guest House </label>
-                                                <div class="col-sm-5">
-                                                    <select name="guesthouse_id" id="guesthouse_id" class="form-control">
-                                                        <option value="0">All</option>
-                                                        <?php
-                                                            foreach ($guesthouse_list as $row) {
-                                                                echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
-                                                            }
-                                                        ?>
-                                                    </select>
-                                                </div>  
-                                            <?php } else { ?> 
-                                                <input type="hidden" name="guesthouse_id" id="guesthouse_id" class="form-control" value="<?=get_guesthouse_id()?>">
-                                             <?php } ?>
 
                                             <label class="col-sm-1 col-form-label text-lg-right" for="exampleInputEmail1">Status </label>
                                             <div class="col-sm-2">
                                                 <select name="status" id="status" class="form-control">
                                                     <option value="0">All</option>
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Accepted">Accepted</option>
-                                                    <option value="Rejected">Rejected</option> 
+                                                    <option value="pending">Pending</option>
+                                                    <option value="1StApprove">1St Approve</option>
+                                                    <option value="2StApprove">2St Approve</option>
+                                                    <option value="UnitApprove">Unit Approve</option>
+                                                    <option value="Approved">Approved</option>
                                                 </select>
                                             </div> 
 
@@ -107,6 +87,42 @@
     </section>
     <!-- /. Main content --> 
 </div>
+
+<!-- Approve Member Modal -->
+<div class="modal fade" id="approveModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="approveForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Approve Member</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span>&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" name="MembersId" id="approveMemberId">
+          <div class="form-group">
+            <label for="approveStatus">Select Status</label>
+            <select name="Status" id="approveStatus" class="form-control">
+              <option value="pending">Pending</option>
+              <option value="1StApprove">1St Approve</option>
+              <option value="2StApprove">2St Approve</option>
+              <option value="UnitApprove">Unit Approve</option>
+              <option value="Approved">Approved</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">    
@@ -209,7 +225,7 @@
     }
 
     $(document).ready(function(){
-        GetList();       
+        // GetList();       
     });
 
     $("#add_form").on("submit", function( event ) {
@@ -269,7 +285,7 @@
         data = $('#search_form').serialize(); 
         var sname = $('#sname').val();
         $.ajax({
-            url: "<?php echo site_url('Admin/GetBookingList');?>",
+            url: "<?php echo site_url('Admin/GetMemberList');?>",
             type: "POST",
             data: data,
             cache: false,
@@ -332,3 +348,22 @@
         };
     }
 </script>
+<script>
+function updateStatus(memberId, newStatus) {
+    if (!confirm("Are you sure you want to change status to " + newStatus + "?")) return;
+
+    $.ajax({
+        url: "<?= site_url('Admin/updateStatus') ?>",
+        type: "POST",
+        data: { MembersId: memberId, Status: newStatus },
+        success: function (res) {
+            alert(res.message);
+            location.reload();
+        },
+        error: function () {
+            alert("Error updating status.");
+        }
+    });
+}
+</script>
+

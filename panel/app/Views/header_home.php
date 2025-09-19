@@ -183,7 +183,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12 col-md-12">
                         <div class="header-left-content text-center">
-                            <h5 style="color: white !important;"> PWD Rest House Booking Portal - Mahasamund </h5>
+                            <h5 style="color: white !important;"> CGC </h5>
                             <?php if(!empty($username)){ ?>
                                 <h6 style="text-align: center;color: white !important;">Welcome <?=$username?> !</h6>
                             <?php }?>

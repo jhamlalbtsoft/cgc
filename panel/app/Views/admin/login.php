@@ -31,7 +31,7 @@
 
         <link rel="stylesheet" href="assets/css/responsive.css" />
         <link rel="icon" type="image/png" href="assets/images/favicon.png" />
-        <title> Mahasamund - Rest House Room Booking Portal</title>
+        <title> CG Chamber</title>
     </head>
     <body>
         <div class="preloader-area">
@@ -62,7 +62,7 @@
                     <nav class="navbar navbar-expand-md navbar-light">
                         <a class="navbar-brand" href="<?=site_url('/admin')?>">
                             <!-- <img src="assets/images/white-logo.png" alt="logo" /> -->
-                             <h3 style="color:white !important;">Admin - Login</h3>
+                             <h3 style="color:white !important;">CGC - Login</h3>
                         </a>
                         
                     </nav>
@@ -218,7 +218,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </form>
-                            <h5 class="text-center mt-5"><a href="<?=site_url('Home/index')?>"> Back to Home</a></h5>
+                            <!-- <h5 class="text-center mt-5"><a href="<?=site_url('Home/index')?>"> Back to Home</a></h5> -->
                             <form id="contactForm1" method="post" >
                                
                             </form>

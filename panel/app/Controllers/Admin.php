@@ -30,14 +30,14 @@ class Admin extends BaseController
     }
 
 
-    public function bookinglist()
+    public function memberlist()
     {
         $session = \Config\Services::session();
         $db      = \Config\Database::connect();
         $checkUser = $session->get('id');
 
         $session->set('top_menu', 'Admin');
-        $session->set('sub_menu', 'Booking List');  
+        $session->set('sub_menu', 'Member List');  
         $data['cdate'] = date('d-m-Y');
         $data['month_start'] = '01-'.date('m-Y'); 
         $ghModel = new GuesthouseModel();
@@ -46,7 +46,7 @@ class Admin extends BaseController
         if ($checkUser) 
         {
             echo view('includes/header',$data);
-            echo view('admin/enquerylist',$data);
+            echo view('admin/memberlist',$data);
             echo view('includes/footer',$data);
         }
         else{
@@ -147,6 +147,164 @@ class Admin extends BaseController
                 $list = $list.'</table>';
             echo $list;
     }
+
+
+    public function GetMemberList()
+    {
+        $db        = \Config\Database::connect();
+        $request   = \Config\Services::request();
+
+        $from_date = $request->getPost("from_date");
+        $to_date   = $request->getPost("to_date");
+        $status  = $request->getPost("status"); // 0=All, 1=Approved only, 2=Pending
+
+        $search = " WHERE m.DeletedStatus=0 ";
+
+        // Date filter
+        if (!empty($from_date) && !empty($to_date)) {
+            $search .= " AND DATE(m.CreationDate) BETWEEN '" . date('Y-m-d', strtotime($from_date)) . "' 
+                        AND '" . date('Y-m-d', strtotime($to_date)) . "'";
+        }
+
+        // Status filter (only if not "0" = All)
+        if (!empty($status) && $status != "0") {
+            $search .= " AND m.status = " . $db->escape($status);
+        }
+
+        $query = $db->query("
+            SELECT m.*
+            FROM members m
+            $search
+            ORDER BY m.CreationDate DESC
+        ");
+
+        $list = '<table class="table table-bordered" id="example1">
+                    <thead>
+                        <tr>
+                            <th>SNo.</th>
+                            <th>Member Type</th>
+                            <th>Firm Name</th>
+                            <th>City</th>
+                            <th>District</th>
+                            <th>GSTN</th>
+                            <th>Registration No</th>
+                            <th>Representative 1</th>
+                            <th>Mobile Rep1</th>
+                            <th>Representative 2</th>
+                            <th>Mobile Rep2</th>
+                            <th>Approved</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+
+        $i = 1;
+        $result = $query->getResult();
+
+        if (count($result) > 0) {
+            foreach ($result as $row) {
+                $list .= '<tr>';
+                $list .= '<td>' . $i++ . '</td>';
+                $list .= '<td>' . esc($row->MemberType) . '</td>';
+                $list .= '<td>' . esc($row->FirmName) . '</td>';
+                $list .= '<td>' . esc($row->CityName) . '</td>';
+                $list .= '<td>' . esc($row->DistrictName) . '</td>';
+                $list .= '<td>' . esc($row->GSTN) . '</td>';
+                $list .= '<td>' . esc($row->RegistrationNo) . '</td>';
+                $list .= '<td>' . esc($row->Representative1) . '</td>';
+                $list .= '<td>' . esc($row->MobileRep1) . '</td>';
+                $list .= '<td>' . esc($row->Representative2) . '</td>';
+                $list .= '<td>' . esc($row->MobileRep2) . '</td>';
+
+                [$statusLabel, $badgeClass] = match ($row->status) {
+                    'pending'    => ['Pending', 'bg-warning'],
+                    '1StApprove' => ['1st Approve', 'bg-info'],
+                    '2StApprove' => ['2nd Approve', 'bg-primary'],
+                    'UnitApprove'=> ['Unit Approve', 'bg-secondary'],
+                    'Approved'   => ['Approved', 'bg-success'],
+                    default      => ['Unknown', 'bg-light text-dark'],
+                };
+
+
+                $list .= '<td><span class="badge ' . $badgeClass . '">' . $statusLabel . '</span></td>';
+
+                // Build Action Buttons
+                $actionButtons  = '<button class="btn btn-info btn-xs m-1" onclick="viewMember(' . $row->MembersId . ')" title="View"><i class="fa fa-eye"></i></button>';
+                // $actionButtons .= '<button class="btn btn-primary btn-xs m-1" onclick="editMember(' . $row->MembersId . ')" title="Edit"><i class="fa fa-edit"></i></button>';
+                // $actionButtons .= '<button class="btn btn-danger btn-xs m-1" onclick="deleteMember(' . $row->MembersId . ')" title="Delete"><i class="fa fa-trash"></i></button>';
+
+                // Show only the next status button based on current status
+                $nextStatus = '';
+                $nextLabel  = '';
+                $btnClass   = 'btn-secondary'; // default color
+
+                switch ($row->status) {
+                    case 'pending':
+                        $nextStatus = '1StApprove';
+                        $nextLabel  = 'AL 1';
+                        $btnClass   = 'btn-warning'; // Yellow for first step
+                        break;
+
+                    case '1StApprove':
+                        $nextStatus = '2StApprove';
+                        $nextLabel  = 'AL 2';
+                        $btnClass   = 'btn-info'; // Blue for second step
+                        break;
+
+                    case '2StApprove':
+                        $nextStatus = 'UnitApprove';
+                        $nextLabel  = 'UA';
+                        $btnClass   = 'btn-primary'; // Dark blue for unit approve
+                        break;
+
+                    case 'UnitApprove':
+                        $nextStatus = 'Approved';
+                        $nextLabel  = 'FA';
+                        $btnClass   = 'btn-success'; // Green for final approve
+                        break;
+
+                    default:
+                        $nextStatus = '';
+                }
+
+                if (!empty($nextStatus)) {
+                    $actionButtons .= '<button class="btn ' . $btnClass . ' btn-xs m-1" 
+                                        onclick="updateStatus(' . $row->MembersId . ', \'' . $nextStatus . '\')" 
+                                        title="' . $nextLabel . '">
+                                        <i class="fa fa-check"></i> ' . $nextLabel . '
+                                      </button>';
+                }
+
+                $list .= '<td>' . $actionButtons . '</td>';
+                $list .= '</tr>';
+            }
+        } else {
+            $list .= '<tr><td colspan="13">No records found</td></tr>';
+        }
+
+        $list .= '</tbody></table>';
+        echo $list;
+    }
+
+    public function updateStatus()
+    {
+        $request   = service('request');
+        $memberId  = $request->getPost('MembersId');
+        $newStatus = $request->getPost('Status');
+
+        if (!$memberId || !$newStatus) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Invalid data']);
+        }
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('members');
+        $builder->where('MembersId', $memberId);
+        $builder->update(['Status' => $newStatus]);
+
+        return $this->response->setJSON(['status' => 'success', 'message' => 'Status updated to ' . $newStatus]);
+    }
+
+
 
 
 

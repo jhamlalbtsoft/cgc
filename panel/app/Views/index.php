@@ -153,7 +153,7 @@
                         <div class="col-lg-6 col-md-4">
                             <div class="social-content ">
                                 <ul>
-                                    <li><span>Copyright @ PWD Rest House Booking Portal - Mahasamund</span></li>
+                                    <li><span>Copyright @ CGC</span></li>
                                     <!-- <li>
                                         <a href="https://www.facebook.com/" target="_blank"><i class="ri-facebook-fill"></i></a>
                                     </li>

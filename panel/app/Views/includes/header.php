@@ -200,7 +200,7 @@
         <!-- Brand Logo -->
         <a href="<?=site_url('/dashboard')?>" class="brand-link">
             <!-- <img src="assets/images/white-logo.png" alt="btsoft " class="brand-image elevation-3" style="opacity: .7"> -->
-            <span class="brand-text">Mahasamund - Guest House</span>
+            <span class="brand-text">CGC</span>
         </a>
 
         <!-- Sidebar -->
@@ -229,15 +229,15 @@
                     </a> 
                 </li>   
                 <li class="nav-item">
-                    <a href="<?=site_url('Admin/bookinglist')?>" class="nav-link">
+                    <a href="<?=site_url('Admin/memberlist')?>" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
-                        Booking List 
+                        Member List 
                     </p>
                     </a> 
                 </li> 
 
-                <li class="nav-item">
+                <li class="nav-item d-none">
                     <a href="<?=site_url('Admin/feedbacklist')?>" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
