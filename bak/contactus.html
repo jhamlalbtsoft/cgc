@@ -1,0 +1,207 @@
+
+   <div id="page_header" class="uh_grey_with_glare bottom-shadow" style="height:10px;min-height:10px" >
+			<div class=" bgback"></div>
+
+
+<div class="zn_header_bottom_style"></div>
+		</div>
+            <script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=false'></script>
+<div id="slideshow" class="uh_map_mask">
+	        
+			<div class="bgback"></div>
+			<div data-images="" id="sparkles"></div>
+
+            <div class="static-content maps-style">
+				<div id="google_map" style="width:100%; height:300px;">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7437.942772729267!2d81.65392182675699!3d21.232983216328318!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a28dd1aaaaaaaa9%3A0x977df0874aa7f2cc!2sChhattisgarh+Chamber+of+Commerce+%26+Industries!5e0!3m2!1sen!2sin!4v1546084749320" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe></div><!-- map container -->
+				 
+			</div>
+           
+			
+    			<div class="zn_header_bottom_style"></div><!-- header bottom style -->
+        </div><!-- end slideshow -->
+	
+<section id="content">
+<div class="container">
+<div class="mainbody ">
+
+<div class="row zn_content_no_margin">
+<div class="span12"><h1 class="page-title">Contact Us</h1></div>
+</div>
+</div></div>
+<div class="container">
+<div class="row "> 
+<?php 
+if(isset($_POST['Email'])){
+	$errors = '';
+	$myemail = 'info.cgchamber@gmail.com';//<-----Put Your email address here.
+	//$myemail = 'cgmohanreddy@gmail.com';//<-----Put Your email address here.
+	if(empty($_POST['Name'])  || 
+	   empty($_POST['Email']) || 
+	   empty($_POST['Message']) ||
+	   empty($_POST['Mobile'])
+	   )
+	{
+	   $errors .= "\n Error: all fields are required";
+	}
+
+	$name = $_POST['Name']; 
+	$email_address = $_POST['Email']; 
+	$message = $_POST['Message']; 
+	$Mobile = $_POST['Mobile']; 
+	$City = $_POST['City']; 
+
+	if (!preg_match(
+	"/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", 
+	$email_address))
+	{
+		$errors .= "\n Error: Invalid email address";
+	}
+
+	if( empty($errors))
+	{
+		$to = $myemail; 
+		$email_subject = "Contact form submission by: $name";
+		$email_body = "You have received a new message. ".
+		" Here are the details:\n<br><br> Name: $name \n<br> Mobile: $Mobile \n<br> Email: $email_address \n<br> City: $City \n<br> Message \n $message"; 
+		
+		//$headers = "From: $myemail\n"; 
+		//$headers .= "Reply-To: $email_address";
+		
+		$headers = "MIME-Version: 1.0" . "\r\n";
+		$headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
+		$headers .= "From: $myemail" . "\r\n" .
+		"Reply-To: $myemail" . "\r\n" .
+		"X-Mailer: PHP/" . phpversion();
+		  
+		///mail($to,$email_subject,$email_body,$headers);
+		if (mail ($to, $email_subject, $email_body, $headers)) {
+           echo '<h1>Thank you!</h1>';
+			echo '<br><font color="green">Thank you for submitting the form. We will contact you soon!</font><br>';
+        } else {
+            echo '<p>Something went wrong, go back and try again!</p>';
+        }
+		//redirect to the 'thank you' page
+		///header('Location: contact-form-thank-you.html');
+		
+	}else
+		echo nl2br($errors);
+}
+?>
+</div>
+<div class="row "> 
+
+	
+
+    
+
+    <div id="fc"  class="span6">   <p>
+        Use this form to send us a message:</p>
+    <div id="contact_form" class="rapid_contact ">
+<form action="" class="cf_validate form-horizontal zn_form" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#master" id="form0" name="contactform"  method="post">        <div id="success">
+        </div>
+        <div class="control-group ">
+            <label class="control-label" for="Name">
+                Name</label><div class="controls">
+                   <input class="single" id="Name" name="Name" type="text" value="" />
+                        <span class="field-validation-valid emailreqtxt" data-valmsg-for="Name" data-valmsg-replace="true"></span></div>
+        </div>
+        <!-- end control group -->
+          <div class="control-group ">
+            <label class="control-label" for="Mobile">
+                Mobile</label><div class="controls">
+                    <input class="single" id="Mobile" name="Mobile" type="text" value="" />
+                        <span class="field-validation-valid emailreqtxt" data-valmsg-for="Mobile" data-valmsg-replace="true"></span></div>
+        </div>
+        <div class="control-group ">
+            <label class="control-label" for="Email">
+                Email</label><div class="controls">
+                   <input class="single" id="Email" name="Email" type="text" value="" />
+                        <span class="field-validation-valid emailreqtxt" data-valmsg-for="Email" data-valmsg-replace="true"></span></div>
+        </div>
+        <!-- end control group -->
+        <div class="control-group ">
+            <label class="control-label" for="City">
+                City</label><div class="controls">
+                    <input class="single" id="City" name="City" type="text" value="" />
+                        <span class="field-validation-valid emailreqtxt" data-valmsg-for="City" data-valmsg-replace="true"></span></div>
+        </div>
+        <!-- end control group -->
+        <div class="control-group ">
+            <label class="control-label" for="Message">
+                Comments</label><div class="controls">
+                      <textarea class="area" cols="30" id="Message" name="Message" rows="20">
+</textarea>
+                        <span class="field-validation-valid emailreqtxt" data-valmsg-for="Message" data-valmsg-replace="true"></span>
+                </div>
+        </div>
+        <!-- end control group -->
+        <input name="cform_submit" value="cf_submitted" type="hidden"/>
+        <div class="control-group">
+            <div class="controls">
+                <input class=" btn " id="submit-form" name="submit" value="Send Message" type="submit">
+            </div>
+        </div>
+        <!-- end control group -->
+     <!--script type="text/javascript">
+         $(document).ready(function () {
+             $("#fc > form").removeData("validator");
+             $("#fc > form").removeData("unobtrusiveValidation");
+             $.validator.unobtrusive.parse("#fc > form");
+         });
+  </script-->
+</form>    </div>
+
+
+	
+        
+        
+        
+        
+                 
+    
+    </div>
+   
+
+
+
+
+
+
+
+
+
+
+
+
+		
+<div class="span6"><h3>Get in touch with us</h3>
+<!--<div class="qrCode alignright" ><h6>Scan me!</h6><img src="http://api.qrserver.com/v1/create-qr-code/?data=MECARD%3AN%3ACCCI %3BADR%3A Ch. Devilal Vyapar Udyog Bhawan 
+2nd Floor, Bombay Market, Raipur (C.G.)%3BTEL%3A+91 (771) 2539275%3BEMAIL%3Ainfo@cgchamber.in%3BURL%3Ahttp%3A%2F%2Fwww.cgchamber.in%2F%3B&amp;size=140x140" alt="Scan this QR Code!" class="img-polaroid" /></div>-->
+<!-- end QR Code -->
+									<p><strong>Address:</strong> Ch. Devilal Vyapar Udyog Bhawan<br>
+2nd Floor, Bombay Market, <br /> Raipur Chhattisgarh</p>
+                                    
+									<p><strong>Phone:</strong> +91 (771) 2539275, 4034572<br>
+<strong>Whats app:</strong> +91 9340389971, <!--9340375472--><br>
+									<strong>Email:</strong> <a href="mailto:info.cgchamber@gmail.com">info.cgchamber@gmail.com</a><br />
+									<strong>Web:</strong> <a href="http://<strong></strong>www.cgchamber.org" target="_blank">www.cgchamber.org</a></p>
+
+									<!--<h4><strong>Website Support</strong></h4>
+<p><strong>Name:</strong> Jaanki Pandey <br>
+<strong>Mobile:</strong> +91 76948 49489 <br>
+<strong>Email:</strong> <a href="mailto:info@cgchamber.in">info@cgchamber.in</a><br /></p>-->	
+</div></div></div></section><!-- end #content -->				
+<script type='text/javascript' src='Scripts/gen_validatorv31.js'></script>
+
+<script language="JavaScript">
+// Code for validating the form
+// Visit http://www.javascript-coder.com/html-form/javascript-form-validation.phtml
+// for details
+var frmvalidator  = new Validator("contactform");
+frmvalidator.addValidation("Name","req","Please provide your name"); 
+frmvalidator.addValidation("Mobile","req","Please provide your mobile no"); 
+frmvalidator.addValidation("Email","req","Please provide your email"); 
+frmvalidator.addValidation("Email","email","Please enter a valid email address"); 
+frmvalidator.addValidation("Message","req","Please provide your Message"); 
+</script>

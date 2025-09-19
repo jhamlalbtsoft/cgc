@@ -1,0 +1,184 @@
+<ul>	
+      <li class="start active "> <a href="admin"> <i class="icon-custom-home"></i><span class="title">Dashboard</span> <span class="selected"></span> <span class="arrow "></span></a> </li>
+
+   
+
+<script type="text/javascript" src="tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    function Inittinymce() {
+        tinymce.init({
+
+            selector: "textarea",
+            plugins: [
+                "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                "searchreplace  visualblocks visualchars code  insertdatetime media nonbreaking",
+                "table contextmenu directionality emoticons template textcolor paste fullpage textcolor"
+        ],
+
+            toolbar1: " bold italic underline  |  fontselect fontsizeselect",
+             menubar: false
+//            toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo |  image media code |  preview | forecolor backcolor",
+//            toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | visualchars visualblocks nonbreaking template pagebreak "
+//           
+});
+     }
+     function SetImageOnTinyMce(ImageUrl) {
+        
+      
+         tinyMCE.activeEditor.dom.add(tinyMCE.activeEditor.getBody(), 'div', { title: 'my title' }, "<img src='" + ImageUrl + "'/>");
+       
+   
+     }
+     function SetFileLinkOnTinyMce(FileLink, FileText) {
+         //var s = tinymce.activeEditor.getContent();
+         tinyMCE.activeEditor.dom.add(tinyMCE.activeEditor.getBody(), 'div', { title: 'my title' }, "<a target='_blank' href='" + FileLink + "'>" + FileText + "</a>");
+         //tinymce.activeEditor.setContent(s + "<a target='_blank' href='" + FileLink + "'>" + FileText + "</a>");
+
+     }
+
+    </script>
+
+
+
+ 
+ 
+     
+
+
+          <li class="">     
+      <a href="<?PHP ECHO webUrl ?>Members/Message-Index?TypeId=1" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-star"></i> <span class="title">Events</span>   <span class="arrow "></span></a>
+
+       </li>
+           <li class="">     
+      <a href="<?PHP ECHO webUrl ?>Members/Message-Index?TypeId=2" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-comments"></i> <span class="title">Latest News </span>   <span class="arrow "></span></a>
+
+       </li>
+      
+          <li class="">     
+      <a href="<?PHP ECHO webUrl ?>Members/Message-Index?TypeId=3" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-camera"></i> <span class="title">Photo Gallery</span>   <span class="arrow "></span></a>
+
+       </li>
+       
+          <li class="">     
+      <a href="<?PHP ECHO webUrl ?>Members/Message-Index?TypeId=4" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-film"></i> <span class="title">Media</span>   <span class="arrow "></span></a>
+
+       </li>
+      
+           <li class="">     
+      <a href="<?PHP ECHO webUrl ?>Members/Message-Index?TypeId=5" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-money"></i> <span class="title">Patrika </span>   <span class="arrow "></span></a>
+
+       </li>
+     
+          <li class="">     
+      <a href="<?PHP ECHO webUrl ?>Members/Message-Index?TypeId=6" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-book"></i> <span class="title">Government Policy </span>   <span class="arrow "></span></a>
+
+       </li>
+      
+      
+
+         <li class="">     
+      <a href="<?PHP ECHO webUrl ?>Members/Groups-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-group"></i> <span class="title">Group</span>   <span class="arrow "></span></a>
+
+       </li>
+        
+         <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/Subgroup-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-sitemap"></i> <span class="title">Subgroup</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+       
+          <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/District-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-play"></i> <span class="title">District</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+
+         
+           <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/City-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-forward"></i> <span class="title">City</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+         
+          <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/Area-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-fast-forward"></i> <span class="title">Area</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+            
+          <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/SMSGroup-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-comments-alt"></i> <span class="title">SMS Group</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+           
+         <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/Designation-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-desktop"></i> <span class="title">Designation</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+            
+
+          <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/GoverningBody-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-bullseye"></i> <span class="title">Governing Body</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+         
+           <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/GovernmentPolicy-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-briefcase"></i> <span class="title">Govt Policy Master</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+          
+          <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/SMSMaster-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-envelope-alt"></i> <span class="title">SMS Master</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+         
+          <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/Members-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-user"></i> <span class="title">Members</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+         
+        
+       
+          <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/Request-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-edit"></i> <span class="title">Request</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+         
+         <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/SMSlog-Create" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-envelope"></i> <span class="title">Send SMS</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+            
+          <li class="">
+         <a href="<?PHP ECHO webUrl ?>Members/Media-Index" data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"> <i class="icon-map-marker"></i> <span class="title">Media Contacts</span>   <span class="arrow "></span></a>
+
+       
+       </li>
+      
+<li class="">
+                  <a href="<?PHP ECHO webUrl ?>Members/Login-ChangePassword " data-ajax-update="#master" data-ajax-mode="replace" data-ajax-loading="#load" data-ajax-complete="$('.scrollup').trigger('click')" data-ajax="true"><i class="icon-key"></i> <span class="title">Change Password</span> <span class="arrow "></span></a>
+
+      </li>
+          <li class="">
+                  <a href="/login/logout"><i class="icon-off"></i> <span class="title">Logout</span> <span class="arrow "></span></a>
+
+    
+       
+      </li>
+        
+        
+    
+	  
+
+   
+
+   
+</ul>

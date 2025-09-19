@@ -1,0 +1,107 @@
+[19-Oct-2020 13:56:19 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 13:58:50 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 13:59:09 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 13:59:26 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 14:03:16 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 14:03:58 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 14:04:01 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 14:04:10 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 14:05:06 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function verbose() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:20
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(24): Users->__construct()
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 20
+[19-Oct-2020 16:48:13 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[19-Oct-2020 16:48:21 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[19-Oct-2020 16:56:47 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[20-Oct-2020 12:38:19 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[20-Oct-2020 16:22:51 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[21-Oct-2020 11:16:38 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[21-Oct-2020 11:33:41 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[21-Oct-2020 14:10:56 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[21-Oct-2020 16:36:16 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[23-Oct-2020 12:25:29 Asia/Kolkata] PHP Warning:  Error while sending STMT_PREPARE packet. PID=1206754 in /home/cgchamber19/public_html/cgc/admin/lib/lib-members.php on line 218
+[23-Oct-2020 12:25:29 Asia/Kolkata] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000]: General error: 2006 MySQL server has gone away in /home/cgchamber19/public_html/cgc/admin/lib/lib-members.php:218
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/lib/lib-members.php(218): PDO->prepare('SELECT GroupsId...')
+#1 /home/cgchamber19/public_html/cgc/admin/SendSMS.php(42): Members->getGroups()
+#2 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-members.php on line 218
+[26-Oct-2020 16:42:11 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[27-Oct-2020 13:45:45 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:63
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(28): Users->getByUserName('admin')
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 63
+[27-Oct-2020 13:48:10 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:63
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(28): Users->getByUserName('admin')
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 63
+[27-Oct-2020 13:51:20 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:63
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(28): Users->getByUserName('admin')
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 63
+[27-Oct-2020 13:52:58 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:63
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(28): Users->getByUserName('admin')
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 63
+[27-Oct-2020 13:54:03 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:63
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(28): Users->getByUserName('admin')
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 63
+[27-Oct-2020 13:55:00 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:63
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(28): Users->getByUserName('admin')
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 63
+[27-Oct-2020 13:59:35 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:63
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(28): Users->getByUserName('admin')
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 63
+[27-Oct-2020 14:00:02 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php:63
+Stack trace:
+#0 /home/cgchamber19/public_html/cgc/admin/ajax-session.php(28): Users->getByUserName('dataentry')
+#1 {main}
+  thrown in /home/cgchamber19/public_html/cgc/admin/lib/lib-users.php on line 63
+[27-Oct-2020 15:27:56 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[27-Oct-2020 16:12:40 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[06-Nov-2020 16:03:09 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[19-Nov-2020 13:39:35 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9
+[19-Nov-2020 16:47:19 Asia/Kolkata] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cgchamber19/public_html/cgc/admin/lib/page-top.php:11) in /home/cgchamber19/public_html/cgc/admin/login.php on line 9

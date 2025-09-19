@@ -1,0 +1,96 @@
+<?php 
+//print_R($_REQUEST);
+require __DIR__ . DIRECTORY_SEPARATOR . "admin/lib" . DIRECTORY_SEPARATOR . "config.php";
+require PATH_LIB . "lib-eep.php";
+$eepLib = new Eep();
+$TypeArr = array(1=>"Events", 2=>"Latest News", 3=>"Photo Gallery", 4=>"Media", 5=>"Press", 6=>"Government Policy");
+$txtLBL='';
+$id=0;
+if(isset($_REQUEST['id'])){
+	$id = $_REQUEST['id'];
+	$txtLBL = $TypeArr[$TypeId];
+}
+$eep = $eepLib->get($id); 
+if($txtLBL=='')
+$txtLBL= $TypeArr[$eep['TypeId']];
+?>
+
+   <div id="page_header" class="uh_grey_with_glare bottom-shadow" style="height:10px;min-height:10px" >
+			<div class=" bgback"></div>
+
+
+<div class="zn_header_bottom_style"></div>
+		</div>
+    <section id="content">
+    <div class="container">
+
+        <div id="mainbody zn_has_sidebar">
+
+
+
+
+            <div class="row">
+
+               
+         <section id="content">
+    <div class="container">
+        <div class="mainbody ">
+            <div class="row ">
+                <div class="span12">
+                    <h1 class="page-title"><?= $txtLBL.' -> '.$eep['Title'] ?> </h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row ">
+            <div class="span12">
+                <div class="row-fluid zn_image_gallery">
+				<div class='row-fluid'>
+					<?php 
+						$img  ='';
+						$Images = explode(',', trim($eep['Image'],',')); 
+						foreach($Images as $k=>$img):
+						if($img){
+							if($eep['TypeId']!=5){
+					?>	
+							<div class="span4">
+									<a rel="prettyPhoto[pp_5327d<?= $k.$EEPId?>]" href="<?= $img?>" title="" class="hoverBorder"><span class="hoverBorderWrapper"><img alt="" src='<?= $img?>' height="190" width="340"/><span class="theHoverBorder"></span></span></a>
+							</div>
+							<?php }else{ ?>
+								<div class="span12">
+									<a rel="" target="_new" href="<?= $img?>" title="" class="hoverBorder"><span class="hoverBorderWrapper"><img alt="" src='<?= $img?>'/><span class="theHoverBorder"></span></span></a>
+								</div>
+							<?php } ?>
+						<?php } ?>
+					<?php endforeach; ?>
+					
+                </div>
+            </div>
+
+        </div>
+    </div>
+	<?php if($eep['TypeId']!=3){ ?>
+	 <div class="row ">
+		<span class="catItemDateCreated">
+			 <h5 class="">As on <?= date('M - D - d - Y' , strtotime($eep['DateOfEEP']))?></h5>
+		<SPAN>
+		<br><br>
+		<P class="">
+			<?= $eep['Description']?>
+		</P>
+		</span>
+    </div>
+	<?php } ?>
+</section>  
+
+
+                
+            </div><!-- end row -->
+        </div><!-- end mainbody -->
+
+    </div><!-- end container -->
+
+</section>
+    

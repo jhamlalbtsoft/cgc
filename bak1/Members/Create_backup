@@ -1,0 +1,1763 @@
+<?php
+// INIT
+session_start();
+require __DIR__ . DIRECTORY_SEPARATOR . "../admin/lib" . DIRECTORY_SEPARATOR . "config.php";
+
+$_ADMIN = false;
+$UserTypeId = 0;
+$SGRep1 = 0;
+if(isset($_SESSION['user'])){
+	$_ADMIN = is_array($_SESSION['user']);
+	$UserTypeId = $_SESSION['user']['UserTypeId'];
+}
+
+if(isset($_REQUEST['SGRep1'])){
+	$SGRep1 = $_REQUEST['SGRep1'];//18
+}
+?>
+<div class="row-fluid">
+
+
+
+     <div class="span12">
+        <div class="grid simple">
+        <div class="grid-body no-border">
+    <div id="fc">
+<form action="/Members/Create/B-Members-Create?id=0" class="form-no-horizontal-spacing" data-ajax="true" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-update="#CreateMem > #modal-body" id="form0" method="post">    <div class="row-fluid column-seperation">
+  <div class="span12">
+				
+                  <h4>Online Membership Form</h4>
+
+                   <div class="row-fluid">
+                      <div class="span6">
+                      <label for="Firm_Name">Firm Name</label>
+                        <input class="span12" data-val="true" data-val-required="Firm Name is required." id="FirmName" name="FirmName" placeholder="Firm Name*" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="FirmName" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span6">
+                      <label for="Member_Type">Member Type</label>
+                        <select class="span12" id="MemberType" name="MemberType" placeholder="Orders*"><option value="">Select Mem Type</option>
+<option value="LT">Life Time</option>
+<option value="GM">General Member</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="MemberType" data-valmsg-replace="true"></span>
+                      </div>
+                </div>
+                <div class="row-fluid">
+                      <div class="span4" id="grp">
+                      <label for="Group">Group</label>
+                        <select class="span12" id="GroupsId" name="GroupsId" placeholder=""><option selected="selected" value="0">Select Group</option>
+<option value="1">Food Grains Wholesalers (01)</option>
+<option value="2">Food Grains Retailers (02)</option>
+<option value="3">Kirana Wholesalers (03)</option>
+<option value="4">Kirana Retailers (04)</option>
+<option value="5">Cosmetics &amp; Generalgoods (05)</option>
+<option value="6">Steel (Iron) &amp; Cement (06)</option>
+<option value="7">Hardware &amp; Paints Dealers (07)</option>
+<option value="8">Mill Machinary (08)</option>
+<option value="9">Jewellery (09)</option>
+<option value="10">Hosiery &amp; Readymade (10)</option>
+<option value="11">Bardana Merchants (11)</option>
+<option value="12">Cycle Dealers (12)</option>
+<option value="13">Auto Parts Dealers (13)</option>
+<option value="14">Utensils Merchants (14)</option>
+<option value="15">Tea &amp; Tobacco Merchants (15)</option>
+<option value="16">Small scale Industry (16)</option>
+<option value="17">Medical Store (17)</option>
+<option value="18">Petroleum Product (18)</option>
+<option value="19">Timber Merchant (19)</option>
+<option value="20">Fruits &amp; Vegetables Merchants (20)</option>
+<option value="21">Cloths Wholesalers (21)</option>
+<option value="22">Cloths Retailers (22)</option>
+<option value="23">Theater (23)</option>
+<option value="24">Rice Mill Owners (24)</option>
+<option value="25">Oil Mill Owners (25)</option>
+<option value="26">Dal Mill Owners (26)</option>
+<option value="27">Electronics,TV &amp; Radio Sellers (27)</option>
+<option value="28">Stationary &amp; Book Sellers (28)</option>
+<option value="29">Hotel &amp; Guest House (29)</option>
+<option value="30">Industry (30)</option>
+<option value="31">Contractors (31)</option>
+<option value="32">Printing Press (32)</option>
+<option value="33">Tyre Dealers (33)</option>
+<option value="34">Union Members - Local (35)</option>
+<option value="35">Union Members (36)</option>
+<option value="36">Transports &amp; Travels Agency (38)</option>
+<option value="37">Home Appliances (39)</option>
+<option value="38">Agriculture Products (40)</option>
+<option value="39">Photo Studio (41)</option>
+<option value="40">Shoes Retailer (42)</option>
+<option value="41">Shoes Wholesaler (43)</option>
+<option value="42">Automobiles (Two Wheeler) (44)</option>
+<option value="43">Restaurant (45)</option>
+<option value="44">Fancy Stores (46) </option>
+<option value="45">Readymade Garments Retailer (47)</option>
+<option value="46">FMCG Wholesalers (48)</option>
+<option value="47">Mobile &amp; Recharge Retailers (49)</option>
+<option value="48">Electrical Wholesaler (50)</option>
+<option value="49">Automobiles (Four Wheeler) (51)</option>
+<option value="50">Electrical Retailer (52)</option>
+<option value="51">Tiles &amp; Marble (53)</option>
+<option value="52">Builders Materials Suppliers (54)</option>
+<option value="53">Computer, Printer, Copier (55)</option>
+<option value="54">Beauty Parlour (56)</option>
+<option value="55">Gas Agency (57)</option>
+<option value="56">Furniture (58)</option>
+<option value="57">Stone Crusher (59)</option>
+<option value="58">Others (60)</option>
+<option value="59">Pan Thela &amp; Pan Mashala (61)</option>
+<option value="60">Building Material (62)</option>
+<option value="61">Provision Stores (63)</option>
+<option value="62">Petrol Pump (64)</option>
+<option value="63">Watch &amp; Optical (65)</option>
+<option value="64">Ready Made and Hosiery Hand loom (66)</option>
+<option value="65">Wholesale Trading (67)</option>
+<option value="66">Builder &amp; Developers (68)</option>
+<option value="67">Trading &amp; Tally Software (69)</option>
+<option value="68">Production of Films (70) </option>
+<option value="69">Confectionery (71)</option>
+<option value="70">Manufacturer (72)</option>
+<option value="71">Trading &amp; Fabrication (73)</option>
+<option value="74">Plywood Hardware (75)</option>
+<option value="75">Fruit Business (76)</option>
+<option value="76">Finance &amp; Consultants (77)</option>
+<option value="77">Coal Trading (78)</option>
+<option value="78">Crackers Seller (79)</option>
+<option value="79">Training Centre (80)</option>
+<option value="80">Machinery &amp; Electrical Parts (81)</option>
+<option value="81">Institute (82)</option>
+<option value="82">Pharming &amp; Cold Storege (83)</option>
+<option value="83">Ice Cream Shop (84)</option>
+<option value="84">Broker (85)</option>
+<option value="85">Real Estate (86)</option>
+<option value="86">Dairy Trading (87)</option>
+<option value="87">Genereal Stores (88)</option>
+<option value="88">Minerals (89)</option>
+<option value="89">Motor Parts (90)</option>
+<option value="90">Footwear (91)</option>
+<option value="91">Govt. Supplier (92)</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="GroupsId" data-valmsg-replace="true"></span>
+                      </div>
+
+                      <div class="span2">&nbsp;<br />
+             
+ <a class="btn btn-danger btn-mini"   data-ajax="true" data-ajax-begin="makedpt('AddGroup')" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-success="showdpt('AddGroup')" data-ajax-update="#AddGroup > #modal-body" href="<?PHP ECHO webUrl ?>Members/Groups-Create?popup=1&eid=AddGroup&fname=LoadGroup">Add</a>
+
+               </div>
+               
+                      <div class="span4" id="sgrp">
+                     <label for="SubGroup">SubGroup</label>
+                       <select class="span12 multi SGId" id="SGId" multiple="multiple" name="SGId" placeholder="SubGroups*"><option value="24">Fertilizers </option>
+<option value="25">State Power Ltd</option>
+<option value="26">Water Suppliers</option>
+<option value="27">Coal Suppliers</option>
+<option value="28">Food Processer</option>
+<option value="29">Cement Production</option>
+<option value="30">Software Development</option>
+<option value="31">ERP</option>
+<option value="32">leaf spring </option>
+<option value="35">GEARS</option>
+<option value="36">AGARBATTI &amp; DHOOP </option>
+<option value="37">NUT BOLT &amp; HARDWARE </option>
+</select>
+
+                       
+                        <span class="field-validation-valid error" data-valmsg-for="SGId" data-valmsg-replace="true"></span>
+                        <script type="text/javascript">
+                            $(".SGId").select2();
+                        </script>
+                      </div>
+
+                      <div class="span2">&nbsp;<br />
+                 <a class="btn btn-danger btn-mini" id="sgrplink"    data-ajax="true" data-ajax-begin="makedpt('AddSubGroup')" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-success="showdpt('AddSubGroup')" data-ajax-update="#AddSubGroup > #modal-body" href="<?PHP ECHO webUrl ?>Members/SubGroup-Create?popup=1&eid=AddSubGroup&fname=LoadSubGroup&GroupsId=0">Add</a>
+
+               </div>
+                      
+                </div>
+                 <div class="row-fluid">
+                      <div class="span3" id="dist">
+                      <label for="District">District</label>
+                        <select class="span12" id="DistrictId" name="DistrictId" placeholder=""><option selected="selected" value="0">Select Dist</option>
+<option value="1">RAIPUR</option>
+<option value="2">MAHASAMUND</option>
+<option value="3">DHAMTARI</option>
+<option value="4">RAIGARH</option>
+<option value="5">JANJGIR-CHAMPA</option>
+<option value="6">SARGUJA</option>
+<option value="7">BALODABAZAR</option>
+<option value="8">SURAJPUR</option>
+<option value="9">KANKER</option>
+<option value="10">DURG</option>
+<option value="11">BEMETARA</option>
+<option value="12">KORBA</option>
+<option value="13">GARIYABAND</option>
+<option value="14">BALOD</option>
+<option value="15">KABIRDHAM</option>
+<option value="16">RAJNANDGAON</option>
+<option value="17">BILASPUR</option>
+<option value="18">MUNGELI</option>
+<option value="19">KORIYA</option>
+<option value="20">BASTAR</option>
+<option value="21">BIJAPUR</option>
+<option value="22">KAWARDHA</option>
+<option value="23">KONDAGAON</option>
+<option value="24">DANTEWADA</option>
+<option value="25">JASHPUR</option>
+<option value="26">NARAYANPUR</option>
+<option value="28">BHILAI</option>
+<option value="29">BALRAMPUR</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="DistrictId" data-valmsg-replace="true"></span>
+                      </div>
+                      <div class="span1">&nbsp;<br />
+                 <a class="btn btn-danger btn-mini"   data-ajax="true" data-ajax-begin="makedpt('AddDistrict')" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-success="showdpt('AddDistrict')" data-ajax-update="#AddDistrict > #modal-body" href="<?PHP ECHO webUrl ?>Members/District-Create?popup=1&eid=AddDistrict&fname=LoadDistrict">Add</a>
+
+               </div>
+               
+                      <div class="span3" id="city">
+                      <label for="City">City</label>
+                        <select class="span12" id="CityId" name="CityId" onchange="citychange()" placeholder=""><option selected="selected" value="0">Select City</option>
+<option value="1">RAIPUR</option>
+<option value="2">SARAIPALI (MAHASAMUND)</option>
+<option value="3">DHAMTARI</option>
+<option value="4">SARANGARH (RAIGARH)</option>
+<option value="5">SAKTI (JANJGIR-CHAMPA)</option>
+<option value="6">AMBIKAPUR (SARGUJA)</option>
+<option value="7">BALODABAZAR</option>
+<option value="8">VISHRAMPUR (SURAJPUR)</option>
+<option value="9">KHARSIA (RAIGARH)</option>
+<option value="10">KANKER</option>
+<option value="11">RAIGARH</option>
+<option value="12">DURG</option>
+<option value="13">BHILAI (DURG)</option>
+<option value="14">SAJA (BEMETARA)</option>
+<option value="15">KORBA</option>
+<option value="16">LAWAN (BALODABAZAR)</option>
+<option value="17">BARAMKELA (RAIGARH)</option>
+<option value="18">MAHASAMUND</option>
+<option value="19">PITHORA (MAHASAMUND)</option>
+<option value="20">GARIYABAND</option>
+<option value="21">DALLI RAJHARA (BALOD)</option>
+<option value="22">SAHASPUR-LOHARA (KABIRDHAM)</option>
+<option value="23">KAWARDHA (KABIRDHAM)</option>
+<option value="24">RAJNANDGAON </option>
+<option value="25">DHAMDHA (DURG)</option>
+<option value="26">CHARAMA (KANKER)</option>
+<option value="27">BILASPUR</option>
+<option value="28">DEVBHOG (GARIYABAND)</option>
+<option value="29">THAN KHAMRIYA (BEMETARA)</option>
+<option value="30">BASNA (MAHASAMUND)</option>
+<option value="31">BEMETARA</option>
+<option value="32">BHATAPARA (BALODABAZAR)</option>
+<option value="33">MALKHAROUDA (JANJGIR-CHAMPA)</option>
+<option value="34">LORMI (MUNGELI)</option>
+<option value="35">MUNGELI</option>
+<option value="36">MANENDRAGARH (KORIYA)</option>
+<option value="37">JAGDALPUR (BASTAR)</option>
+<option value="38">ARANG (RAIPUR)</option>
+<option value="39">SURAJPUR</option>
+<option value="40">NAGRI (DHAMTARI)</option>
+<option value="41">BALOD</option>
+<option value="42">CHARODA (DURG)</option>
+<option value="43">AHIWARA (DURG)</option>
+<option value="44">ABHANPUR (RAIPUR)</option>
+<option value="45">BHOPALPATNAM (BIJAPUR)</option>
+<option value="46">JHALAP (MAHASAMUND)</option>
+<option value="47">DONDI &quot;AWARI&quot; (BALOD)</option>
+<option value="48">TILDA - NEVRA (RAIPUR)</option>
+<option value="49">BILAIGARH (BALODABAZAR)</option>
+<option value="50">LAKHANPUR (SARGUJA)</option>
+<option value="51">KUMHARI (DURG)</option>
+<option value="52">RAJIM (GARIYABAND)</option>
+<option value="53">SARAIPALI (MAHASAMUND)</option>
+<option value="54">DHAMTARI (MAHASAMUND)</option>
+<option value="55">SARANGARH</option>
+<option value="56">SAKTI</option>
+<option value="57">AMBIKAPUR</option>
+<option value="58">BALODABAZAR</option>
+<option value="59">VISHRAMPUR</option>
+<option value="60">KHARSIA</option>
+<option value="61">KANKER</option>
+<option value="62">RAIGARH</option>
+<option value="63">DURG</option>
+<option value="64">BHILAI</option>
+<option value="65">SAJA</option>
+<option value="66">KORBA</option>
+<option value="67">LAWAN</option>
+<option value="68">BARAMKELA</option>
+<option value="69">MAHASAMUND</option>
+<option value="70">PITHORA</option>
+<option value="71">GARIYABAND</option>
+<option value="72">DALLI RAJHARA</option>
+<option value="73">SAHASPUR-LOHARA</option>
+<option value="74">KAWARDHA </option>
+<option value="75">RAJNANDGAON </option>
+<option value="76">DHAMDHA</option>
+<option value="77">CHARAMA</option>
+<option value="78">BILASPUR</option>
+<option value="79">DEVBHOG</option>
+<option value="80">THAN KHAMRIYA</option>
+<option value="81">BASNA</option>
+<option value="82">BEMETARA</option>
+<option value="83">BHATAPARA</option>
+<option value="84">MALKHAROUDA</option>
+<option value="85">LORMI</option>
+<option value="86">MUNGELI</option>
+<option value="87">MANENDRAGARH</option>
+<option value="88">RAIPUR</option>
+<option value="89">KHAIRAGARH (RAJNANDGAON)</option>
+<option value="90">KESHKAL (KONDAGAON)</option>
+<option value="91">BAGBAHARA (MAHASAMUND)</option>
+<option value="92">CHAMPA (JANJGIR-CHAMPA)</option>
+<option value="93">FINGESHWAR (GARIYABAND)</option>
+<option value="94">CHHURA (GARIYABAND)</option>
+<option value="95">MAINPUR (GARIYABAND)</option>
+<option value="96">GURUR (BALOD)</option>
+<option value="97">SONHAT (KORIYA)</option>
+<option value="98">BACHELI (DANTEWADA)</option>
+<option value="99">PATAN (DURG)</option>
+<option value="100">CHANDRAPUR (RAIGARH)</option>
+<option value="101">KIRANDUL (DANTEWADA)</option>
+<option value="102">JASHPUR NAGAR</option>
+<option value="103">PATHALGAON (JASHPUR)</option>
+<option value="104">RAJPUR (SARGUJA)</option>
+<option value="105">GIDAM (RAIGARH)</option>
+<option value="106">KURUD (DHAMATRI)</option>
+<option value="107">JANJGIR</option>
+<option value="108">KHARORA (RAIPUR)</option>
+<option value="109">BILHA (BILASPUR)</option>
+<option value="110">DANTEWADA</option>
+<option value="111">GANDAI (RAJNANDGAON)</option>
+<option value="112">KONDAGAON</option>
+<option value="113">GUNDARDEHI (BALOD)</option>
+<option value="114">GHARGHODA (RAIGARH)</option>
+<option value="115">CHIRMIRI (KORIYA)</option>
+<option value="116">SIMGA (BALODABAZAR)</option>
+<option value="117">SARIYA (RAIGARH)</option>
+<option value="118">BERLA (BEMETARA)</option>
+<option value="119">AKALTARA (JANJGIR-CHAMPA)</option>
+<option value="120">KATGHORA (KORBA)</option>
+<option value="121">DHARSIWA (RAIPUR)</option>
+<option value="122">DOUNDI-LOHARA (BALOD)</option>
+<option value="123">LAKHANPURI (KANKER)</option>
+<option value="124">MAKRI (KANKER)</option>
+<option value="125">KONGAPANI (KORIYA)</option>
+<option value="126">BAIKUNTHPUR (KORIYA)</option>
+<option value="127">CHARCHA (KORIYA)</option>
+<option value="128">DHARAMJAYGARH (RAIGARH)</option>
+<option value="129">DONGARGARH (RAJNANDGAON)</option>
+<option value="130">NAVAPARA (RAIPUR)</option>
+<option value="131">NEVRA (RAIPUR)</option>
+<option value="132">BHAKHARA (DHAMTARI)</option>
+<option value="133">SILTARA (RAIPUR)</option>
+<option value="135">TARPONGI (RAIPUR)</option>
+<option value="136">BATREL (DURG)</option>
+<option value="137">SALAR (SALAR)</option>
+<option value="138">MANIKPUR (RAIPUR)</option>
+<option value="139">BHATAGAON (RAIPUR)</option>
+<option value="140">KIRARI (JANJGIR-CHAMPA)</option>
+<option value="141">BALODA (JANJGIR-CHAMPA)</option>
+<option value="142">UTAI (DURG)</option>
+<option value="143">NAILA-JANJGIR</option>
+<option value="144">KHARKENA (JANJGIR-CHAMPA)</option>
+<option value="145">DOMANPUR (JANJGIR-CHAMPA)</option>
+<option value="146">KOTMI (JANJGIR-CHAMPA)</option>
+<option value="147">HASAUD (JANJGIR-CHAMPA)</option>
+<option value="148">MUDPAR (JANJGIR-CHAMPA)</option>
+<option value="149">SUPELA (DURG)</option>
+<option value="150">BICHHIYAN (MAHASAMUND)</option>
+<option value="151">KOSIR (RAIGARH)</option>
+<option value="152">MAKRI KHUNA (KANKER)</option>
+<option value="153">PAHANDA (RAIGARH)</option>
+<option value="154">SINODHA (RAIGARH)</option>
+<option value="155">SAHASPUR (RAIGARH)</option>
+<option value="156">GODAM (RAIGARH)</option>
+<option value="157">BARADWAR  (JANJGIR-CHAMPA)</option>
+<option value="158">BIRGAON (RAIPUR)</option>
+<option value="159">BAKTARA (RAIPUR)</option>
+<option value="160">KHONGAPANI (KORIYA)</option>
+<option value="161">KHONGAPANI (KORIYA)</option>
+<option value="162">CHIKHALI (DURG)</option>
+<option value="165">JEORA SIRSA (DURG)</option>
+<option value="166">RASMADA (DURG)</option>
+<option value="167">AALBARAS (DURG)</option>
+<option value="168">NAGPURA (DURG)</option>
+<option value="169">KARMJA BHILAI (DURG)</option>
+<option value="170">KASARIDIH (DURG)</option>
+<option value="171">SOMNI (RAJNANDGAON)</option>
+<option value="172">SANGITARAI (RAIGARH)</option>
+<option value="173">GANDAI (RAJNANDGAON)</option>
+<option value="174">GATHULA (RAJNANDGAON)</option>
+<option value="175">DHELKADIH (RAJNANDGAON)</option>
+<option value="176">CHICHOLA (RAJNANDGAON)</option>
+<option value="177">BARGA (RAJNANDGAON)</option>
+<option value="178">PANEKA (RAJNANDGAON)</option>
+<option value="179">BORI (RAJNANDGAON)</option>
+<option value="180">KELHARI (KORIA)</option>
+<option value="181">UJIYARPUR (KORIYA)</option>
+<option value="182">JORATRAI (RAJNANDGAON)</option>
+<option value="183">NAVAGAON (RAJNANDGAON)</option>
+<option value="184">JAIJAIPUR (JANJGIR-CHAMPA)</option>
+<option value="185">BIRGHANI (JANJGIR-CHAMPA)</option>
+<option value="186">MALUD (DURG)</option>
+<option value="187">SUPELA (BHILAI)</option>
+<option value="188">JAMGAON (DURG)</option>
+<option value="189">GADADIH (DURG)</option>
+<option value="190">JAISAKARRA (KANKER)</option>
+<option value="191">MANPUR (RAJNANDGAON)</option>
+<option value="192">KAHGAON (RAJNANDGAON)</option>
+<option value="193">DONGARGAON (RAJNANDGAON)</option>
+<option value="194">SUNDRA (RAJNANDGAON)</option>
+<option value="195">SARAGAON (RAIPUR)</option>
+<option value="196">HATHKHOJ (DURG)</option>
+<option value="197">KHORPA (RAIPUR)</option>
+<option value="198">MUNRETHI (RAIPUR)</option>
+<option value="199">DUMARTARAI (RAIPUR)</option>
+<option value="200">MURMUNDA (DURG)</option>
+<option value="201">BIREBHAT (DURG)</option>
+<option value="202">AUNDHI (RAJNANDGAON)</option>
+<option value="203">SITAGAON (RAJNANDGAON)</option>
+<option value="204">LAKHOLI (RAJNANDGAON)</option>
+<option value="205">INDAMARA (RAJNANDGAON)</option>
+<option value="206">MAJARKATTA (GARIYABAND)</option>
+<option value="207">SAIDHA MORGA (KORIYA)</option>
+<option value="208">KORIYA</option>
+<option value="209">CHHURIA (RAJNANDGAON)</option>
+<option value="210">BHILAI</option>
+<option value="211">CHHUIKHADAN</option>
+<option value="212">BHATAPARA</option>
+<option value="213">SARANGARH</option>
+<option value="214">SAKTI</option>
+<option value="215">BASNA</option>
+<option value="216">SARAIPALI</option>
+<option value="217">KHAIRAGARH</option>
+<option value="218">KHARSIA</option>
+<option value="219">BHATGAON(SURAJPUR)</option>
+<option value="220">PALARI</option>
+<option value="221">NAVAPARA NAGAR</option>
+<option value="222">RAWAN (BALODA BAZAR)</option>
+<option value="223">PANDARIA</option>
+<option value="224">SANDI (BALODABAZAR)</option>
+<option value="225">SHERIKHERI (RAIPUR)</option>
+<option value="226">NAILA (JANJGIR-CHAMPA)</option>
+<option value="227">BANGOLI (KHARORA)</option>
+<option value="228">KHARORA (RAIPUR)</option>
+<option value="229">BIRKONI (MAHASAMUND)</option>
+<option value="230">BANGOLI (RAIPUR)</option>
+<option value="231">CHARODA (DHARSIWA)</option>
+<option value="232">KUNRA (DHARSIWA)</option>
+<option value="233">BHOINA BHATHA (BEMETARA)</option>
+<option value="234">BONDA (RAIGARH)</option>
+<option value="235">PALLARI (BALODABAZAR)</option>
+<option value="236">DONDI (BALOD)</option>
+<option value="237">LACHHANPUR (JANJGIR-CHAMPA)</option>
+<option value="238">DABHRA (JANJGIR-CHAMPA)</option>
+<option value="239">MAKDI KHUNA (KAKER)</option>
+<option value="240">MAKDI KHUNA (KANKER)</option>
+<option value="241">BHIRAWAHI (KANKER)</option>
+<option value="242">BORSI (DURG)</option>
+<option value="243">ADARSH NAGAR (DURG)</option>
+<option value="244">KANHIYAPURI (DURG)</option>
+<option value="245">PADMANABHPUR (DURG)</option>
+<option value="246">MOHLAI (DURG)</option>
+<option value="247">CHANDKHURI (DURG)</option>
+<option value="248">SINGHOLA (RAJNANDGAON)</option>
+<option value="249">ARJUNI (BHATAPARA)</option>
+<option value="250">SARSIWAN (BALODABAZAR)</option>
+<option value="251">DHOURABHATA (BHATAPARA)</option>
+<option value="252">SEMARIYA (BHATAPARA)</option>
+<option value="253">DATRENGA (BHATAPARA)</option>
+<option value="254">KHOKHLI (BHATAPARA)</option>
+<option value="255">SHANKAR NAGAR (RAIPUR)</option>
+<option value="256">PULGAON (DURG)</option>
+<option value="257">RAWABHATA (RAIPUR)</option>
+<option value="258">URLA (RAIPUR)</option>
+<option value="259">AMLESHWAR (DURG)</option>
+<option value="260">CHAKARBHATA (BILASPUR)</option>
+<option value="261">HALDIBADI (KORIYA)</option>
+<option value="262">NAI LEDARI (KORIYA)</option>
+<option value="263">NAWAPARA NAGAR (RIAIPUR)</option>
+<option value="264">RAJPUR</option>
+<option value="265">RAJPUR(BALRAMPUR)</option>
+<option value="266">NAWAPARA NAGAR (RAIPUR).</option>
+<option value="267">BANKI MONGRA</option>
+<option value="268">PANDUKA</option>
+<option value="269">TILDA</option>
+<option value="270">HATHBANDH</option>
+<option value="271">MAGARLOD</option>
+<option value="272">TAPKARA</option>
+<option value="273">MANDHER(RAIPUR)</option>
+<option value="274">BHILAI</option>
+<option value="275">DUMARDIH KALA</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="CityId" data-valmsg-replace="true"></span>
+                      </div>
+                      <div class="span1">&nbsp;<br />
+  <a class="btn btn-danger btn-mini" id="citylink"    data-ajax="true" data-ajax-begin="makedpt('AddCity')" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-success="showdpt('AddCity')" data-ajax-update="#AddCity > #modal-body" href="<?PHP ECHO webUrl ?>Members/City-Create?popup=1&eid=AddCity&fname=LoadCity&DistrictId=0">Add</a>
+               </div>
+                       
+                       <div class="span3" id="area">
+                      <label for="Area">Area</label>
+                        <select class="span12" id="AreaId" name="AreaId" placeholder=""><option selected="selected" value="0">Select Area</option>
+<option value="1">BAJRANG NAGAR</option>
+<option value="2">GANJ PARA</option>
+<option value="3">RAMSAGAR PARA</option>
+<option value="4">STATION ROAD</option>
+<option value="5">JAWAHAR NAGAR</option>
+<option value="6">AMANAKA</option>
+<option value="7">TELGHANI NAKA</option>
+<option value="8">M G ROAD</option>
+<option value="9">SARAIPALI</option>
+<option value="10">DHAMTARI</option>
+<option value="11">0</option>
+<option value="12">0</option>
+<option value="13">CIVIL LINES</option>
+<option value="14">0</option>
+<option value="15">CHOUBEY COLONY</option>
+<option value="16">FAFADIH</option>
+<option value="17">0</option>
+<option value="18">BHAINS THAN </option>
+<option value="19">0</option>
+<option value="20">SAMTA COLONY</option>
+<option value="21">GOLE BAZAR</option>
+<option value="22">BANJARI ROAD</option>
+<option value="23">GURUNANAK CHOWK</option>
+<option value="24">0</option>
+<option value="25">0</option>
+<option value="26">0</option>
+<option value="27">0</option>
+<option value="28">BAJRANG PARA </option>
+<option value="29">0</option>
+<option value="30">LODHI PARA</option>
+<option value="31">SADAR BAZAR</option>
+<option value="32">NARMDA PARA</option>
+<option value="33">0</option>
+<option value="34">GUDHIYARI</option>
+<option value="35">0</option>
+<option value="36">MOTI BAG</option>
+<option value="37">BUDHA PARA</option>
+<option value="38">0</option>
+<option value="39">BHANPURI</option>
+<option value="40">MOWA</option>
+<option value="41">0</option>
+<option value="42">0</option>
+<option value="43">0</option>
+<option value="44">DEVENDRA NAGAR </option>
+<option value="45">0</option>
+<option value="46">PANDRI</option>
+<option value="47">NAYA PARA</option>
+<option value="48">0</option>
+<option value="49">0</option>
+<option value="50">0</option>
+<option value="51">0</option>
+<option value="52">0</option>
+<option value="53">0</option>
+<option value="54">0</option>
+<option value="55">0</option>
+<option value="56">0</option>
+<option value="57">0</option>
+<option value="58">0</option>
+<option value="59">0</option>
+<option value="60">0</option>
+<option value="61">0</option>
+<option value="62">0</option>
+<option value="63">0</option>
+<option value="64">TATYA PARA</option>
+<option value="65">0</option>
+<option value="66">0</option>
+<option value="67">TELIBANDHA</option>
+<option value="68">0</option>
+<option value="69">0</option>
+<option value="70">KHAMTARAI</option>
+<option value="71">URLA</option>
+<option value="72">LAKHE NAGAR</option>
+<option value="73">KATORA TALAB</option>
+<option value="74">DEVPURI</option>
+<option value="75">DEEN DAYAL UPADHYAY NAGAR</option>
+<option value="76">AMARDEEP TALKIES ROAD</option>
+<option value="77">BAIJNATH PARA</option>
+<option value="78">SHASTRI BAZAR</option>
+<option value="79">GOGAON</option>
+<option value="80">NAHAR PARA</option>
+<option value="81">0</option>
+<option value="82">0</option>
+<option value="83">MANA</option>
+<option value="84">RAJA TALAB</option>
+<option value="85">0</option>
+<option value="86">0</option>
+<option value="87">BADHAI PARA</option>
+<option value="88">0</option>
+<option value="89">BIRGAON</option>
+<option value="90">GANESHRAM NAGAR</option>
+<option value="91">0</option>
+<option value="92">NEAR RAJKUMAR COLLEGE</option>
+<option value="93">VIVEKANAND NAGAR</option>
+<option value="94">0</option>
+<option value="95">BHATAGAON</option>
+<option value="96">0</option>
+<option value="97">0</option>
+<option value="98">SHAILENDRA NAGAR</option>
+<option value="99">JIVAN BIMA MARG</option>
+<option value="100">MALVIYA ROAD</option>
+<option value="101">0</option>
+<option value="102">TIKRA PARA</option>
+<option value="103">0</option>
+<option value="104">0</option>
+<option value="105">0</option>
+<option value="106">0</option>
+<option value="107">0</option>
+<option value="108">0</option>
+<option value="109">0</option>
+<option value="110">0</option>
+<option value="111">0</option>
+<option value="112">0</option>
+<option value="113">0</option>
+<option value="114">0</option>
+<option value="115">CHARODA </option>
+<option value="116">0</option>
+<option value="117">0</option>
+<option value="118">0</option>
+<option value="119">0</option>
+<option value="120">0</option>
+<option value="121">0</option>
+<option value="122">0</option>
+<option value="123">0</option>
+<option value="124">0</option>
+<option value="125">0</option>
+<option value="126">0</option>
+<option value="127">0</option>
+<option value="128">0</option>
+<option value="129">0</option>
+<option value="130">0</option>
+<option value="131">0</option>
+<option value="132">0</option>
+<option value="133">0</option>
+<option value="134">0</option>
+<option value="135">0</option>
+<option value="136">0</option>
+<option value="137">0</option>
+<option value="138">0</option>
+<option value="139">SHANKAR NAGAR</option>
+<option value="140">SANTOSHI NAGAR</option>
+<option value="141">TAIGORE NAGAR</option>
+<option value="142">0</option>
+<option value="143">0</option>
+<option value="144">0</option>
+<option value="145">0</option>
+<option value="146">RAWABHATA</option>
+<option value="147">0</option>
+<option value="148">0</option>
+<option value="149">K K ROAD</option>
+<option value="150">0</option>
+<option value="151">0</option>
+<option value="152">0</option>
+<option value="153">0</option>
+<option value="154">0</option>
+<option value="155">0</option>
+<option value="156">0</option>
+<option value="157">SHARDA CHOWK</option>
+<option value="158">RAJBANDHA MAIDAN</option>
+<option value="159">BOMBAY MARKET</option>
+<option value="160">RING ROAD 1</option>
+<option value="161">LALPUR</option>
+<option value="162">TATIBANDH</option>
+<option value="163">PURANI BASTI</option>
+<option value="164">VIVEKANAND ASHRAM</option>
+<option value="165">NEW RAJENDRA NAGAR</option>
+<option value="166">CHANGORA BHATA</option>
+<option value="167">CHHATTISGARH NAGAR</option>
+<option value="168">RAIPURA</option>
+<option value="169">SHASTRI CHOWK</option>
+<option value="170">SILTARA</option>
+<option value="171">0</option>
+<option value="172">BAIRAN BAZAR</option>
+<option value="173">SUBHASH ROAD</option>
+<option value="174">AMAPARA</option>
+<option value="175">0</option>
+<option value="176">0</option>
+<option value="177">KOTA</option>
+<option value="178">PACHPEDI NAKA</option>
+<option value="179">SUNDER NAGAR</option>
+<option value="180">HIRAPUR</option>
+<option value="181">BANS TAL</option>
+<option value="182">AMLIDIH</option>
+<option value="183">KUSHALPUR</option>
+<option value="184">PHOOL CHOWK</option>
+<option value="185">G E ROAD</option>
+<option value="186">SARORA</option>
+<option value="187">BRAMHAN PARA</option>
+<option value="188">0</option>
+<option value="189">0</option>
+<option value="190">CHHOTA PARA</option>
+<option value="191">SAHILENDRA NAGAR</option>
+<option value="192">PURENA</option>
+<option value="193">RAMNAGAR</option>
+<option value="194">0</option>
+<option value="195">KUKRI PARA</option>
+<option value="196">0</option>
+<option value="197">0</option>
+<option value="198">0</option>
+<option value="199">SATTI BAZAR</option>
+<option value="200">0</option>
+<option value="201">0</option>
+<option value="202">0</option>
+<option value="203">0</option>
+<option value="204">0</option>
+<option value="205">MOHBA BAZAR</option>
+<option value="206">GONDWARA</option>
+<option value="207">0</option>
+<option value="208">0</option>
+<option value="209">0</option>
+<option value="210">JAIL ROAD</option>
+<option value="211">KALIBADI CHOWK</option>
+<option value="212">DUMARTARAI</option>
+<option value="213">BORIYA KHURD</option>
+<option value="214">0</option>
+<option value="215">MAHOBA BAZAR</option>
+<option value="216">MANDIR HASOUD</option>
+<option value="217">0</option>
+<option value="218">0</option>
+<option value="219">DHARSIWA</option>
+<option value="220">RING ROAD 2</option>
+<option value="221">0</option>
+<option value="222">CHHERIKHEDHI</option>
+<option value="223">0</option>
+<option value="224">DANGANIA</option>
+<option value="225">RAJENDRA NAGAR</option>
+<option value="226">0</option>
+<option value="227">KATORA TALAB</option>
+<option value="228">DUNDA</option>
+<option value="229">BORIYAKALA</option>
+<option value="230">DHARSIWA</option>
+<option value="231">LAXMAN NAGAR</option>
+<option value="232">0</option>
+<option value="233">NEW SHANTI NAGAR</option>
+<option value="234">URKURA</option>
+<option value="235">SHANTI NAGAR</option>
+<option value="236">ROHINIPURAM</option>
+<option value="237">AVANTI VIHAR</option>
+<option value="238">0</option>
+<option value="239">NEW PURENA</option>
+<option value="240">0</option>
+<option value="241">PENSION BADA</option>
+<option value="242">KABIR NAGAR</option>
+<option value="243">SADDU</option>
+<option value="244">SEJBAHAR</option>
+<option value="245">0</option>
+<option value="246">SONDONGARI</option>
+<option value="247">SCIENCE COLLEGE</option>
+<option value="248">0</option>
+<option value="249">0</option>
+<option value="250">RAVIGRAM</option>
+<option value="251">0</option>
+<option value="252">0</option>
+<option value="253">ANUPAM NAGAR</option>
+<option value="254">0</option>
+<option value="255">ASHWANI NAGAR</option>
+<option value="256">GOVINDPUR ROAD</option>
+<option value="257">MAIN ROAD</option>
+<option value="258">RAIPUR ROAD</option>
+<option value="259">AGRASEN CHOWK </option>
+<option value="260">AWANTI VIHAR </option>
+<option value="261">PRATAP DEO WARD</option>
+<option value="262">JAISTAMBH CHOWK </option>
+<option value="263">MOUDHAPARA </option>
+<option value="264">DHANELI </option>
+<option value="265">POWER HOUSE </option>
+<option value="266">SUPELA </option>
+<option value="267">B.M.Y. CHARODA </option>
+<option value="268">MANSAROVAR COLONY </option>
+<option value="269">CHHAWNI </option>
+<option value="270">SUNDER VIHAR COLONY</option>
+<option value="271">MAKRI </option>
+<option value="272">GEEDMA ROAD </option>
+<option value="273">LINK ROAD </option>
+<option value="274">KHURSIPAR</option>
+<option value="275">RAVI BHAWAN </option>
+<option value="276">SHITALAPARA </option>
+<option value="277">SHYAM NAGAR </option>
+<option value="278">GANJPARA </option>
+<option value="279">HEAVEY INDUSTRIAL AREA </option>
+<option value="280">RANITARAI</option>
+<option value="281">NANDINI ROAD</option>
+<option value="282">NAILA</option>
+<option value="283">KOTMI </option>
+<option value="284">GURUNANAK NAGAR</option>
+<option value="285">AMLESHWAR </option>
+<option value="286">PAHANDA</option>
+<option value="287">NANDELI</option>
+<option value="288">CHHATAMURA</option>
+<option value="289">RISALI</option>
+<option value="290">BORAI</option>
+<option value="291">KOHKA</option>
+<option value="292">SHRI NAGAR</option>
+<option value="293">G. E. ROAD</option>
+<option value="294">LIGHT INDUSTRIAL AREA</option>
+<option value="295">CHARODA</option>
+<option value="296">NEHRU NAGAR</option>
+<option value="297">NAYA RAIPUR</option>
+<option value="298">BASANTPUR</option>
+<option value="299">DURGAPARA</option>
+<option value="300">TRANSPORT NAGAR</option>
+<option value="301">UTAI</option>
+<option value="302">INDUSTRIAL ESTATE</option>
+<option value="303">NEW KHURSIPAR</option>
+<option value="304">SECTOR - 1</option>
+<option value="305">SECTOR - 10</option>
+<option value="306">VAISHALI NAGAR</option>
+<option value="307">SECTOR - 6</option>
+<option value="308">BHILAI - 3</option>
+<option value="309">HATHKHOJ </option>
+<option value="310">Kankali Para</option>
+<option value="311">Main Market </option>
+<option value="312">SECTOR-5</option>
+<option value="313">SMRITI NAGAR</option>
+<option value="314">VIKASH NAGAR </option>
+<option value="315">MUKTI DHAM </option>
+<option value="316">PROFESSOR COLONY</option>
+<option value="317">M G ROAD </option>
+<option value="318">KUTCHERY CHOWK </option>
+<option value="319">KACHARI CHOWK</option>
+<option value="320">DONDEKALA</option>
+<option value="321">KUMHARI</option>
+<option value="322">GAYA NAGAR</option>
+<option value="323">RAMNAGAR</option>
+<option value="324">ORISSA ROAD</option>
+<option value="325">0</option>
+<option value="326">,</option>
+<option value="327">,</option>
+<option value="328">STATION PARA</option>
+<option value="329">TRANSPORT NAGAR</option>
+<option value="330">BHAWNA NAGAR</option>
+<option value="331">SADDANI CHOWK</option>
+<option value="332">NEW CHANGORA BHATA</option>
+<option value="333">KAILASHPURI</option>
+<option value="334">VALLABH NAGAR</option>
+<option value="335">JALVIHAR COLONY</option>
+<option value="336">RATHOR CHOWK</option>
+<option value="337">AMASEONI</option>
+<option value="338">GAURAV PATH ROAD</option>
+<option value="339">KAILASH NAGAR</option>
+<option value="340">PUSHPAK NAGAR</option>
+<option value="341">CAMP-1</option>
+<option value="342">CAMP-2</option>
+<option value="343">SECTOR-11</option>
+<option value="344">JAMUL</option>
+<option value="345">SECTOR-2</option>
+<option value="346">SHANTI NAGAR</option>
+<option value="347">GOVIND NAGAR</option>
+<option value="348">MAHAVEER NAGAR</option>
+<option value="349">KANKALI PARA</option>
+<option value="350">AMIN PARA</option>
+<option value="351">TIMBER MARKET</option>
+<option value="352">TENDUA</option>
+<option value="353">GEETANJALI NAGAR</option>
+<option value="354">GANJ BANSTALL</option>
+<option value="355">NEW BOMBAY MARKET</option>
+<option value="356">RING ROAD 3</option>
+<option value="357">RAJIV NAGAR</option>
+<option value="358">PANDRI TARAI</option>
+<option value="359">JAWAHAR NAGAR</option>
+<option value="360">JORA</option>
+<option value="361">KATCHERY CHOWK</option>
+<option value="362">JORAPARA</option>
+<option value="363">SHIVANAND NAGAR</option>
+<option value="364">GHADI CHOWK</option>
+<option value="365">RAIPUR</option>
+<option value="366">BYRON BAZAR</option>
+<option value="367">JUNWANI</option>
+<option value="368">STATION ROAD</option>
+<option value="369">CHUDI LINE</option>
+<option value="370">VIDHAN SABHA ROAD</option>
+<option value="371">JANAK BADA</option>
+<option value="372">MOUDHA PARA</option>
+<option value="373">BANJARI CHOWK</option>
+<option value="374">TELIPARA</option>
+<option value="375">KRISHNA NAGAR</option>
+<option value="376">KHAPRABHATTI</option>
+<option value="377">SHASTRI CHOWK</option>
+<option value="378">FIRE BRIGED CHOWK</option>
+<option value="379">HANDI PARA</option>
+<option value="380">RING ROAD</option>
+<option value="381">KHAMHARDIH</option>
+<option value="382">GITANJALI NAGAR</option>
+<option value="383">RAJEEV NAGAR</option>
+<option value="384">DHARAM NAGAR</option>
+<option value="385">AVANTI BAI CHOWK</option>
+<option value="386">NEVRA</option>
+<option value="387">KUNRA</option>
+<option value="388">LOBHANDI</option>
+<option value="389">STATION ROAD</option>
+<option value="390">INDIRA MARKET</option>
+<option value="391">RAWANBHATA</option>
+<option value="392">RAM MANDIR ROAD</option>
+<option value="393">HANUMAN NAGAR</option>
+<option value="394">BHATAGAON</option>
+<option value="395">AZAD CHOWK</option>
+<option value="396">BHOI PARA</option>
+<option value="397">G.E. ROAD</option>
+<option value="398">SANJAY CHOWK</option>
+<option value="399">DEOPURI</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="AreaId" data-valmsg-replace="true"></span>
+                      </div>
+                      <div class="span1">&nbsp;<br />
+  <a class="btn btn-danger btn-mini" id="arealink"    data-ajax="true" data-ajax-begin="makedpt('AddArea')" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-success="showdpt('AddArea')" data-ajax-update="#AddArea > #modal-body" href="<?PHP ECHO webUrl ?>Members/Create?popup=1&eid=AddArea&fname=LoadArea&CityId=0">Add</a>
+
+               </div>
+                       
+                </div>
+                  <div class="row-fluid">
+                  <div class="span3">
+                      <label for="Address">Address</label>
+                        <input class="span12" id="SubGroupName" name="SubGroupName" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="SubGroupName" data-valmsg-replace="true"></span>
+                      </div>
+                      <div class="span3">
+                      <label for="Shop">Shop</label>
+                        <input class="span12" id="Shop" name="Shop" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="Shop" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span2">
+                      <label for="Complex">Complex</label>
+                        <input class="span12" id="Complex" name="Complex" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="Complex" data-valmsg-replace="true"></span>
+                      </div>
+                       <div class="span2">
+                      <label for="Street">Street</label>
+                        <input class="span12" id="Street" name="Street" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="Street" data-valmsg-replace="true"></span>
+                      </div>
+                        <div class="span2">
+                      <label for="Pin">PIN</label>
+                        <input class="span12" id="PIN" name="PIN" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="PIN" data-valmsg-replace="true"></span>
+                      </div>
+
+                </div>
+                  <div class="row-fluid">
+                      <div class="span3">
+                      <label for="STD_-_Code">STD - Code</label>
+                        <input class="span12" id="STDCode" name="STDCode" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="STDCode" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span3">
+                      <label for="Landline">Landline</label>
+                        <input class="span12" id="Landline" name="Landline" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="Landline" data-valmsg-replace="true"></span>
+                      </div>
+                       <div class="span3">
+                      <label for="Mobile">Mobile</label>
+                        <input class="span12" id="Mobile" name="Mobile" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="Mobile" data-valmsg-replace="true"></span>
+                      </div>
+                        <div class="span3">
+                      <label for="Email">Email</label>
+                        <input class="span12" id="Email" name="Email" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                      </div>
+                </div>
+                 <div class="row-fluid">
+                      <div class="span4">
+                      <label for="TIN_No">TIN No</label>
+                        <input class="span12" id="TINNo" name="TINNo" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="TINNo" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span4">
+                      <label for="PAN_No">PAN No</label>
+                        <input class="span12" id="PAN" name="PAN" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="PAN" data-valmsg-replace="true"></span>                 
+                      </div>
+                       <div class="span4">
+                      <label for="Old_Registration_No">Old Registration No</label>
+                        <input class="span12" id="RegistrationNoOld" name="RegistrationNoOld" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="RegistrationNoOld" data-valmsg-replace="true"></span>
+                      </div>
+                        
+                </div>
+                 <div class="row-fluid">
+                      <div class="span6">
+                     <div class="checkbox check-success 	">
+                      
+                       <input id="Approved" type="checkbox" value="true" name="Approved" ></input>
+                    
+                      <label for="Approved">Approved</label>
+                    </div>
+                      </div>
+               
+                      <div class="span6">
+                      <label for="Due_Date">Due Date</label>
+                        
+        <input class="datefield span12" id="DueDate" name="DueDate" type="text" value="" />
+
+
+
+                        <span class="field-validation-valid error" data-valmsg-for="DueDate" data-valmsg-replace="true"></span>
+                      </div>     
+                </div>
+               
+                <div class="row-fluid">
+                <div class="span4">
+                       <label for="Document_Upload">Document Upload</label>
+                         <input class="span12" id="MemDoc" name="MemDoc" placeholder="document" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="MemDoc" data-valmsg-replace="true"></span>
+                        <a href="" target="_blank" id="MemDocimg" > </a> 
+                       </div>
+                   <div class="span4">     
+                        <label for="Document_Type">Document Type</label>
+                         <input class="span12" id="DocTitle" name="DocTitle" placeholder="type" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="DocTitle" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="span4">     
+                                     
+                       
+                      <label for="Upload_file">Upload file</label>
+                        <iframe src="<?PHP ECHO webUrl ?>Web_Image_Upload2.php?File=1&amp;id=MemDoc&amp;type=1&amp;size=150" width="500px" height="50px"  frameborder="0" scrolling=no >
+
+</iframe>
+                     </div>
+                      
+                       </div>
+                 <h4>Representative 1</h4>
+                 <div class="row-fluid">
+                      <div class="span3">
+                      <label for="Salutation">Salutation</label>
+                        <select class="span12" id="SalutationRep1" name="SalutationRep1" placeholder=""><option value="Mr.">Mr.</option>
+<option value="Mrs.">Mrs.</option>
+<option value="Miss">Miss</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="SalutationRep1" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span3">
+                      <label for="Name">Name</label>
+                        <input class="span12" data-val="true" data-val-required="Representative1 Name is required." id="Representative1" name="Representative1" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="Representative1" data-valmsg-replace="true"></span>
+                      </div>
+                         <div class="span3">
+                      <label for="Mobile">Mobile</label>
+                        <input class="span12" id="MobileRep1" name="MobileRep1" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="MobileRep1" data-valmsg-replace="true"></span>
+                      </div>
+                        <div class="span3">
+                      <label for="Email">Email</label>
+                        <input class="span12" id="EmailRep1" name="EmailRep1" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="EmailRep1" data-valmsg-replace="true"></span>
+                      </div>
+                </div>
+                  <div class="row-fluid">
+                      
+                      <div class="span4">
+                      <label for="DOB">DOB</label>
+                        
+        <input class="datefield span12" id="DOBRep1" name="DOBRep1" type="text" value="" />
+
+
+
+                        <span class="field-validation-valid error" data-valmsg-for="DOBRep1" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span4">
+                      <label for="Organization_Designation">Organization Designation</label>
+                        <input class="span12" id="OrgDesignationRep1" name="OrgDesignationRep1" placeholder="" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="OrgDesignationRep1" data-valmsg-replace="true"></span>
+                      </div>
+                         <div class="span4">
+                      <label for="Blood_Group">Blood Group</label>
+                        <select class="span12" id="BloodGroupRep1" name="BloodGroupRep1" placeholder=""><option value="">Select B Group</option>
+<option value="A+">A+</option>
+<option value="A-">A-</option>
+<option value="B+">B+</option>
+<option value="B-">B-</option>
+<option value="AB+">AB+</option>
+<option value="AB-">AB-</option>
+<option value="O+">O+</option>
+<option value="O-">O-</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="BloodGroupRep1" data-valmsg-replace="true"></span>
+                      </div>
+                    
+                </div>
+                <div class="row-fluid">
+                      <div class="span3">
+                      <label for="Governing_Body">Governing Body</label>
+                        <select class="span12" id="GoverningBodyIdRep1" name="GoverningBodyIdRep1" placeholder=""><option selected="selected" value="0">Select GBody/Comm</option>
+<option value="3">EXECUTIVE MEMBER (Association Other Cities)</option>
+<option value="6">EXECUTIVE MEMBERS</option>
+<option value="13">CORE COMMITTEE</option>
+<option value="15">VICE PRESIDENT Raipur</option>
+<option value="16">SECRETARY Raipur</option>
+<option value="17">VICE PRESIDENT Other Cities</option>
+<option value="18">SECRETARY Other Cities</option>
+<option value="19">Ad hoc Committee</option>
+<option value="24">EXECUTIVE MEMBERS (Association Raipur)</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="GoverningBodyIdRep1" data-valmsg-replace="true"></span>
+                      </div>
+               
+                       <div class="span3">
+                      <label for="Designation">Designation</label>
+                        <select class="span12" id="GBDesignationIdRep1" name="GBDesignationIdRep1" placeholder=""><option selected="selected" value="0">Select Designation</option>
+<option value="1">President</option>
+<option value="3">Vice President (Raipur)</option>
+<option value="6">Patron</option>
+<option value="7">Chairman (Discipline Committee) </option>
+<option value="8">Member (Discipline Committee)</option>
+<option value="9">Chairman</option>
+<option value="10">Working President </option>
+<option value="11">Secretary </option>
+<option value="12">Treasurer</option>
+<option value="13">Vice President </option>
+<option value="14">Vice President (Sarguja)</option>
+<option value="15">Vice President (Rajnandgaon)</option>
+<option value="16">Vice President (Raigarh)</option>
+<option value="17">Vice President (Durg)</option>
+<option value="18">Vice President (Bhilai)</option>
+<option value="19">Vice President (Janjgir-Champa)</option>
+<option value="20">Vice President (Korba)</option>
+<option value="21">Vice President (Mahasamund)</option>
+<option value="22">Vice President (Kanker)</option>
+<option value="23">Vice President (Bilaspur)</option>
+<option value="24">Vice President (Mungeli)</option>
+<option value="25">Vice President (Gariyaband)</option>
+<option value="26">Vice President (Balodabazar)</option>
+<option value="27">Vice President (Balod)</option>
+<option value="28">Vice President (Bemetara)</option>
+<option value="29">Vice President (Dhamtri)</option>
+<option value="30">Secretary (Sarguja)</option>
+<option value="31">Secretary (Rajnandgaon)</option>
+<option value="32">Secretary (Raigarh)</option>
+<option value="33">Secretary (Durg)</option>
+<option value="34">Secretary (Bhilai)</option>
+<option value="35">Secretary (Janjgir - Champa)</option>
+<option value="36">Secretary (Korba)</option>
+<option value="37">Secretary (Mahasamund)</option>
+<option value="38">Secretary (Kanker)</option>
+<option value="39">Secretary (Bilaspur)</option>
+<option value="40">Secretary (Gariyaband)</option>
+<option value="41">Secretary (Balodabazar)</option>
+<option value="42">Secretary (Balod)</option>
+<option value="43">Secretary (Bemetara)</option>
+<option value="44">Secretary (Dhamtri)</option>
+<option value="45">Secretary (Mungeli)</option>
+<option value="46">Vice President (Dhantewada)</option>
+<option value="47">Vice President (Koria)</option>
+<option value="51">Secretary (Dantewada)</option>
+<option value="52">Padhadhikari Darja</option>
+<option value="55">Padadhikari Darja (Bilaspur)</option>
+<option value="63">Ad Hoc Committee </option>
+<option value="72">Secretary Durg Zone </option>
+<option value="79">Secretary  (Koria)</option>
+<option value="142">Vice President (Bhatapara)</option>
+<option value="143">President (Yuva Chamber)</option>
+<option value="145">General Secretary (Yuva Chamber)</option>
+<option value="147">Vice President                       (Yuva Chamber)</option>
+<option value="150">Secretary                                  (Yuva Chamber)</option>
+<option value="163">President (Mahila Chamber)</option>
+<option value="165">General Secretary (Mahila Chamber)</option>
+<option value="167">Treasurer (Mahila Chamber)</option>
+<option value="168">President (Udyog Chamber)</option>
+<option value="173">Vidhi Vidhayi Koria</option>
+<option value="190">Organisation Secretary</option>
+<option value="192">Joint President</option>
+<option value="193">State President</option>
+<option value="194">State general secretary</option>
+<option value="195">State Treasurer</option>
+<option value="197">Secretary Raipur</option>
+<option value="198">Vice President Raipur</option>
+<option value="200">Vice President Kawardha</option>
+<option value="201">Secretary Kawardha</option>
+<option value="202">Chairman (Action committee)</option>
+<option value="203">Executive Member</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="GBDesignationIdRep1" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span3">
+                      <label for="Committee">Committee</label>
+                        <select class="span12" id="CommitteeIDRep1" name="CommitteeIDRep1" placeholder=""><option selected="selected" value="0">Select GBody/Comm</option>
+<option value="5">MAHILA CHAMBER</option>
+<option value="8">DISCIPLINE COMMITTEE </option>
+<option value="9">TRANSPORT CHAMBER </option>
+<option value="10">COMMITTEE </option>
+<option value="11">UDYOG CHAMBER</option>
+<option value="14">PATRON</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="CommitteeIDRep1" data-valmsg-replace="true"></span>
+                      </div>
+                       <div class="span3">
+                      <label for="Designation">Designation</label>
+                        <select class="span12" id="CdesignationIdRep1" name="CdesignationIdRep1" placeholder=""><option selected="selected" value="0">Select Designation</option>
+<option value="1">President</option>
+<option value="3">Vice President (Raipur)</option>
+<option value="6">Patron</option>
+<option value="7">Chairman (Discipline Committee) </option>
+<option value="8">Member (Discipline Committee)</option>
+<option value="9">Chairman</option>
+<option value="10">Working President </option>
+<option value="11">Secretary </option>
+<option value="12">Treasurer</option>
+<option value="13">Vice President </option>
+<option value="14">Vice President (Sarguja)</option>
+<option value="15">Vice President (Rajnandgaon)</option>
+<option value="16">Vice President (Raigarh)</option>
+<option value="17">Vice President (Durg)</option>
+<option value="18">Vice President (Bhilai)</option>
+<option value="19">Vice President (Janjgir-Champa)</option>
+<option value="20">Vice President (Korba)</option>
+<option value="21">Vice President (Mahasamund)</option>
+<option value="22">Vice President (Kanker)</option>
+<option value="23">Vice President (Bilaspur)</option>
+<option value="24">Vice President (Mungeli)</option>
+<option value="25">Vice President (Gariyaband)</option>
+<option value="26">Vice President (Balodabazar)</option>
+<option value="27">Vice President (Balod)</option>
+<option value="28">Vice President (Bemetara)</option>
+<option value="29">Vice President (Dhamtri)</option>
+<option value="30">Secretary (Sarguja)</option>
+<option value="31">Secretary (Rajnandgaon)</option>
+<option value="32">Secretary (Raigarh)</option>
+<option value="33">Secretary (Durg)</option>
+<option value="34">Secretary (Bhilai)</option>
+<option value="35">Secretary (Janjgir - Champa)</option>
+<option value="36">Secretary (Korba)</option>
+<option value="37">Secretary (Mahasamund)</option>
+<option value="38">Secretary (Kanker)</option>
+<option value="39">Secretary (Bilaspur)</option>
+<option value="40">Secretary (Gariyaband)</option>
+<option value="41">Secretary (Balodabazar)</option>
+<option value="42">Secretary (Balod)</option>
+<option value="43">Secretary (Bemetara)</option>
+<option value="44">Secretary (Dhamtri)</option>
+<option value="45">Secretary (Mungeli)</option>
+<option value="46">Vice President (Dhantewada)</option>
+<option value="47">Vice President (Koria)</option>
+<option value="51">Secretary (Dantewada)</option>
+<option value="52">Padhadhikari Darja</option>
+<option value="55">Padadhikari Darja (Bilaspur)</option>
+<option value="63">Ad Hoc Committee </option>
+<option value="72">Secretary Durg Zone </option>
+<option value="79">Secretary  (Koria)</option>
+<option value="142">Vice President (Bhatapara)</option>
+<option value="143">President (Yuva Chamber)</option>
+<option value="145">General Secretary (Yuva Chamber)</option>
+<option value="147">Vice President                       (Yuva Chamber)</option>
+<option value="150">Secretary                                  (Yuva Chamber)</option>
+<option value="163">President (Mahila Chamber)</option>
+<option value="165">General Secretary (Mahila Chamber)</option>
+<option value="167">Treasurer (Mahila Chamber)</option>
+<option value="168">President (Udyog Chamber)</option>
+<option value="173">Vidhi Vidhayi Koria</option>
+<option value="190">Organisation Secretary</option>
+<option value="192">Joint President</option>
+<option value="193">State President</option>
+<option value="194">State general secretary</option>
+<option value="195">State Treasurer</option>
+<option value="197">Secretary Raipur</option>
+<option value="198">Vice President Raipur</option>
+<option value="200">Vice President Kawardha</option>
+<option value="201">Secretary Kawardha</option>
+<option value="202">Chairman (Action committee)</option>
+<option value="203">Executive Member</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="CdesignationIdRep1" data-valmsg-replace="true"></span>
+                      </div>
+                    
+                </div>
+                   
+                
+                   <div class="row-fluid">
+                     <div class="span4">
+                      <label for="SMS_Group">SMS Group</label>
+                       <select class="span12 multi SGRep1" id="SGRep1" multiple="multiple" name="SGRep1" placeholder="SMS Groups*"><option value="18">CORE COMMITTEE</option>
+</select>
+
+                       
+                        <span class="field-validation-valid error" data-valmsg-for="SGRep1" data-valmsg-replace="true"></span>
+                        <script type="text/javascript">
+                            $(".SGRep1").select2();
+                        </script>
+                      </div>
+                      
+               
+                     <div class="span4">
+                       <label for="Photograph">Photograph</label>
+                         <input class="span12" id="ImageRep1" name="ImageRep1" placeholder="Image*" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="ImageRep1" data-valmsg-replace="true"></span>
+                        <img src="" id="ImageRep1img" style="Width:150px" />                      </div>
+                       <div class="span4">
+                      <label for="Upload_file">Upload file</label>
+                        <iframe src="<?PHP ECHO webUrl ?>Web_Image_Upload2.php?File=1&amp;id=ImageRep1&amp;size=150" width="500px" height="50px"  frameborder="0" scrolling=no >
+
+</iframe>
+                    
+                      </div>
+                </div>
+             <h4>Representative 2</h4>
+                 <div class="row-fluid">
+                      <div class="span3">
+                      <label for="Salutation">Salutation</label>
+                        <select class="span12" id="SalutationRep2" name="SalutationRep2" placeholder=""><option value="Mr.">Mr.</option>
+<option value="Mrs.">Mrs.</option>
+<option value="Miss">Miss</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="SalutationRep2" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span3">
+                      <label for="Name">Name</label>
+                        <input class="span12" id="Representative2" name="Representative2" placeholder="Name" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="Representative2" data-valmsg-replace="true"></span>
+                      </div>
+                         <div class="span3">
+                      <label for="Mobile">Mobile</label>
+                        <input class="span12" id="MobileRep2" name="MobileRep2" placeholder="Mobile" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="MobileRep2" data-valmsg-replace="true"></span>
+                      </div>
+                        <div class="span3">
+                      <label for="Email">Email</label>
+                        <input class="span12" id="EmailRep2" name="EmailRep2" placeholder="Email" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="EmailRep2" data-valmsg-replace="true"></span>
+                      </div>
+                </div>
+                  <div class="row-fluid">
+                      <div class="span4">
+                      <label for="DOB">DOB</label>
+                        
+        <input class="datefield span12" id="DOBRep2" name="DOBRep2" type="text" value="" />
+
+
+
+                        <span class="field-validation-valid error" data-valmsg-for="SalutationRep1" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span4">
+                      <label for="Organization_Designation">Organization Designation</label>
+                        <input class="span12" id="OrgDesignationRep2" name="OrgDesignationRep2" placeholder="Organization Designation" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="OrgDesignationRep2" data-valmsg-replace="true"></span>
+                      </div>
+                         <div class="span4">
+                      <label for="Blood_Group">Blood Group</label>
+                        <select class="span12" id="BloodGroupRep1" name="BloodGroupRep1" placeholder=""><option value="">Select B Group</option>
+<option value="A+">A+</option>
+<option value="A-">A-</option>
+<option value="B+">B+</option>
+<option value="B-">B-</option>
+<option value="AB+">AB+</option>
+<option value="AB-">AB-</option>
+<option value="O+">O+</option>
+<option value="O-">O-</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="BloodGroupRep1" data-valmsg-replace="true"></span>
+                      </div>
+                    
+                </div>
+                 <div class="row-fluid">
+                      <div class="span3">
+                      <label for="Governing_Body">Governing Body</label>
+                        <select class="span12" id="GoverningBodyIdRep2" name="GoverningBodyIdRep2" placeholder=""><option selected="selected" value="0">Select GBody/Comm</option>
+<option value="3">EXECUTIVE MEMBER (Association Other Cities)</option>
+<option value="6">EXECUTIVE MEMBERS</option>
+<option value="13">CORE COMMITTEE</option>
+<option value="15">VICE PRESIDENT Raipur</option>
+<option value="16">SECRETARY Raipur</option>
+<option value="17">VICE PRESIDENT Other Cities</option>
+<option value="18">SECRETARY Other Cities</option>
+<option value="19">Ad hoc Committee</option>
+<option value="24">EXECUTIVE MEMBERS (Association Raipur)</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="GoverningBodyIdRep2" data-valmsg-replace="true"></span>
+                      </div>
+               
+                       <div class="span3">
+                      <label for="Designation">Designation</label>
+                        <select class="span12" id="GBDesignationIdRep2" name="GBDesignationIdRep2" placeholder=""><option selected="selected" value="0">Select Designation</option>
+<option value="1">President</option>
+<option value="3">Vice President (Raipur)</option>
+<option value="6">Patron</option>
+<option value="7">Chairman (Discipline Committee) </option>
+<option value="8">Member (Discipline Committee)</option>
+<option value="9">Chairman</option>
+<option value="10">Working President </option>
+<option value="11">Secretary </option>
+<option value="12">Treasurer</option>
+<option value="13">Vice President </option>
+<option value="14">Vice President (Sarguja)</option>
+<option value="15">Vice President (Rajnandgaon)</option>
+<option value="16">Vice President (Raigarh)</option>
+<option value="17">Vice President (Durg)</option>
+<option value="18">Vice President (Bhilai)</option>
+<option value="19">Vice President (Janjgir-Champa)</option>
+<option value="20">Vice President (Korba)</option>
+<option value="21">Vice President (Mahasamund)</option>
+<option value="22">Vice President (Kanker)</option>
+<option value="23">Vice President (Bilaspur)</option>
+<option value="24">Vice President (Mungeli)</option>
+<option value="25">Vice President (Gariyaband)</option>
+<option value="26">Vice President (Balodabazar)</option>
+<option value="27">Vice President (Balod)</option>
+<option value="28">Vice President (Bemetara)</option>
+<option value="29">Vice President (Dhamtri)</option>
+<option value="30">Secretary (Sarguja)</option>
+<option value="31">Secretary (Rajnandgaon)</option>
+<option value="32">Secretary (Raigarh)</option>
+<option value="33">Secretary (Durg)</option>
+<option value="34">Secretary (Bhilai)</option>
+<option value="35">Secretary (Janjgir - Champa)</option>
+<option value="36">Secretary (Korba)</option>
+<option value="37">Secretary (Mahasamund)</option>
+<option value="38">Secretary (Kanker)</option>
+<option value="39">Secretary (Bilaspur)</option>
+<option value="40">Secretary (Gariyaband)</option>
+<option value="41">Secretary (Balodabazar)</option>
+<option value="42">Secretary (Balod)</option>
+<option value="43">Secretary (Bemetara)</option>
+<option value="44">Secretary (Dhamtri)</option>
+<option value="45">Secretary (Mungeli)</option>
+<option value="46">Vice President (Dhantewada)</option>
+<option value="47">Vice President (Koria)</option>
+<option value="51">Secretary (Dantewada)</option>
+<option value="52">Padhadhikari Darja</option>
+<option value="55">Padadhikari Darja (Bilaspur)</option>
+<option value="63">Ad Hoc Committee </option>
+<option value="72">Secretary Durg Zone </option>
+<option value="79">Secretary  (Koria)</option>
+<option value="142">Vice President (Bhatapara)</option>
+<option value="143">President (Yuva Chamber)</option>
+<option value="145">General Secretary (Yuva Chamber)</option>
+<option value="147">Vice President                       (Yuva Chamber)</option>
+<option value="150">Secretary                                  (Yuva Chamber)</option>
+<option value="163">President (Mahila Chamber)</option>
+<option value="165">General Secretary (Mahila Chamber)</option>
+<option value="167">Treasurer (Mahila Chamber)</option>
+<option value="168">President (Udyog Chamber)</option>
+<option value="173">Vidhi Vidhayi Koria</option>
+<option value="190">Organisation Secretary</option>
+<option value="192">Joint President</option>
+<option value="193">State President</option>
+<option value="194">State general secretary</option>
+<option value="195">State Treasurer</option>
+<option value="197">Secretary Raipur</option>
+<option value="198">Vice President Raipur</option>
+<option value="200">Vice President Kawardha</option>
+<option value="201">Secretary Kawardha</option>
+<option value="202">Chairman (Action committee)</option>
+<option value="203">Executive Member</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="GBDesignationIdRep2" data-valmsg-replace="true"></span>
+                      </div>
+               
+                      <div class="span3">
+                      <label for="Committee">Committee</label>
+                        <select class="span12" id="CommitteeIDRep2" name="CommitteeIDRep2" placeholder=""><option selected="selected" value="0">Select GBody/Comm</option>
+<option value="5">MAHILA CHAMBER</option>
+<option value="8">DISCIPLINE COMMITTEE </option>
+<option value="9">TRANSPORT CHAMBER </option>
+<option value="10">COMMITTEE </option>
+<option value="11">UDYOG CHAMBER</option>
+<option value="14">PATRON</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="CommitteeIDRep2" data-valmsg-replace="true"></span>
+                      </div>
+                       <div class="span3">
+                      <label for="Designation">Designation</label>
+                        <select class="span12" id="CdesignationIdRep2" name="CdesignationIdRep2" placeholder=""><option selected="selected" value="0">Select Designation</option>
+<option value="1">President</option>
+<option value="3">Vice President (Raipur)</option>
+<option value="6">Patron</option>
+<option value="7">Chairman (Discipline Committee) </option>
+<option value="8">Member (Discipline Committee)</option>
+<option value="9">Chairman</option>
+<option value="10">Working President </option>
+<option value="11">Secretary </option>
+<option value="12">Treasurer</option>
+<option value="13">Vice President </option>
+<option value="14">Vice President (Sarguja)</option>
+<option value="15">Vice President (Rajnandgaon)</option>
+<option value="16">Vice President (Raigarh)</option>
+<option value="17">Vice President (Durg)</option>
+<option value="18">Vice President (Bhilai)</option>
+<option value="19">Vice President (Janjgir-Champa)</option>
+<option value="20">Vice President (Korba)</option>
+<option value="21">Vice President (Mahasamund)</option>
+<option value="22">Vice President (Kanker)</option>
+<option value="23">Vice President (Bilaspur)</option>
+<option value="24">Vice President (Mungeli)</option>
+<option value="25">Vice President (Gariyaband)</option>
+<option value="26">Vice President (Balodabazar)</option>
+<option value="27">Vice President (Balod)</option>
+<option value="28">Vice President (Bemetara)</option>
+<option value="29">Vice President (Dhamtri)</option>
+<option value="30">Secretary (Sarguja)</option>
+<option value="31">Secretary (Rajnandgaon)</option>
+<option value="32">Secretary (Raigarh)</option>
+<option value="33">Secretary (Durg)</option>
+<option value="34">Secretary (Bhilai)</option>
+<option value="35">Secretary (Janjgir - Champa)</option>
+<option value="36">Secretary (Korba)</option>
+<option value="37">Secretary (Mahasamund)</option>
+<option value="38">Secretary (Kanker)</option>
+<option value="39">Secretary (Bilaspur)</option>
+<option value="40">Secretary (Gariyaband)</option>
+<option value="41">Secretary (Balodabazar)</option>
+<option value="42">Secretary (Balod)</option>
+<option value="43">Secretary (Bemetara)</option>
+<option value="44">Secretary (Dhamtri)</option>
+<option value="45">Secretary (Mungeli)</option>
+<option value="46">Vice President (Dhantewada)</option>
+<option value="47">Vice President (Koria)</option>
+<option value="51">Secretary (Dantewada)</option>
+<option value="52">Padhadhikari Darja</option>
+<option value="55">Padadhikari Darja (Bilaspur)</option>
+<option value="63">Ad Hoc Committee </option>
+<option value="72">Secretary Durg Zone </option>
+<option value="79">Secretary  (Koria)</option>
+<option value="142">Vice President (Bhatapara)</option>
+<option value="143">President (Yuva Chamber)</option>
+<option value="145">General Secretary (Yuva Chamber)</option>
+<option value="147">Vice President                       (Yuva Chamber)</option>
+<option value="150">Secretary                                  (Yuva Chamber)</option>
+<option value="163">President (Mahila Chamber)</option>
+<option value="165">General Secretary (Mahila Chamber)</option>
+<option value="167">Treasurer (Mahila Chamber)</option>
+<option value="168">President (Udyog Chamber)</option>
+<option value="173">Vidhi Vidhayi Koria</option>
+<option value="190">Organisation Secretary</option>
+<option value="192">Joint President</option>
+<option value="193">State President</option>
+<option value="194">State general secretary</option>
+<option value="195">State Treasurer</option>
+<option value="197">Secretary Raipur</option>
+<option value="198">Vice President Raipur</option>
+<option value="200">Vice President Kawardha</option>
+<option value="201">Secretary Kawardha</option>
+<option value="202">Chairman (Action committee)</option>
+<option value="203">Executive Member</option>
+</select>
+                        <span class="field-validation-valid error" data-valmsg-for="CdesignationIdRep2" data-valmsg-replace="true"></span>
+                      </div>
+                    
+                </div>
+
+                  
+                
+                   <div class="row-fluid">
+                       <div class="span4">
+                      <label for="SMS_Group">SMS Group</label>
+                       <select class="span12 multi SGRep2" id="SGRep2" multiple="multiple" name="SGRep2" placeholder="SMS Groups*"><option value="18">CORE COMMITTEE</option>
+</select>
+
+                       
+                        <span class="field-validation-valid error" data-valmsg-for="SGRep2" data-valmsg-replace="true"></span>
+                        <script type="text/javascript">
+                            $(".SGRep2").select2();
+                        </script>
+                      </div>
+                   
+                     <div class="span4">
+                       <label for="Photograph">Photograph</label>
+                         <input class="span12" id="ImageRep2" name="ImageRep2" placeholder="Image*" type="text" value="" />
+                        <span class="field-validation-valid error" data-valmsg-for="ImageRep2" data-valmsg-replace="true"></span>
+                        <img src="" id="ImageRep2img" style="Width:150px" />    
+                      </div>
+                       <div class="span4">
+                      <label for="Upload_file">Upload file</label>
+                        <iframe src="<?PHP ECHO webUrl ?>Web_Image_Upload2.php?File=1&amp;id=ImageRep2&amp;size=150" width="500px" height="50px"  frameborder="0" scrolling=no >
+
+</iframe>
+                    
+                      </div>
+                </div>
+               
+               
+
+     <script type="text/javascript">
+         $(document).ready(function () {
+             $("#fc > form").removeData("validator");
+             $("#fc > form").removeData("unobtrusiveValidation");
+             $.validator.unobtrusive.parse("#fc > form");
+         });
+  </script>
+      
+        
+				<div class="form-actions">
+					<div class="pull-left">
+					
+					</div>
+					<div class="pull-right">
+					  <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
+					
+					</div>
+				  </div>  </div>
+		</div>		  
+</form>    </div>
+    </div>
+  </div>
+ </div>
+    </div>
+    <script type="text/javascript">
+        function SetFileLink(link, id, type) {
+            alert("Image uploaded " + link);
+            //$("#Link").val(link);
+            document.getElementById(id).value = link;
+            if (type == '1') {
+                $("#" + id + "img").attr("href", link);
+                $("#" + id + "img").html(link);
+            }
+            else {
+                $("#" + id + "img").attr("src", link);
+            }
+
+        }
+
+
+        function LoadGroup(id) {
+            $("#load").show();
+            //alert("hi");
+            $.ajax({
+                url: "Members/LoadGroup?id=" + id,
+                type: "GET",
+                data: "",
+
+                success: function (data) {
+                    //alert("hi");
+
+                    //$(".cpy").remove();
+                    $("#CreateMem").find("#grp").html(data);
+                    $("#load").hide();
+                    //$.validator.unobtrusive.parse("form");
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                }
+                //                complete: function () {
+                //                    $("#ProgressDialog").dialog("close");
+                //                }
+            });
+        }
+        function LoadSubGroup(id) {
+            $("#load").show();
+            //alert("hi");
+            $.ajax({
+                url: "Members/LoadSubGroup?id=" + id + "&GroupId=" + $("#CreateMem").find("#GroupsId").val(),
+                type: "GET",
+                data: "",
+
+                success: function (data) {
+                    //alert("hi");
+
+                    $("#CreateMem").find("#sgrp").html(data);
+                    $("#load").hide();
+                    $("#CreateMem").find("#SGId").select2();
+                    //$.validator.unobtrusive.parse("form");
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                }
+                //                complete: function () {
+                //                    $("#ProgressDialog").dialog("close");
+                //                }
+            });
+        }
+
+        $("#CreateMem").find("#GroupsId").change(function (event) {
+            LoadSubGroup(0);
+            $("#CreateMem").find("#sgrplink").attr("href", "<?PHP ECHO webUrl ?>Members/SubGroup-Create?popup=1&eid=AddSubGroup&fname=LoadSubGroup&GroupsId=" + $("#CreateMem").find("#GroupsId").val());
+        });
+
+        function LoadDistrict(id) {
+            $("#load").show();
+            //alert("hi");
+            $.ajax({
+                url: "Members/LoadDistrict?id=" + id,
+                type: "GET",
+                data: "",
+
+                success: function (data) {
+                    //alert("hi");
+
+                    //$(".cpy").remove();
+                    $("#CreateMem").find("#dist").html(data);
+                    LoadCity(0);
+                    $("#CreateMem").find("#citylink").attr("href", "<?PHP ECHO webUrl ?>Members/City-Create?popup=1&eid=AddCity&fname=LoadCity&DistrictId=" + $("#CreateMem").find("#DistrictId").val());
+                    $("#load").hide();
+                    //$.validator.unobtrusive.parse("form");
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                }
+                //                complete: function () {
+                //                    $("#ProgressDialog").dialog("close");
+                //                }
+            });
+        }
+
+        function LoadCity(id) {
+            $("#load").show();
+            //alert("hi");
+            $.ajax({
+                url: "Members/LoadCity?id=" + id + "&DistrictId=" + $("#DistrictId").val(),
+                type: "GET",
+                data: "",
+
+                success: function (data) {
+                    //alert("hi");
+
+                    //$(".cpy").remove();
+                    $("#CreateMem").find("#city").html(data);
+                    LoadArea(0);
+                    $("#CreateMem").find("#arealink").attr("href", "<?PHP ECHO webUrl ?>Members/Create?popup=1&eid=AddArea&fname=LoadArea&CityId=" + $("#CreateMem").find("#CityId").val());
+                    $("load").hide();
+                    //$.validator.unobtrusive.parse("form");
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                }
+                //                complete: function () {
+                //                    $("#ProgressDialog").dialog("close");
+                //                }
+            });
+        }
+
+        $("#CreateMem").find("#DistrictId").change(function (event) {
+            LoadCity(0);
+            $("#CreateMem").find("#citylink").attr("href", "<?PHP ECHO webUrl ?>Members/City-Create?popup=1&eid=AddCity&fname=LoadCity&DistrictId=" + $("#CreateMem").find("#DistrictId").val());
+        });
+
+
+        function LoadArea(id) {
+            $("#load").show();
+            //alert($("#CityId").val());
+            $.ajax({
+                url: "Members/LoadArea?id=" + id + "&CityId=" + $("#CreateMem").find("#CityId").val(),
+                type: "GET",
+                data: "",
+
+                success: function (data) {
+                    //alert("hi");
+
+                    //$(".cpy").remove();
+                    $("#CreateMem").find("#area").html(data);
+                    $("#load").hide();
+                    //$.validator.unobtrusive.parse("form");
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                }
+                //                complete: function () {
+                //                    $("#ProgressDialog").dialog("close");
+                //                }
+            });
+        }
+
+
+        function citychange() {
+            LoadArea(0);
+            $("#CreateMem").find("#arealink").attr("href", "<?PHP ECHO webUrl ?>Members/Create?popup=1&eid=AddArea&fname=LoadArea&CityId=" + $("#CreateMem").find("#CityId").val());
+        }
+</script>

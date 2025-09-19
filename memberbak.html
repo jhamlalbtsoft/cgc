@@ -1,0 +1,1195 @@
+<?php
+session_start();
+require __DIR__ . DIRECTORY_SEPARATOR . "admin/lib" . DIRECTORY_SEPARATOR . "config.php";
+
+$_ADMIN = false;
+$UserTypeId = 0;
+if(isset($_SESSION['user'])){
+
+	$_ADMIN = is_array($_SESSION['user']);
+$UserTypeId = $_SESSION['user']['UserTypeId'];
+}elseif(isset($_COOKIE['user_id']) && $_COOKIE['user_id']!=0) {
+
+   $_SESSION['user'] = array(
+          "id" => $_COOKIE['user_id'],
+          "UserTypeId" => $_COOKIE['UserTypeId']
+        );
+	$_ADMIN = true;;
+	$UserTypeId = $_COOKIE['UserTypeId'];
+}
+
+
+require PATH_LIB . "lib-members.php";
+$memLib = new Members();
+$groups = $memLib->getGroups();
+$subGroups = $memLib->getSubGroups();
+$loadDistrict = $memLib->LoadDistrict();
+$loadCity = $memLib->loadCity();
+$loadArea = $memLib->loadArea();
+$getGB = $memLib->getGB('GB');
+//$getGBCommittee = $memLib->getGB('Committee');
+$getGBCommittee = $memLib->getGB('');
+$getDesignation = $memLib->getDesignation();
+
+/*
+if($_ADMIN){
+	$MembersId = $_REQUEST['id'];//18
+}else{
+	echo "Invalid user";
+	die;
+}*/
+?>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <!-- Mirrored from cgchamber.org/member by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 25 Jul 2019 20:24:11 GMT -->
+    <!-- Added by HTTrack -->
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <!-- /Added by HTTrack -->
+
+    <head id="Head">
+        <title>Member</title>
+        <meta content="Default" name="description" id="MetaTag1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <!-- BEGIN PLUGIN CSS -->
+
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/56c8cfe329e31aa9fc513f0f01e53c3fdf4646b5/assets/plugins/pace/pace-theme-flash.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/469a93b140601eea53d2f314a32626a6c4591b85/assets/plugins/gritter/css/jquery.gritter.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/4ce28ee88ecd18b3dea3fa978d94a216ecd7f2c5/assets/plugins/bootstrap-datepicker/css/datepicker.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/82b2a48cbf5634397e60d026890e94dc7def39f9/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/0f3af7869eb15b30e1884371604cd1596bb006ed/assets/plugins/jquery-morris-chart/css/morris.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/29dc8dbc181ded706139a7d4c1f1f4cd515cc7b7/assets/plugins/jquery-slider/css/jquery.sidr.light.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/b3585eb5627d7ede663eca4f59d3219fd4b645fa/assets/plugins/bootstrap-select2/select2.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/1884a59f7e7331825dca0b6e71043f98c0289f73/assets/plugins/jquery-jvectormap/css/jquery-jvectormap-1.2.2.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/be790d727366829c8dbfa2f3a2b9fc880e1435eb/assets/plugins/boostrap-checkbox/css/bootstrap-checkbox.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/b54e6c3cd41636c423439c76df997eefce57a3cb/assets/plugins/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/a7534c01230e13be1b3e63b7212818f1b29287c3/assets/plugins/bootstrap/css/bootstrap-responsive.min.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/257678ac5c078ba3d83505199d54da0c62791b68/assets/plugins/font-awesome/css/font-awesome.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/e24dc41868f2503ec60abaffb848b68b1ddb614c/assets/css/animate.min.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/9966e31d4e513faf36a0509dcb6377ffaa60de52/assets/css/style.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/8acc710df3723574cfd1c3af803c11a0f5747883/assets/css/responsive.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/59dbe900a4d9df8047f2617587728d46dc70553f/assets/css/custom-icon-set.css" type="text/css" rel="stylesheet" />
+        <link href="<?PHP ECHO webUrl ?>cassette.axd/stylesheet/9ef3dde572fbcedf13935e2f87c28d9b72349016/assets/plugins/jquery-superbox/css/style.css" type="text/css" rel="stylesheet" />
+
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/c5268df4c1f0bada95cb3d2b80089a50b494b5ee/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/6ccdd8a368e50542c1ab2844b5fb7a8e71ad9c84/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/6ab5d9b8349fc98fa656de69c8900ef968a96e75/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/abdebc690cfa2c0ee75c87b1f10be71fd9d90242/assets/plugins/breakpoints.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/3b7c8c788853aab78e8f4f91ef3dded17677acc7/assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/f1f8eeeb18ee3187d996172c8cca43ae8fb922a6/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/d7dafe2c5520c3fb822ac3ad04bd71df57a809bf/assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/18f44fdfb5ec231fbd3844043f7886de4a8c695d/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/3915de45f4d72a7aca4066d04f938e5b77340399/assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/73be93c22b3dd6b424ee2f76f88227224579fc94/assets/plugins/bootstrap-select2/select2.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/76ff0db778e97654fa3919079a0be809483e25bf/assets/plugins/jquery-slider/jquery.sidr.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/2d075abee9db8edcd7c2c5834f3940820b75abb4/assets/plugins/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/97ef49587508ee13c8021534c7c1a53596ee530b/assets/plugins/jquery-jvectormap/js/jquery-jvectormap-us-lcc-en.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/7e3cc75c9facc4ef22dc14002ee79e0976cc0130/assets/plugins/jquery-sparkline/jquery-sparkline.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/c1ca9d374b4458de55de8e7325d732e340d394d8/assets/plugins/jquery-flot/jquery.flot.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/8c09f55eef4d4b7e0bcbe7e12222c21658fb7588/assets/plugins/jquery-flot/jquery.flot.animator.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/f4462282c6e584e0fbea01782f5b49ff869732c6/assets/plugins/skycons/skycons.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/21353672200991ed7a0826fae2134c4d47c7ec75/assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/61a049346a38ba58e4a26248360bd2d20d9b91bf/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/db884486ad1d0fccb6bcbf793a21833b97df1e27/assets/plugins/jquery-inputmask/jquery.inputmask.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/3bfa4e389792f28faecb9f8abb2a2d7449e9d21d/assets/plugins/jquery-autonumeric/autoNumeric.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/cc1f96d99625d5285e12d56d1ab3baec75eb4f9f/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/beff3b245fea750be9b7af1cdecf5efec07d0234/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/d950e8e239d6e02d08c94468dec057f386e80121/assets/plugins/bootstrap-tag/bootstrap-tagsinput.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/016c7f61ede5d650b1740a1750cd994099ab7b09/assets/plugins/dropzone/dropzone.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/d260211b80908eae12f8d26715aad3f60c2fdb86/assets/js/form_elements.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/7f380366ef0d20c2ff7fa05805effbf3cadc1fad/assets/js/core.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/1919f8b69ec08263b0e357305c131b46c4872553/assets/js/demo.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/b0be42406b7f681a501d5845ce4b05be0b9f6bd8/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="<?PHP ECHO webUrl ?>cassette.axd/script/644c0a4d39f177fc72b496eb30db16e109e1c2f5/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+        <!--<link href="<?PHP ECHO webUrl ?>assets/plugins/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="<?PHP ECHO webUrl ?>assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen" charset="utf-8">
+<link rel="stylesheet" href="<?PHP ECHO webUrl ?>assets/plugins/jquery-morris-chart/css/morris.css" type="text/css" media="screen" charset="utf-8">
+<link href="<?PHP ECHO webUrl ?>assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/jquery-jvectormap/css/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/boostrap-checkbox/css/bootstrap-checkbox.css" rel="stylesheet" type="text/css" media="screen"/>-->
+        <!-- END PLUGIN CSS -->
+
+        <!-- BEGIN CORE CSS FRAMEWORK -->
+        <!--<link href="<?PHP ECHO webUrl ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="<?PHP ECHO webUrl ?>assets/css/animate.min.css" rel="stylesheet" type="text/css"/>-->
+        <!-- END CORE CSS FRAMEWORK -->
+
+        <!-- BEGIN CSS TEMPLATE -->
+        <!--<link href="<?PHP ECHO webUrl ?>assets/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="<?PHP ECHO webUrl ?>assets/css/responsive.css" rel="stylesheet" type="text/css"/>
+<link href="<?PHP ECHO webUrl ?>assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
+<link href="<?PHP ECHO webUrl ?>assets/plugins/jquery-superbox/css/style.css" rel="stylesheet" type="text/css" media="screen"/>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>-->
+        <style>
+            img[src="image/home.png?Red=1"] {
+                background-color: Red;
+            }
+            
+            img[src="image/home.png?Green=1"] {
+                background-color: Yellow;
+            }
+			#loadMore {
+			  width: 200px;
+			  color: #fff;
+			  display: block;
+			  text-align: center;
+			  margin: 20px auto;
+			  padding: 10px;
+			  border-radius: 10px;
+			  border: 1px solid transparent;
+			  background-color: #f35958;
+			  transition: .3s;
+			}
+			#loadMore:hover {
+			  color: blue;
+			  background-color: #fff;
+			  border: 1px solid blue;
+			  text-decoration: none;
+			}
+			.noContent {
+			  color: #000 !important;
+			  background-color: transparent !important;
+			  pointer-events: none;
+			}
+        </style>
+
+    </head>
+
+    <body class="">
+        <div id="load" class="pace  pace-inactive">
+            <div data-progress="99" data-progress-text="100%" style="width: 100%;" class="pace-progress">
+                <div class="pace-progress-inner"></div>
+            </div>
+            <div class="pace-activity"></div>
+        </div>
+
+        <div id="master">
+
+            <style type="text/css">
+
+            </style>
+            <script type="text/javascript">
+                function LoadSubGroup(id) {
+                    $("#masterload").show();
+                    //alert("hi");
+                    $.ajax({
+                        url: "Members/LoadSubGroup?id=" + id + "&GroupId=" + $("#GroupsId").val(),
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+                            //alert("hi");
+
+                            //$(".cpy").remove();
+                            $("#sgrp").html(data);
+                            $("#masterload").hide();
+                            //$.validator.unobtrusive.parse("form");
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                                alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                            }
+                            //                complete: function () {
+                            //                    $("#ProgressDialog").dialog("close");
+                            //                }
+                    });
+                }
+
+                $("#GroupsId").change(function(event) {
+                    LoadSubGroup(0);
+                    $("#sgrplink").attr("href", "/school/B-SubGroup-Create?popup=1&eid=AddSubGroup&fname=LoadSubGroup&GroupsId=" + $("#GroupsId").val());
+                });
+
+                function LoadCity(id) {
+                    $("#masterload").show();
+                    //alert("hi");
+                    $.ajax({
+                        url: "Members/LoadCity?id=" + id + "&DistrictId=" + $("#DistrictId").val(),
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+                            //alert("hi");
+
+                            //$(".cpy").remove();
+                            $("#city").html(data);
+                            $("#masterload").hide();
+                            //$.validator.unobtrusive.parse("form");
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                                alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                            }
+                            //                complete: function () {
+                            //                    $("#ProgressDialog").dialog("close");
+                            //                }
+                    });
+                }
+
+                $("#DistrictId").change(function(event) {
+                    LoadCity(0);
+                    $("#citylink").attr("href", "/school/B-City-Create?popup=1&eid=AddCity&fname=LoadCity&DistrictId=" + $("#DistrictId").val());
+                });
+
+                function LoadArea(id) {
+                    $("#masterload").show();
+                    //alert($("#CityId").val());
+                    $.ajax({
+                        url: "Members/LoadArea?id=" + id + "&CityId=" + $("#CityId").val(),
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+                            //alert("hi");
+
+                            //$(".cpy").remove();
+                            $("#area").html(data);
+                            $("#masterload").hide();
+                            //$.validator.unobtrusive.parse("form");
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                                alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                            }
+                            //                complete: function () {
+                            //                    $("#ProgressDialog").dialog("close");
+                            //                }
+                    });
+                }
+
+                function citychange(event) {
+                    LoadArea(0);
+                    $("#arealink").attr("href", "/school/B-Area-Create?popup=1&eid=AddArea&fname=LoadArea&CityId=" + $("#CityId").val());
+                }
+
+                function SetOrder() {
+                    $("#masterload").show();
+                    var id = "";
+                    $(".ord").each(function() {
+                        if (id != "") {
+                            id += "," + $(this).attr("id") + "_" + $(this).val();
+                        } else {
+                            id = $(this).attr("id") + "_" + $(this).val();
+                        }
+
+                    });
+                    $.ajax({
+                        url: "Members/SetOrder?id=" + id,
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+
+                            $("#form2").submit();
+
+                            $("#masterload").hide();
+
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                            alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                        }
+
+                    });
+                }
+            </script>
+
+            <div class="page-title" style="display: none">
+                <a href="#" id="btn-back"><i class="icon-custom-left"></i></a>
+                <h3>
+        Back- <span class="semi-bold">Inbox</span>
+    </h3>
+            </div>
+            <div class="row-fluid" id="inbox-wrapper">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="grid simple">
+                                <div class="grid-body no-border email-body" style="min-height: 1500px;">
+                                    <br/>
+                                    <div class="row-fluid column-seperation">
+                                        <div class='span4'>
+                                            <form action="Members/Search?type=1" class="" data-ajax="true" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-update="#list" id="form0" method="post">
+                                                <h5>
+                                        Search 1</h5>
+                                                <div class="row-fluid dataTables_wrapper">
+                                                    <div class="row-fluid">
+                                                        <div class="span12 ">
+                                                            <input FontInfo="Cambria" class="span12" id="FirmName" name="FirmName" placeholder="Firm or Representative Name" type="text" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-fluid">
+                                                        <div class="span12 ">
+                                                            <!--input class="span12" id="RegistrationNo" name="RegistrationNo" placeholder="Registration No" type="text" value="" /-->
+															 <input class="span12" id="RegistrationNoOld" name="RegistrationNoOld" placeholder="Registration No" type="text" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-fluid">
+                                                        <!--div class="span8 ">
+                                                            <input class="span12" id="RegistrationNoOld" name="RegistrationNoOld" placeholder="Old Registration No" type="text" value="" />
+                                                        </div-->
+                                                        <div class="span4">
+                                                            <button class="btn btn-danger btn-mini" type="submit">
+                                                                <i class="icon-ok"></i>Go</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class='span5'>
+                                            <form action="Members/Search?type=2" class="" data-ajax="true" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-update="#list" id="form1" method="post">
+                                                <h5>
+                                        Search 2</h5>
+											
+											   <div class="row-fluid dataTables_wrapper">
+                                                    <div class="row-fluid">
+													<?php $_ADMIN = is_array($_SESSION['user']);
+														if ($_ADMIN) {
+													?>
+														<div class="span3" id="dist">
+                                                            <label for="District">District</label>
+                                                            <select class="span12" id="DistrictId" name="DistrictId" placeholder=""><option value="0">Select Dist</option>
+																<?php foreach($loadDistrict as $group){ ?>
+																<option value="<?= $group['id'] ?>" <?php if($group['id']==$DistrictId) echo 'selected="selected"' ?>><?= $group['name'] ?></option>
+																<?php } ?>						
+															</select>
+															<script type="text/javascript">
+                                                                $("#DistrictId").select2({
+                                                                    dropdownCssClass: 'bigdrop'
+                                                                });
+                                                            </script>
+                                                        </div>
+													<?php }	?>
+                                                        <div class="span3" id="city">
+                                                            <label for="City">City</label>
+                                                            <select class="span12" id="CityId" name="CityId" onchange="citychange()" placeholder=""><option value="0">Select City</option>
+																<?php foreach($loadCity as $group){ ?>
+																<option value="<?= $group['id'] ?>" <?php if($group['id']==$CityId) echo 'selected="selected"' ?>><?= $group['name'] ?></option>
+																<?php } ?>	
+															</select>
+															<script type="text/javascript">
+                                                                $("#CityId").select2({
+                                                                    dropdownCssClass: 'bigdrop'
+                                                                });
+                                                            </script>
+                                                        </div>
+													<?php $_ADMIN = is_array($_SESSION['user']);
+														if ($_ADMIN) {
+													?>
+                                                        <div class="span3" id="area">
+                                                            <label for="Area">Area</label>
+                                                            <select class="span12" id="AreaId" name="AreaId" placeholder=""><option value="0">Select Area</option>
+																<?php foreach($loadArea as $group){ ?>
+																<option value="<?= $group['id'] ?>" <?php if($group['id']==$AreaId) echo 'selected="selected"' ?>><?= $group['name'] ?></option>
+																<?php } ?>	
+															</select>
+															<script type="text/javascript">
+                                                                $("#AreaId").select2({
+                                                                    dropdownCssClass: 'bigdrop'
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <!--div class="span3" id="area">
+                                                            <label for="Blood_Group">Blood Group</label>
+                                                            <select class="span12" id="BloodGroupRep1" name="BloodGroupRep1" placeholder="">
+                                                                <option value="">Select B Group</option>
+                                                                <option value="A+">A+</option>
+                                                                <option value="A-">A-</option>
+                                                                <option value="B+">B+</option>
+                                                                <option value="B-">B-</option>
+                                                                <option value="AB+">AB+</option>
+                                                                <option value="AB-">AB-</option>
+                                                                <option value="O+">O+</option>
+                                                                <option value="O-">O-</option>
+                                                            </select>
+                                                            <script type="text/javascript">
+                                                                $("#BloodGroupRep1").select2({
+                                                                    dropdownCssClass: 'bigdrop'
+                                                                });
+                                                            </script>
+                                                        </div-->
+                                                    <?php } ?>
+													</div>
+                                                    <div class="row-fluid">
+                                                        <?php $_ADMIN = is_array($_SESSION['user']);
+															if ($_ADMIN) {
+														?>
+														<div class="span3">
+                                                            <label for="Member_Type">Member Type</label>
+                                                            <select class="span12" id="MemberType" name="MemberType" placeholder="">
+                                                                <option value="">Select Mem Type</option>
+                                                                <option value="LT">Life Time</option>
+                                                                <option value="GM">General Member</option>
+                                                            </select>
+                                                            <script type="text/javascript">
+                                                                $("#MemberType").select2({
+                                                                    dropdownCssClass: 'bigdrop'
+                                                                });
+                                                            </script>
+                                                        </div>
+														<?php } ?>
+                                                        <div class="span3" id="grp">
+                                                            <label for="Group">Group</label>
+                                                            <select class="span12" id="GroupsId" name="GroupsId" placeholder="">
+															<option value="0">Select Group</option>
+																<?php foreach($groups as $group){ ?>
+																<option value="<?= $group['GroupsId'] ?>" <?php if($group['GroupsId']==$GroupsId) echo 'selected="selected"' ?>><?= $group['GroupName'] ?></option>
+																<?php } ?>
+															</select>
+															<script type="text/javascript">
+                                                                $("#GroupsId").select2({
+                                                                    dropdownCssClass: 'bigdrop'
+                                                                });
+                                                            </script>
+                                                        </div>
+														<?php $_ADMIN = is_array($_SESSION['user']);
+												if ($_ADMIN) {
+											?>
+                                                        <div class="span4" id="sgrp">
+                                                            <label for="Sub_Group">Sub Group</label>
+                                                            <select class="span12 multi" id="SGId" multiple="multiple" name="SGId" placeholder="SubGroups*">
+                                                                <?php foreach($subGroups as $group){ ?>
+																<option value="<?= $group['id'] ?>" <?php if($group['id']==$SubGroupId) echo 'selected="selected"' ?>><?= $group['name'] ?></option>
+																<?php } ?>
+                                                            </select>
+                                                            <script type="text/javascript">
+                                                                $("#SGId").select2();
+                                                            </script>
+                                                        </div>
+													<?php }	?>
+                                                        <div class="span2">
+                                                            <label for="">_</label>
+                                                            <button class="btn btn-danger btn-mini" type="submit" name="Go" value="Go">
+                                                                <i class="icon-ok"></i>Go</button>
+                                                            <?php if ($_ADMIN ) {	?>  
+															<button class="btn btn-danger btn-mini" type="submit" name="Go" value="Print">
+                                                                <i class="icon-ok"></i>Group</button>
+															<?php }	?>  
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+										<?php if($_ADMIN ){ ?>
+                                        <div class="span3 ">
+                                            <form action="Members/Search?type=3" class="" data-ajax="true" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-update="#list" id="form2" method="post">
+                                                <h5>
+                                        Search 3</h5>
+                                                <div class="row-fluid dataTables_wrapper">
+                                                    <div class="row-fluid">
+                                                        <div class="span8">
+                                                            <label for="Governing_Body">Governing Body</label>
+                                                            <select class="span12" id="GoverningBodyIdRep1" name="GoverningBodyIdRep1" placeholder="">
+                                                              <?php foreach($getGB as $group){ ?>
+															<option value="<?= $group['id'] ?>" <?php if($group['id']==$GoverningBodyIdRep1) echo 'selected="selected"' ?>><?= $group['name'] ?></option>
+															<?php } ?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="span4">
+                                                            <label for="">_</label>
+                                                            <button class="btn btn-danger btn-mini" type="submit">
+                                                                <i class="icon-ok"></i>Go</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!--form action="Members/Search?type=3" class="" data-ajax="true" data-ajax-loading="#load" data-ajax-mode="replace" data-ajax-update="#list" id="form3" method="post">
+                                                <div class="row-fluid dataTables_wrapper">
+                                                    <div class="row-fluid">
+                                                        <div class="span8">
+                                                            <label for="SMS_Group">SMS Group</label>
+                                                            <select class="span12 multi" id="SGRep1" multiple="multiple" name="SGRep1" placeholder="SMS Groups*">
+                                                                <option value="18">CORE COMMITTEE</option>
+                                                            </select>
+                                                            <script type="text/javascript">
+                                                                $("#SGRep1").select2();
+                                                            </script>
+                                                        </div>
+                                                        <div class="span4">
+                                                            <label for="">_</label>
+                                                            <button class="btn btn-danger btn-mini" type="submit">
+                                                                <i class="icon-ok"></i>Go</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                    </div>
+                                                </div>
+                                            </form-->
+                                        </div>
+										<?php } ?>
+                                    </div>
+						<?php if($_ADMIN ){ ?>
+                                    <h5>
+                            Action</h5>
+                                    <div class="row-fluid column-seperation">
+                                        <div class="span3">
+                                            <div class="row-fluid">
+                                                <div class="span4">
+                                                    <button class="btn btn-danger btn-mini" type="button" onclick="AppUnapp(1)">
+                                                        <i class="icon-ok"></i>Approve</button>
+                                                </div>
+                                                <div class="span8">
+                                                    <button class="btn btn-danger btn-mini" type="button" onclick="AppUnapp(0)">
+                                                        <i class="icon-remove"></i>Unapprove</button>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+
+                                                <div class="span4">
+                                                    <button class="btn btn-danger btn-mini" type="button" onclick="SendCardPrint()">
+                                                        <i class="icon-ok"></i>CardPrint</button>
+                                                </div>
+                                                <div class="span8">
+                                                    <button class="btn btn-danger btn-mini" type="button" onclick="SendSMS()">
+                                                        <i class="icon-ok"></i>Send SMS</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="span6">
+                                            <div class="row-fluid">
+                                                <div class="span5">
+                                                    <label for="Gov_Body_Comm">Gov Body/Comm</label>
+                                                    <select class="span12" id="GB" name="GB" placeholder="">
+                                                        <?php foreach($getGBCommittee as $group){ ?>
+															<option value="<?= $group['id'] ?>" <?php if($group['id']==$GoverningBodyIdRep1) echo 'selected="selected"' ?>><?= $group['name'] ?></option>
+															<?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="span5">
+                                                    <label for="Designation">Designation</label>
+                                                    <select class="span12" id="Degi" name="Degi" placeholder="">
+                                                        <option selected="selected" value="0">Select Designation</option>
+                                                        <?php foreach($getDesignation as $group){ ?>
+															<option value="<?= $group['id'] ?>" <?php if($group['id']==$GBDesignationIdRep1) echo 'selected="selected"' ?>><?= $group['name'] ?></option>
+															<?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="span2">
+                                                    <label for="">_</label>
+                                                    <button class="btn btn-danger btn-mini" type="button" onclick="ApplyGB()">
+                                                        <i class="icon-ok"></i>Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--div class="span3">
+                                            <div class="row-fluid">
+                                                <div class="span9">
+                                                    <label for="SMS_Group">SMS Group</label>
+                                                    <select class="span12" id="SG" name="SG" placeholder="">
+                                                        <option value="18">CORE COMMITTEE</option>
+                                                    </select>
+                                                </div>
+                                                <div class="span3">
+                                                    <label for="">_</label>
+                                                    <button class="btn btn-danger btn-mini" type="button" onclick="ApplySG()">
+                                                        <i class="icon-ok"></i>Apply</button>
+                                                </div>
+                                            </div>
+                                        </div-->
+                                    </div>
+								
+                                    <div id="listSMS" style="display:none">
+
+                                        <div class="row-fluid">
+                                            <div class="span12">
+                                                <div class="grid simple">
+                                                    <div class="grid-body no-border">
+                                                        <div id="fc">
+                                                            <form action="SMSlog/Members-Index?inline=1" class="form-no-horizontal-spacing" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#listSMS" id="form4" method="post">
+                                                                <div class="row-fluid column-seperation">
+                                                                    <div class="span8">
+                                                                        <h4>
+                                    Send SMS</h4>
+                                                                        <div class="row-fluid">
+
+                                                                            <div class="span9">
+                                                                                <input id="SMSGroup" name="SMSGroup" type="hidden" value="" />
+
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <div class="row-fluid">
+                                                                            <div class="span3">
+                                                                                <label for="Message">Message</label>
+                                                                            </div>
+                                                                            <div class="span9">
+                                                                                <textarea class="span12" cols="20" id="SMSText" name="SMSText" placeholder="Message*" rows="2"></textarea>
+                                                                                <span class="field-validation-valid error" data-valmsg-for="SMSText" data-valmsg-replace="true"></span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row-fluid">
+
+                                                                        </div>
+                                                                        <div class="pull-right">
+                                                                            <button class="btn btn-danger btn-cons" type="submit">
+                                                                                <i class="icon-ok"></i>Send</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <script type="text/javascript">
+                                                                        $(document).ready(function() {
+                                                                            $("#fc > form").removeData("validator");
+                                                                            $("#fc > form").removeData("unobtrusiveValidation");
+                                                                            $.validator.unobtrusive.parse("#fc > form");
+                                                                        });
+                                                                    </script>
+
+                                                                </div>
+                                                                <div class="form-actions">
+                                                                    <div class="pull-left">
+                                                                    </div>
+                                                                    <div class="pull-right">
+
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+								<?php } ?>
+                                    <div id="list">
+
+                                        <div class="row-fluid">
+                                            <div class="row-fluid dataTables_wrapper">
+                                                <h2 class="pull-left">
+            Members
+            <?php $_ADMIN = is_array($_SESSION['user']);
+							if ($_ADMIN) {
+			?>
+				<div class="btn-group">
+                    <a href="#" data-toggle="dropdown" class="btn btn-white btn-mini dropdown-toggle"><span
+                        class="caret single"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a  href="<?PHP ECHO webUrl ?>Members/Create" data-ajax="true" data-ajax-begin="makedpt('EditMem')" data-ajax-loading="#load"  data-ajax-mode="replace" data-ajax-success="showdpt('EditMem')" data-ajax-update="#EditMem > #modal-body"    >
+                                Add New</a>
+
+                            </li>
+                        <li><a href="<?PHP ECHO webUrl ?>Members/Search?Approved=1" data-ajax-update="#master" data-ajax-mode="replace"
+                            data-ajax-loading="" data-ajax="true">Approved</a></li>
+                        <li><a href="<?PHP ECHO webUrl ?>Members/Search?Approved=0" data-ajax-update="#master" data-ajax-mode="replace"
+                            data-ajax-loading="" data-ajax="true">Unapproved</a></li>
+                             <li><a href="<?PHP ECHO webUrl ?>Members/PendingCardPrint?Status=1" data-ajax-update="#master" data-ajax-mode="replace"
+                            data-ajax-loading="" data-ajax="true">Pending Card Prints</a></li>
+                             <li><a href="<?PHP ECHO webUrl ?>Members/PendingCardPrint?Status=2" data-ajax-update="#master" data-ajax-mode="replace"
+                            data-ajax-loading="" data-ajax="true">Complete Card Prints</a></li>
+
+                    </ul>
+                </div> 
+			<?php } ?>
+        </h2>
+                                                <div class="pull-right margin-top-20">
+                                                    <div class="dataTables_info hidden-phone" id="example_info">
+                                                        Showing <b>1 to 0</b> of 0 entries</div>
+                                                </div>
+                                                <div class="clearfix">
+                                                </div>
+                                            </div>
+                                            <div id="email-list">
+                                                <table class="table table-fixed-layout table-hover table-bordered" id="emails">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="medium-cell">
+                                                            </th>
+
+                                                            <th>
+                                                                Firm Name
+                                                            </th>
+															<?php if($_ADMIN ){ ?>
+                                                            <th>
+                                                                Reg. No
+                                                            </th>
+                                                            <th>
+                                                                Mem Type
+                                                            </th>
+															<?php }else{ ?>
+															 <th>
+                                                                Address
+                                                            </th>
+                                                            <th>
+                                                                City & District
+                                                            </th>
+															<?php } ?>
+                                                            <th>
+                                                                Group
+                                                            </th>
+                                                            <th>
+                                                                Remark
+                                                            </th>
+
+                                                            <th>
+															<?php $_ADMIN = is_array($_SESSION['user']);
+															if ($_ADMIN && $_SESSION['user']['UserTypeId']==1) {
+															?>
+                                                                <input id="CbRep1" type="checkbox" value="" onchange="cbrep1click()"></input>
+															<?php } ?>
+                                                                Rep(1)
+                                                            </th>
+                                                            <th>
+                                                            <?php $_ADMIN = is_array($_SESSION['user']);
+															if ($_ADMIN  && $_SESSION['user']['UserTypeId']==1) {
+															?>
+																<input id="CbRep2" type="checkbox" value="" onchange="cbrep2click()"></input>
+															<?php } ?>
+                                                                Rep(2)
+                                                            </th>
+                                                            <th>
+
+                                                            </th>
+                                                            <th class="">
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            appsel = "";
+                                            gbsel = "";
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+            </div>
+            <script type="text/javascript">
+                //    function checkAll(ele) {
+                //        alert('hi');
+                //        var checkboxes = document.getElementsByTagName('input');
+                //        if (ele.checked) {
+                //            for (var i = 0; i < checkboxes.length; i++) {
+                //                if (checkboxes[i].type == 'checkbox') {
+                //                    checkboxes[i].checked = true;
+                //                }
+                //            }
+                //        } else {
+                //            for (var i = 0; i < checkboxes.length; i++) {
+                //                console.log(i)
+                //                if (checkboxes[i].type == 'checkbox') {
+                //                    checkboxes[i].checked = false;
+                //                }
+                //            }
+                //        }
+                //    }
+
+                function cbrep1click() {
+                    if ($("#CbRep1").is(':checked')) {
+                        //alert("Checked")
+                        $(".cbrep1").each(function() {
+                            $(this).prop("checked", true);
+                        });
+                    } else {
+                        //alert("UnChecked")
+                        $(".cbrep1").each(function() {
+                            $(this).prop("checked", false);
+                        });
+                    }
+
+                    gbsel = "";
+                    gbclick();
+                }
+
+                function cbrep2click() {
+                    if ($("#CbRep2").is(':checked')) {
+                        //alert("Checked")
+                        $(".cbrep2").each(function() {
+                            $(this).prop("checked", true);
+                        });
+                    } else {
+                        //alert("UnChecked")
+                        $(".cbrep2").each(function() {
+                            $(this).prop("checked", false);
+                        });
+                    }
+
+                    gbsel = "";
+                    gbclick();
+                }
+                var appsel = "";
+
+                function appclick() {
+                    appsel = "";
+                    $(".bapp").each(function() {
+                        if ($(this).is(":checked")) {
+                            if (appsel != "") {
+
+                                appsel += "," + $(this).val();
+                            } else {
+
+                                appsel += $(this).val();
+                            }
+                        }
+                    });
+
+                }
+                var gbsel = "";
+
+                function gbclick() {
+                    gbsel = "";
+                    $(".gb").each(function() {
+                        if ($(this).is(":checked")) {
+                            if (gbsel != "") {
+
+                                gbsel += "," + $(this).val();
+
+                            } else {
+
+                                gbsel += $(this).val();
+
+                            }
+                        }
+                    });
+
+                    $("#listSMS").find("#SMSGroup").val(gbsel);
+
+                }
+
+                function AppUnapp(id) {
+                    $("#load").show();
+                    // alert(appsel);
+                    $.ajax({
+                        url: "Members/Approve?id=" + appsel + "&status=" + id,
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+                            var str = appsel.split(",");
+                            for (i = 0; i < str.length; i++) {
+                                if (id == 1) {
+                                    $(".app" + str[i]).attr("style", "color:#00ff00")
+                                } else {
+                                    $(".app" + str[i]).attr("style", "color:#ff0000")
+                                }
+
+                            }
+                            appsel = "";
+
+                            $("#load").hide();
+
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                            alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                        }
+
+                    });
+                }
+
+                function ApplyGB() {
+                    $("#load").show();
+                    // alert(appsel);
+                    gbsel = "";
+                    gbclick();
+                    $.ajax({
+                        url: "Members/ApplyGB?id=" + gbsel + "&gb=" + $("#GB").val() + "&degi=" + $("#Degi").val(),
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+                            alert("Action Completed");
+                            $("#load").hide();
+                            gbsel = "";
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                            alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                        }
+
+                    });
+                }
+
+                function ApplySG() {
+                    $("#load").show();
+                    // alert(appsel);
+                    gbsel = "";
+                    gbclick();
+                    $.ajax({
+                        url: "Members/ApplySG?id=" + gbsel + "&sg=" + $("#SG").val(),
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+                            alert("Action Completed");
+                            $("#load").hide();
+                            gbsel = "";
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                            alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                        }
+
+                    });
+                }
+
+                function SendCardPrint() {
+                    $("#load").show();
+                    // alert(appsel);
+                    gbsel = "";
+                    gbclick();
+                    $.ajax({
+                        url: "Members/SendCardPrint?id=" + gbsel,
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+                            alert("Action Completed");
+                            $("#load").hide();
+                            gbsel = "";
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                            alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                        }
+
+                    });
+                }
+
+                function SendCardPrintSingle(id) {
+                    $("#load").show();
+                    // alert(appsel);
+                    gbsel = id;
+
+                    $.ajax({
+                        url: "Members/SendCardPrint?id=" + gbsel,
+                        type: "GET",
+                        data: "",
+
+                        success: function(data) {
+                            alert("Action Completed");
+                            $("#load").hide();
+                            gbsel = "";
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                            alert("Error '" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                        }
+
+                    });
+                }
+
+                function SendSMS() {
+                    gbsel = "";
+                    gbclick();
+					if(gbsel==''){
+					alert("select members");
+						return false;
+					}
+                    $("#listSMS").find("#SMSGroup").val(gbsel);
+                    $("#listSMS").toggle();
+                }
+            </script>
+            <script>
+                $(document).ready(function() {
+
+                    //The url we will send our get request to
+                    var attendeeUrl = 'Members/SearchLive.php';
+                    var pageSize = 20;
+
+                    $('#FirmName').select2({
+                        placeholder: 'Enter name',
+                        //Does the user have to enter any data before sending the ajax request
+                        minimumInputLength: 0,
+                        allowClear: true,
+                        ajax: {
+                            //How long the user has to pause their typing before sending the next request
+                            quietMillis: 150,
+                            //The url of the json service
+                            url: attendeeUrl,
+                            dataType: 'json',
+                            //Our search term and what page we are on
+                            data: function(term, page) {
+                                return {
+                                    pageSize: pageSize,
+                                    pageNum: page,
+                                    searchTerm: term
+                                };
+                            },
+                            results: function(data, page) {
+                                //Used to determine whether or not there are more results available,
+                                //and if requests for more data should be sent in the infinite scrolling                    
+                                var more = (page * pageSize) < data.Total;
+                                return {
+                                    results: data.Results,
+                                    more: more
+                                };
+                            }
+                        }
+                    });
+
+                });
+            </script>
+
+        </div>
+
+        <div style="display: none;" id="myModal" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style="clear:both"></div>
+            </div>
+            <br/>
+            <div class="modal-body" id="modal-body"></div>
+
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+        <!-- BEGIN CORE JS FRAMEWORK-->
+        <!--<script src="assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script> 
+<script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script> 
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script> 
+<script src="assets/plugins/breakpoints.js" type="text/javascript"></script> 
+<script src="assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script> -->
+        <!-- END CORE JS FRAMEWORK -->
+        <!--[if lt IE 9]>
+	<script src="assets/plugins/excanvas.js"></script>
+	<script src="assets/js/respond.js" type="text/javascript"></script> 
+	<![endif]-->
+
+        <!-- BEGIN PAGE LEVEL JS -->
+        <!--<script src="assets/plugins/pace/pace.min.js" type="text/javascript"></script>  
+<script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script> 
+<script src="assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script> 
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>  
+<script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script> 
+<script src="assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script> 
+<script src="assets/plugins/bootstrap-select2/select2.min.js" type="text/javascript"></script>-->
+        <!--<script src="assets/plugins/jquery-ricksaw-chart/js/raphael-min.js"></script> -->
+        <!--<script src="assets/plugins/jquery-ricksaw-chart/js/d3.v2.js"></script>
+<script src="assets/plugins/jquery-ricksaw-chart/js/rickshaw.min.js"></script>
+<script src="assets/plugins/jquery-morris-chart/js/morris.min.js"></script>
+<script src="assets/plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js"></script>-->
+        <!--<script src="assets/plugins/jquery-slider/jquery.sidr.min.js" type="text/javascript"></script> 	
+<script src="assets/plugins/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script> 	
+<script src="assets/plugins/jquery-jvectormap/js/jquery-jvectormap-us-lcc-en.js" type="text/javascript"></script> 	
+<script src="assets/plugins/jquery-sparkline/jquery-sparkline.js"></script>
+<script src="assets/plugins/jquery-flot/jquery.flot.min.js"></script>
+<script src="assets/plugins/jquery-flot/jquery.flot.animator.min.js"></script>
+<script src="assets/plugins/skycons/skycons.js"></script>
+
+<script src="assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script> 
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js" type="text/javascript"></script>
+<script src="assets/plugins/jquery-inputmask/jquery.inputmask.min.js" type="text/javascript"></script>
+<script src="assets/plugins/jquery-autonumeric/autoNumeric.js" type="text/javascript"></script>-->
+        <!--<script src="assets/plugins/ios-switch/ios7-switch.js" type="text/javascript"></script>-->
+        <!--<script src="assets/plugins/bootstrap-select2/select2.min.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-tag/bootstrap-tagsinput.min.js" type="text/javascript"></script>
+<script src="assets/plugins/dropzone/dropzone.min.js" type="text/javascript"></script>-->
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!--<script src="assets/js/form_elements.js" type="text/javascript"></script>-->
+        <!-- PAGE JS  -->
+        <!-- BEGIN CORE TEMPLATE JS  -->
+        <!--<script src="assets/js/core.js" type="text/javascript"></script> 
+<script src="assets/js/demo.js" type="text/javascript"></script> 
+<script src="Scripts/jquery.validate.min.js" type="text/javascript"></script>
+<script src="Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>-->
+        <script type="text/javascript" src="./assets/js/print.js"></script>
+        <script type="text/javascript" src="./Scripts/jquery.unobtrusive-ajax.js"></script>
+        <!-- END CORE TEMPLATE JS -->
+        <script>
+			var pageNo=1;
+			function loadMore(_url, _id) {
+                  $('#'+_id).show();
+
+                  $.post( _url, {'pageNo': pageNo}, function( data ) {
+					  ///$( ".result" ).html( data );
+					  
+					  if(data){
+							$("#searchResult tbody").append(data);
+					  }
+					  
+					   pageNo++;
+					   parent.resizeIframe();
+				  });
+            }
+			
+			function showloadMore(_id) {
+				
+				 $('#'+_id).hide();
+			}
+			
+            function makedpt(id) {
+                cloned = $('#myModal');
+                $('#myModal').clone().attr('id', id).insertBefore(cloned);
+                $(".close").click(function(event) {
+                    $(this).parent(".modal-header").parent(".modal").hide();
+                    $(this).parent(".modal-header").parent(".modal").remove();
+                });
+            }
+
+            
+			
+            function showdpt(id) {
+
+                $("#" + id).show();
+                $("#" + id).display = "block";
+            }
+
+            function hidedpt(id) {
+
+                $("#" + id).hide();
+                $("#" + id).remove();
+            }
+
+            function RemoveRow(id) {
+
+                $('#' + id).remove();
+            }
+        </script>
+        <script type="text/javascript" src="tinymce/tinymce.min.js"></script>
+        <script type="text/javascript">
+            function Inittinymce() {
+                tinymce.init({
+
+                    selector: "textarea",
+                    plugins: [
+                        "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                        "searchreplace  visualblocks visualchars code  insertdatetime media nonbreaking",
+                        "table contextmenu directionality emoticons template textcolor paste fullpage textcolor"
+                    ],
+
+                    toolbar1: " bold italic underline  |  fontselect fontsizeselect",
+                    menubar: false
+                        //            toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo |  image media code |  preview | forecolor backcolor",
+                        //            toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | visualchars visualblocks nonbreaking template pagebreak "
+                        //           
+                });
+            }
+
+            function SetImageOnTinyMce(ImageUrl) {
+
+                tinyMCE.activeEditor.dom.add(tinyMCE.activeEditor.getBody(), 'div', {
+                    title: 'my title'
+                }, "<img src='" + ImageUrl + "'/>");
+
+            }
+
+            function SetFileLinkOnTinyMce(FileLink, FileText) {
+                //var s = tinymce.activeEditor.getContent();
+                tinyMCE.activeEditor.dom.add(tinyMCE.activeEditor.getBody(), 'div', {
+                    title: 'my title'
+                }, "<a target='_blank' href='" + FileLink + "'>" + FileText + "</a>");
+                //tinymce.activeEditor.setContent(s + "<a target='_blank' href='" + FileLink + "'>" + FileText + "</a>");
+
+            }
+        </script>
+    </body>
+    <!-- Mirrored from cgchamber.org/member by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 25 Jul 2019 20:24:47 GMT -->
+
+    </html>

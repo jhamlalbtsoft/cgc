@@ -1,0 +1,15 @@
+Options +FollowSymLinks
+DirectoryIndex index.php
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-z]+)\/?$ index.php?path=$1 [NC,L,QSA]
+#RewriteRule ^(.*)$ /index.php?path=$1 [NC,L,QSA]
+#Rewritecond %{HTTP_HOST} ^cgchamber.org
+#RewriteRule ^(.*)$ http://localhost/cgchamber.org/$1 [R=301,L]
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "https://www.cgchamber.org"
+    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, X-Requested-With"
+</IfModule>

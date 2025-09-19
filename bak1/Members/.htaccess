@@ -1,0 +1,10 @@
+Options +FollowSymLinks
+DirectoryIndex index.php
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ $1.php [L]
+#RewriteRule ^(.*)$ /index.php?path=$1 [NC,L,QSA]
+#Rewritecond %{HTTP_HOST} ^cgchamber.org
+#RewriteRule ^(.*)$ http://localhost/cgchamber.org/$1 [R=301,L]

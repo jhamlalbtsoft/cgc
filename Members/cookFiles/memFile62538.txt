@@ -1,0 +1,1 @@
+{"filters":{"type":"2","CityId":"41","GroupsId":"152","X-Requested-With":"XMLHttpRequest"}}

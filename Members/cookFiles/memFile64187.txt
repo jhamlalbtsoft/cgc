@@ -1,0 +1,1 @@
+{"filters":{"type":"2","Go":"Go","DistrictId":"14","CityId":"0","AreaId":"0","MemberType":"","GroupsId":"124","X-Requested-With":"XMLHttpRequest"}}

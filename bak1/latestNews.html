@@ -1,0 +1,102 @@
+<?php 
+//print_R($_REQUEST);
+require __DIR__ . DIRECTORY_SEPARATOR . "admin/lib" . DIRECTORY_SEPARATOR . "config.php";
+require PATH_LIB . "lib-eep.php";
+$eepLib = new Eep();
+$TypeArr = array(1=>"Events", 2=>"Latest News", 3=>"Photo Gallery", 4=>"Media", 5=>"Patrika", 6=>"Government Policy");
+$txtLBL='';
+$TypeId=2;
+if(isset($_REQUEST['Type'])){
+	$Type = $_REQUEST['Type'];
+	///$txtLBL = $TypeArr[$TypeId];
+}
+$eep = $eepLib->getAll($TypeId,0, '', " AND Title='".($Type)."'"); 
+
+$txtLBL= "Latest News";
+?>
+
+   <div id="page_header" class="uh_grey_with_glare bottom-shadow" style="height:10px;min-height:10px" >
+			<div class=" bgback"></div>
+
+
+<div class="zn_header_bottom_style"></div>
+		</div>
+    <section id="content">
+    <div class="container">
+
+        <div id="mainbody zn_has_sidebar">
+
+
+
+
+            <div class="row">
+
+<section id="content">
+    <div class="container">
+        <div class="mainbody ">
+            <div class="row ">
+                <div class="span12">
+                    <h1 class="page-title"><?= $txtLBL.' -> '.$Type ?> </h1>					
+                </div>
+				
+            </div>
+			 <div class="row ">
+			 <div class="span12">
+				<?php if(count($eep) > 0): ?>
+				<table class="table responsiveTabledata table-bordered" id="grp" role="grid">
+					<thead>
+						<th>Date</th>
+						<th>Title</th>
+						<th>Files</th>
+					</thead>
+					<tbody>
+				<?php foreach($eep as $k=>$ele): ?>
+					<tr>
+						<td><?= $ele['DateOfEEP'] ?></td>
+						<td><?= $ele['Description'] ?></td>
+						<td>
+							<?php
+								$k=0;
+								$imgArr = explode(',', trim($ele['Image'],',')); 
+								
+								foreach($imgArr as $imgURL){
+									if($imgURL){
+									if($k>0) echo ' | ';
+									?>
+									<a style="color: #0088cc;" target="_new" href="<?= webUrl.$imgURL; ?>">File <?= ++$k ?></a> 
+									<?php
+									}
+								}
+								
+								if($ele['filePath']){
+									$imgArr = explode(',', trim($ele['filePath'],',')); 
+									foreach($imgArr as $imgURL){ 
+										if($imgURL){
+											if($k>0) echo ' | ';
+											?>
+											<a style="color: #0088cc;" target="_new" href="<?= webUrl.$imgURL; ?>">File <?= ++$k ?></a> 
+											<?php
+										}
+									}
+								}
+								
+							?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+					</tbody>
+				</table>	
+				<?php endif; ?>
+			</span>
+			</div>
+		 
+        </div>
+    </div>
+    
+</section>  
+        </div><!-- end mainbody -->
+
+    </div><!-- end container -->
+
+</section>
+    

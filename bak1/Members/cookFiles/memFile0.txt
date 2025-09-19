@@ -1,0 +1,1 @@
+{"user":{"id":1,"UserTypeId":1,"first_name":"Mohan","last_name":"Reddy","name":"admin","email":"cgmohanreddy@gmail.com"},"filters":{"type":"1","FirmName":"","RegistrationNoOld":"35241","X-Requested-With":"XMLHttpRequest"}}

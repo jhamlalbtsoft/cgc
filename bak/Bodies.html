@@ -1,0 +1,144 @@
+<?php 
+ini_set('display_errors', 0);
+//print_R($_REQUEST);
+require __DIR__ . DIRECTORY_SEPARATOR . "admin/lib" . DIRECTORY_SEPARATOR . "config.php";
+require PATH_LIB . "lib-members.php";
+$eepLib = new Members();
+//$TypeArr = array(1=>"Events", 2=>"Latest News", 3=>"Photo Gallery", 4=>"Media", 5=>"Patrika", 6=>"Government Policy");
+$txtLBL='';
+$id=0;
+if(isset($_REQUEST['id'])){
+	$id = $_REQUEST['id'];
+	///$txtLBL = $TypeArr[$TypeId];
+}
+?>
+   <div id="page_header" class="uh_grey_with_glare bottom-shadow" style="height:10px;min-height:10px" >
+			<div class=" bgback"></div>
+
+
+<div class="zn_header_bottom_style"></div>
+		</div>
+
+<section id="content">
+    <?php
+	if(!$id)	
+	{
+		echo "invalid request";
+		//die;
+	}else{
+	$GBOrderRep1=0;$GBOrderRep2=0;
+		$txtLBL = $eepLib->getGBNameByID($id);
+		$filter['GoverningBodyIdRep1'] = $id;
+		$eepList = $eepLib->getAll($searchType=3, $filter, $menuType='bodies'); 
+		$eepList1 = $eepLib->getAll($searchType=4, $filter, $menuType='bodies'); 
+		
+		$eepListMearged=array();
+		$bb=1;
+		foreach($eepList as $a){
+			if($a['GoverningBodyIdRep1']>0 || $a['CommitteeIDRep1']>0){
+				//$eepListMearged[$a['GBOrderRep1']] = $a;
+				if($a['GBOrderRep1']==0){
+					$eepListMearged[count($eepList)+$GBOrderRep1+$bb+1] = $a;
+					$bb++;
+				} else{
+					$eepListMearged[$a['GBOrderRep1']] = $a;
+					$GBOrderRep1=$a['GBOrderRep1'];
+				  }
+			}
+		}
+		
+		foreach($eepList1 as $a){
+			if($a['GoverningBodyIdRep2']>0 || $a['CommitteeIDRep2']>0){
+				$a['ImageRep1'] = $a['ImageRep2'];
+				$a['GBDesignationIdNameRep1'] = $a['GBDesignationIdNameRep2'];
+				$a['CdesignationIdNameRep1'] = $a['CdesignationIdNameRep2'];
+				$a['Representative1'] = $a['Representative2'];
+				$a['ImageRep1'] = $a['ImageRep2'];
+				$a['MobileRep1'] = $a['MobileRep2'];
+				//$eepListMearged[$a['GBOrderRep2']] = $a;
+				if($a['GBOrderRep2']==0){
+					$eepListMearged[count($eepList)+count($eepList1)+$GBOrderRep2+$bb+2] = $a;
+					$bb++;
+				 }else{
+					$eepListMearged[$a['GBOrderRep2']] = $a;
+					 $GBOrderRep2=$a['GBOrderRep2'];
+					}
+			}
+		}
+		ksort($eepListMearged);
+	?>
+	<div class="container">
+        <div class="mainbody ">
+            <div class="row ">
+                <div class="span12">
+                    <h3 class="page-title"> <?= $txtLBL['name'] ?></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+	
+	<?php 
+	if (is_array($eepListMearged)) {
+	//print_R($eepList);
+	//echo $txtLBL['Type'];	
+	$k=0;
+	?>
+	<?php foreach($eepListMearged as $ku=>$u): //$k--; ?>	
+	<?php 
+	    if($u['ImageRep1']==''){
+	         $img = "Image/no.jpg";
+	    }else{
+    		$img  ='';
+    		$Images = explode(',', $u['ImageRep1']); 
+    		if(isset($Images[0]))
+    			$img  = $Images[0];
+		}
+		   
+		/*   if (!file_exists(__DIR__ . DIRECTORY_SEPARATOR .$img)) {
+    echo "<br> ".basename($img)." ";
+}*/
+		if($k%4==0) 
+		echo "<div class='row'>";
+		
+		$designation = $txtLBL['Type']=='GB'? $u['GBDesignationIdNameRep1']:$u['CdesignationIdNameRep1'];
+	?>	
+	                
+			<div class="span3">
+                <div class="team_member">
+                    <center><a href="#" target="_blank" class="grayHover">
+                     <!--img src="showimage02dd.html?w=273&amp;h=182&amp;image=Image/LALIT%20JAISINGH%20(3)_1010.jpg" alt="<?= $u['EEPId']?>" title="<?= $u['EEPId']?>" height="270" width="270" /-->
+                   <img class="shadow img" src='<?= $img?>' alt="<?= $u['FirmName']?>" title="<?= $u['FirmName']?>" height="182px" width="" alt=""> 
+                    
+                    </a></center>
+                    <h4><?= $u['Representative1'] ?></h4>
+                    <h6><?= $designation ?> </h6>
+                    <div class="details" style="width:86%">
+                        <div class="desc">
+                            <p><?= $u['FirmName'] ?> </p>
+                            <p>Phone: <?= $u['MobileRep1'] ?></p>
+                            <p>Email: <a href="mailto:<?= $u['Email'] ?>"><?= $u['Email'] ?> </a></p>
+                             <p>Address: <?php str_replace(",,", ", ", $u['Shop'] .', '. $u['Complex'] .', '. $u['street']) ?>,<br/><?= $u['AreaName'] ?><br/>City: <?= $u['CityName'] ?><br/>District: <?= $u['DistrictName'] ?><br/></p>
+                        </div>
+                      
+                    </div><!-- end details -->
+                </div><!-- end team_member -->
+            </div>
+                            
+      
+   
+    
+	<?php 
+	if($k>0 && $k%4==3) 
+		echo "</div>"; 
+		
+		$k++;
+	?>
+	<?php endforeach; ?>
+	<?php } else {
+	  echo "<div>No records found.</div>";
+	} ?>
+</div>	
+<?php } ?>
+</section>
+

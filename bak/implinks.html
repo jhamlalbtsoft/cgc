@@ -1,0 +1,107 @@
+<?php 
+//print_R($_REQUEST);
+require __DIR__ . DIRECTORY_SEPARATOR . "admin/lib" . DIRECTORY_SEPARATOR . "config.php";
+require PATH_LIB . "lib-links.php";
+$eepLib = new Links();
+$TypeArr = array(1=>"Events", 2=>"Latest News", 3=>"Photo Gallery", 4=>"Media", 5=>"Patrika", 6=>"Government Policy");
+$txtLBL='Important Links';
+if(isset($_REQUEST['TypeId'])){
+	$TypeId = $_REQUEST['TypeId'];
+	$txtLBL = $TypeArr[$TypeId];
+}
+?>
+<div id="page_header" class="uh_grey_with_glare bottom-shadow" style="height:110px;min-height:110px" >
+			<div class=" bgback"></div>
+
+
+<div class="zn_header_bottom_style"></div>
+		</div>
+    <section id="content">
+    <div class="container">
+
+        <div id="mainbody zn_has_sidebar">
+
+
+
+
+            <div class="row">
+
+               
+
+
+
+
+      <section id="content">
+    <div class="container">
+
+        <div id="mainbody zn_has_sidebar">
+
+
+
+
+            <div class="row">
+
+
+  <div class="span12 zn_content">
+		<?php
+			if($txtLBL=='')	
+			{
+				echo "invalid request";
+				//die;
+			}else{
+				$eepList = $eepLib->getAll(); 
+			
+		?>
+                    <h1 class="page-title"> 
+                         <span> <?= $txtLBL ?></span>
+                    </h1>
+                    <div class="itemListView clearfix eBlog">
+					<?php
+					if (is_array($eepList)) {
+					//print_R($eepList);
+					?>
+                        <div class="itemList">
+							                               
+							<?php foreach($eepList as $links): ?>	
+							<div class='row-fluid'>  
+								<a target="_new"  href="<?= $links['ulink'] ?>"><?= $links['title'] ?> >>></a><br><br>
+							</div>  
+							<?php endforeach; ?>
+                                
+							                          
+                        
+                        </div><!-- end .itemList -->
+					<?php } else {
+					  echo "<div>No records found.</div>";
+					} ?>
+                        <!-- Pagination -->
+
+                    </div><!-- end blog items list (.itemListView) -->
+			
+		<?php } ?>
+                </div>
+</div><!-- end row -->
+        </div><!-- end mainbody -->
+
+    </div><!-- end container -->
+
+</section>
+
+
+  
+
+                
+            </div><!-- end row -->
+        </div><!-- end mainbody -->
+
+    </div><!-- end container -->
+
+</section>
+
+
+
+
+
+
+
+
