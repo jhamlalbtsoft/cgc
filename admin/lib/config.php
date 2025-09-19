@@ -8,11 +8,11 @@ date_default_timezone_set('Asia/Kolkata');
 //error_reporting(E_ALL);
 // DATABASE SETTINGS
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'cgchamber19_cgchambe_raipur');
+define('DB_NAME', 'cgc');
 define('DB_CHARSET', 'utf8');
-define('DB_USER', 'cgchambe_raipur');
-define('DB_PASSWORD', '2c&t?9Xh&n1^');
-define('webUrl', 'https://www.cgchamber.org/');
+define('DB_USER', 'root');
+define('DB_PASSWORD', '');
+define('webUrl', 'http://localhost/cgc/');
 
 // FILE PATHS
 define("PATH_LIB", __DIR__ . DIRECTORY_SEPARATOR);

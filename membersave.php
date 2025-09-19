@@ -1,58 +1,60 @@
 <?php
+// Enable error reporting (for debugging, remove in production)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require __DIR__ . "/admin/lib/config.php";
 
-class DBConnection {
-    public $pdo;
+// Database configuration
+$host = 'localhost';     // usually localhost
+$port = 3306;            // default MySQL port
+$dbname = 'cgc';         // your database name
+$user = 'root';          // your DB username
+$password = '';          // your DB password
+$charset = 'utf8mb4';
 
-    public function __construct() {
-        try {
-            $this->pdo = new PDO(
-                "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET,
-                DB_USER,
-                DB_PASSWORD,
-                [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES => false
-                ]
-            );
-        } catch (Exception $ex) {
-            die('Database error: ' . $ex->getMessage());
-        }
-    }
+// Connect with PDO
+try {
+    $pdo = new PDO(
+        "mysql:host=$host;port=$port;dbname=$dbname;charset=$charset",
+        $user,
+        $password,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false
+        ]
+    );
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
 
-$db = new DBConnection();
-$pdo = $db->pdo;
-
-// Get POST values
-$MemberType = 'LT';
-$FirmName = $_POST['FirmName'] ?? '';
-$Shop = $_POST['Shop'] ?? '';
-$Complex = $_POST['Complex'] ?? '';
-$AreaId = $_POST['AreaId'] ?? '';
-$CityId = $_POST['CityId'] ?? '';
-$DistrictId = $_POST['DistrictId'] ?? '';
-$Street = $_POST['Street'] ?? '';
-$PIN = $_POST['PIN'] ?? '';
-$STDCode = $_POST['STDCode'] ?? '';
-$Landline = $_POST['Landline'] ?? '';
-$GSTN = $_POST['GSTN'] ?? '';
-$GroupsID = $_POST['GroupsID'] ?? '';
-$Representative1 = $_POST['Representative1'] ?? '';
-$MobileRep1 = $_POST['MobileRep1'] ?? '';
-$EmailRep1 = $_POST['EmailRep1'] ?? '';
-$Representative2 = $_POST['Representative2'] ?? '';
-$MobileRep2 = $_POST['MobileRep2'] ?? '';
-$EmailRep2 = $_POST['EmailRep2'] ?? '';
+// Get POST values (safe with null coalescing)
+$MemberType       = 'LT';
+$FirmName         = $_POST['FirmName'] ?? '';
+$Shop             = $_POST['Shop'] ?? '';
+$Complex          = $_POST['Complex'] ?? '';
+$Street           = $_POST['Street'] ?? '';
+$DistrictName     = $_POST['DistrictName'] ?? '';
+$CityName         = $_POST['CityName'] ?? '';
+$AreaName         = $_POST['AreaName'] ?? '';
+$PIN              = $_POST['PIN'] ?? '';
+$STDCode          = $_POST['STDCode'] ?? '';
+$GSTN             = $_POST['GSTN'] ?? '';
+$GroupName        = $_POST['GroupName'] ?? '';
+$Representative1  = $_POST['Representative1'] ?? '';
+$EmailRep1        = $_POST['EmailRep1'] ?? '';
+$Representative2  = $_POST['Representative2'] ?? '';
+$mobileRep2       = $_POST['mobileRep2'] ?? '';
+$emailRep2        = $_POST['emailRep2'] ?? '';
+$website          = $_POST['website'] ?? '';
+$geoLocation      = $_POST['geoLocation'] ?? '';
+$reference        = $_POST['reference'] ?? '';
+$referenceMobile  = $_POST['referenceMobile'] ?? '';
 
 // Upload folder
 $upload_dir = __DIR__ . '/uploads/';
 if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
 
-// Upload handler function
+// File upload handler
 function upload_file($field_name, $prefix = '') {
     global $upload_dir;
     if (isset($_FILES[$field_name]) && $_FILES[$field_name]['error'] === 0) {
@@ -60,61 +62,65 @@ function upload_file($field_name, $prefix = '') {
         $filename = uniqid($prefix, true) . '.' . $ext;
         $dest_path = $upload_dir . $filename;
         if (move_uploaded_file($_FILES[$field_name]['tmp_name'], $dest_path)) {
-            return 'uploads/' . $filename;
+            return 'uploads/' . $filename; // relative path saved in DB
         }
     }
     return '';
 }
 
 // Upload files
-$photoPath = upload_file('photofiles', 'photo1_');
-$photoPath2 = upload_file('photofiles2', 'photo2_');
-$gstPath = upload_file('gstfiles', 'gst_');
-$paymentPath = upload_file('paymentfiles', 'payment_');
+$ImageRep1    = upload_file('ImageRep1', 'rep1_');
+$ImageRep2    = upload_file('ImageRep2', 'rep2_');
+$gstfiles     = upload_file('gstfiles', 'gst_');
+$paymentfiles = upload_file('paymentfiles', 'payment_');
+$shopPhoto    = upload_file('shopPhoto', 'shop_');
 
 // Prepare SQL
 $sql = "INSERT INTO members (
-    FirmName, Shop, Complex, AreaId, CityId, PIN, STDCode, Landline, GSTN, GroupsID,
-    Representative1, MobileRep1, EmailRep1,
-    Representative2, MobileRep2, EmailRep2, DistrictId, Street, MemberType,
-    ImageRep1, ImageRep2, GSTFilePath, PaymentFilePath
+    MemberType,FirmName, Shop, Complex, Street, DistrictName, CityName, AreaName, PIN, STDCode, GSTN,
+    GroupName, Representative1, ImageRep1, EmailRep1, Representative2, ImageRep2, mobileRep2, emailRep2,
+    gstfiles, paymentfiles, website, shopPhoto, geoLocation, reference, referenceMobile
 ) VALUES (
-    :FirmName, :Shop, :Complex, :AreaId, :CityId, :PIN, :STDCode, :Landline, :GSTN, :GroupsID,
-    :Representative1, :MobileRep1, :EmailRep1,
-    :Representative2, :MobileRep2, :EmailRep2, :DistrictId, :Street, :MemberType,
-    :PhotoPath, :PhotoPath2, :GSTFilePath, :PaymentFilePath
+    :MemberType,:FirmName, :Shop, :Complex, :Street, :DistrictName, :CityName, :AreaName, :PIN, :STDCode, :GSTN,
+    :GroupName, :Representative1, :ImageRep1, :EmailRep1, :Representative2, :ImageRep2, :mobileRep2, :emailRep2,
+    :gstfiles, :paymentfiles, :website, :shopPhoto, :geoLocation, :reference, :referenceMobile
 )";
 
 $stmt = $pdo->prepare($sql);
+
+// Execute
 $success = $stmt->execute([
-    ':FirmName' => $FirmName,
-    ':Shop' => $Shop,
-    ':Complex' => $Complex,
-    ':AreaId' => $AreaId,
-    ':CityId' => $CityId,
-    ':PIN' => $PIN,
-    ':STDCode' => $STDCode,
-    ':Landline' => $Landline,
-    ':GSTN' => $GSTN,
-    ':GroupsID' => $GroupsID,
+    ':MemberType'      => $MemberType,
+    ':FirmName'        => $FirmName,
+    ':Shop'            => $Shop,
+    ':Complex'         => $Complex,
+    ':Street'          => $Street,
+    ':DistrictName'    => $DistrictName,
+    ':CityName'        => $CityName,
+    ':AreaName'        => $AreaName,
+    ':PIN'             => $PIN,
+    ':STDCode'         => $STDCode,
+    ':GSTN'            => $GSTN,
+    ':GroupName'       => $GroupName,
     ':Representative1' => $Representative1,
-    ':MobileRep1' => $MobileRep1,
-    ':EmailRep1' => $EmailRep1,
+    ':ImageRep1'       => $ImageRep1,
+    ':EmailRep1'       => $EmailRep1,
     ':Representative2' => $Representative2,
-    ':MobileRep2' => $MobileRep2,
-    ':EmailRep2' => $EmailRep2,
-    ':DistrictId' => $DistrictId,
-    ':Street' => $Street,
-    ':MemberType' => $MemberType,
-    ':PhotoPath' => $photoPath,
-    ':PhotoPath2' => $photoPath2,
-    ':GSTFilePath' => $gstPath,
-    ':PaymentFilePath' => $paymentPath
+    ':ImageRep2'       => $ImageRep2,
+    ':mobileRep2'      => $mobileRep2,
+    ':emailRep2'       => $emailRep2,
+    ':gstfiles'        => $gstfiles,
+    ':paymentfiles'    => $paymentfiles,
+    ':website'         => $website,
+    ':shopPhoto'       => $shopPhoto,
+    ':geoLocation'     => $geoLocation,
+    ':reference'       => $reference,
+    ':referenceMobile' => $referenceMobile
 ]);
 
+// Redirect with message
 if ($success) {
     echo "<script>alert('Form data saved successfully.'); window.location.href = 'MembersFormNew';</script>";
 } else {
     echo "<script>alert('Failed to save form data.'); window.history.back();</script>";
 }
-?>

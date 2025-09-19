@@ -88,200 +88,226 @@ $db = new DBConnection();
         </div>
         <div class="card-body">
             
-            <h2>Coming Soon...</h2>
-          <form method="post" action="membersave.php" enctype="multipart/form-data" style="display:none;">
+            <!-- <h2>Coming Soon...</h2> -->
+          <form action="membersave.php" method="post" enctype="multipart/form-data">
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="MobileRep1" class="form-label">MOBILE NO</label>
+                <input type="tel" class="form-control" id="MobileRep1" name="MobileRep1" required>
+            </div>
             
-            <div class="row m-3 align-items-center">
-              <label for="FirmName" class="col-sm-2 col-form-label text-left text-left">FULL NAME OF FIRM</label>
-              <div class="col-sm-6">
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6 form-group-column">
+                <label for="FirmName" class="form-label">FULL NAME OF FIRM</label>
                 <input type="text" class="form-control" id="FirmName" name="FirmName" required>
-              </div>
             </div>
+            <div class="col-md-6 form-group-column">
+                <label for="Shop" class="form-label">SHOP NO.</label>
+                <input type="text" class="form-control" id="Shop" name="Shop">
+            </div>
+           
+            
+        </div>
 
-            <div class="row m-3 align-items-center">
-              <label for="Shop" class="col-sm-2 col-form-label text-left">SHOP NO.</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="Shop" name="Shop" required>
-              </div>
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="Complex" class="form-label">COMPLEX NAME</label>
+                <input type="text" class="form-control" id="Complex" name="Complex">
             </div>
-            <div class="row m-3 align-items-center">
-            	<label for="Complex" class="col-sm-2 col-form-label text-left">COMPLEX NAME</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="Complex" name="Complex" required>
-              </div>
+            <div class="col-md-6 form-group-column">
+                <label for="Street" class="form-label">Street</label>
+                <input type="text" class="form-control" id="Street" name="Street">
             </div>
-            <div class="row m-3 align-items-center">
-            	<label for="Street" class="col-sm-2 col-form-label text-left">Street</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="Street" name="Street" required>
-              </div>
-            </div>
-            <div class="row m-3 align-items-center">
-              <label for="DistrictId" class="col-sm-2 col-form-label text-left">District</label>
-              <div class="col-sm-6">
-                 <select class="form-select" id="DistrictId" name="DistrictId" required>
-										  <option value="">Select District</option>
-										  <?php
-										    $sql = "SELECT DistrictId as id, DistrictName as name FROM district ORDER BY DistrictName";
-										    $stmt = $db->pdo->prepare($sql);
-										    $stmt->execute();
-										    $entry = $stmt->fetchAll();
-										    foreach ($entry as $group) {
-										      echo '<option value="' . $group['id'] . '" >' . htmlspecialchars($group['name']) . '</option>';
-										    }
-										  ?>
-								</select>
-              </div>
-            </div>
+            
+            
+        </div>
 
-            <div class="row m-3 align-items-center">
-              <label for="CityId" class="col-sm-2 col-form-label text-left">CITY / VILLAGE</label>
-              <div class="col-sm-6">
-                <select class="form-select" id="CityId" name="CityId" required>
-										  <option value="">Select City</option>
-										  <?php
-										    $sql = "SELECT CityId as id, CityName as name FROM city ORDER BY CityName";
-										    $stmt = $db->pdo->prepare($sql);
-										    $stmt->execute();
-										    $entry = $stmt->fetchAll();
-										    foreach ($entry as $group) {
-										      echo '<option value="' . $group['id'] . '" >' . htmlspecialchars($group['name']) . '</option>';
-										    }
-										  ?>
-								</select>
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="DistrictName" class="form-label">District</label>
+                <select class="form-select" id="DistrictName" name="DistrictName" required>
+                    <option value="">Select District</option>
+                    <?php
+                              $stmt = $db->pdo->prepare("SELECT DistrictName FROM district order by DistrictName");
+                                  $stmt->execute();
+                                  $districts = $stmt->fetchAll();
 
-              </div>
-            </div>
-            <div class="row m-3 align-items-center">
-              <label for="AreaId" class="col-sm-2 col-form-label text-left">AREA / MOHALLA</label>
-              <div class="col-sm-6">
-                 <select class="form-select" id="AreaId" name="AreaId" required>
-										  <option value="">Select Area</option>
-										  <?php
-										    $sql = "SELECT AreaId as id, AreaName as name FROM area ORDER BY AreaName";
-										    $stmt = $db->pdo->prepare($sql);
-										    $stmt->execute();
-										    $entry = $stmt->fetchAll();
-										    foreach ($entry as $group) {
-										      echo '<option value="' . $group['id'] . '" >' . htmlspecialchars($group['name']) . '</option>';
-										    }
-										  ?>
-								</select>
-              </div>
-            </div>
+                                  foreach ($districts as $row) {
+                                      echo '<option value="' . htmlspecialchars($row['DistrictName']) . '">' . htmlspecialchars($row['DistrictName']) . '</option>';
+                                  }
 
-            <div class="row m-3 align-items-center">
-              <label for="PIN" class="col-sm-2 col-form-label text-left">PIN CODE NO.</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="PIN" name="PIN" required pattern="\d{6}" maxlength="6">
-              </div>
+                          ?>
+                </select>
             </div>
+            <div class="col-md-6 form-group-column">
+                <label for="CityName" class="form-label">CITY / VILLAGE</label>
+                <select class="form-select" id="CityName" name="CityName" required>
+                    <?php
+                              $stmt = $db->pdo->prepare("SELECT CityName FROM city order by CityName");
+                                  $stmt->execute();
+                                  $cities = $stmt->fetchAll();
 
-            <div class="row m-3 align-items-center">
-              <label for="STDCode" class="col-sm-2 col-form-label text-left">STD CODE</label>
-              <div class="col-sm-4">
-                <input type="number" class="form-control" id="STDCode" name="STDCode" required maxlength="5">
-              </div>
-              <label for="Landline" class="col-sm-2 col-form-label text-left">PHONE NO.</label>
-              <div class="col-sm-4">
-                <input type="tel" class="form-control" id="Landline" name="Landline" required maxlength="10">
-              </div>
+                                  foreach ($cities as $row) {
+                                      echo '<option value="' . htmlspecialchars($row['CityName']) . '">' . htmlspecialchars($row['CityName']) . '</option>';
+                                  }
+
+                          ?>
+                </select>
             </div>
+            
+            
+        </div>
 
-            <div class="row m-3 align-items-center">
-              <label for="GSTN" class="col-sm-2 col-form-label text-left">GST NO. / GUMASTA</label>
-              <div class="col-sm-6">
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="AreaName" class="form-label">AREA / MOHALLA</label>
+                <select class="form-select" id="AreaName" name="AreaName" required>
+                          <option value="">Select Area</option>
+                          <?php
+                              $stmt = $db->pdo->prepare("SELECT AreaName FROM area order by AreaName");
+                                  $stmt->execute();
+                                  $areas = $stmt->fetchAll();
+
+                                  foreach ($areas as $row) {
+                                      echo '<option value="' . htmlspecialchars($row['AreaName']) . '">' . htmlspecialchars($row['AreaName']) . '</option>';
+                                  }
+
+                          ?>
+                      
+
+                </select>
+            </div>
+            <div class="col-md-6 form-group-column">
+                <label for="PIN" class="form-label">PIN CODE NO.</label>
+                <input type="text" class="form-control" id="PIN" name="PIN" required>
+            </div>
+            
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6 form-group-column">
+                <label for="STDCode" class="form-label">STD CODE</label>
+                <input type="text" class="form-control" id="STDCode" name="STDCode">
+            </div>
+           <div class="col-md-6 form-group-column">
+                <label for="Mobile" class="form-label">PHONE NO.</label>
+                <input type="tel" class="form-control" id="Mobile" name="Mobile">
+            </div>
+           
+            
+            
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="GSTN" class="form-label">GST NO. / GUMASTA</label>
                 <input type="text" class="form-control" id="GSTN" name="GSTN" required>
-              </div>
             </div>
+            <div class="col-md-6 form-group-column">
+                <label for="GroupName" class="form-label">TYPE OF BUSINESS</label>
+                <select class="form-select" id="GroupName" name="GroupName" required>
+                    <?php
+                              $stmt = $db->pdo->prepare("SELECT GroupName FROM groups order by GroupName");
+                                  $stmt->execute();
+                                  $groups = $stmt->fetchAll();
 
-            <div class="row m-3 align-items-center">
-              <label for="GroupsID" class="col-sm-2 col-form-label text-left">TYPE OF BUSINESS</label>
-              <div class="col-sm-6">
-                <!-- <input type="text" class="form-control" id="business_type" name="business_type" required> -->
-                <select class="form-select" id="GroupsID" name="GroupsID" required>
-										  <option value="">Select Group</option>
-										  <?php
-										    $sql = "SELECT GroupsId as id, GroupName as name FROM groups ORDER BY GroupName";
-										    
-										  
-										    $stmt = $db->pdo->prepare($sql);
-										    $stmt->execute();
-										    $entry = $stmt->fetchAll();
-										    foreach ($entry as $group) {
-										      echo '<option value="' . $group['id'] . '" >' . ($group['name']) . '</option>';
-										    }
-										  ?>
-								</select>
-              </div>
+                                  foreach ($groups as $row) {
+                                      echo '<option value="' . htmlspecialchars($row['GroupName']) . '">' . htmlspecialchars($row['GroupName']) . '</option>';
+                                  }
+
+                          ?>
+                </select>
             </div>
-
-            <div class="row m-3 align-items-center">
-              <label for="Representative1" class="col-sm-2 col-form-label text-left">NAME OF REPRESENTATIVE (1)</label>
-              <div class="col-sm-6">
+            <div class="col-md-6 form-group-column">
+                <label for="Representative1" class="form-label">NAME OF REPRESENTATIVE (1)</label>
                 <input type="text" class="form-control" id="Representative1" name="Representative1">
-              </div>
             </div>
-
-            <div class="row m-3 align-items-center">
-              <label for="MobileRep1" class="col-sm-2 col-form-label text-left">MOBILE NO</label>
-              <div class="col-sm-4">
-                <input type="tel" class="form-control" id="MobileRep1" name="MobileRep1" required maxlength="10">
-              </div>
-              <label for="EmailRep1" class="col-sm-2 col-form-label text-left">E – MAIL</label>
-              <div class="col-sm-4">
-                <input type="email" class="form-control" id="EmailRep1" name="EmailRep1">
-              </div>
+             <div class="col-md-6 form-group-column">
+                <label for="ImageRep1" class="form-label">Photo 1</label>
+                <input type="file" class="form-control" id="ImageRep1" name="ImageRep1">
             </div>
+        </div>
 
-            <div class="row m-3 align-items-center">
-              <label for="Representative2" class="col-sm-2 col-form-label text-left">NAME OF REPRESENTATIVE (2)</label>
-              <div class="col-sm-6">
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="EmailRep1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="EmailRep1" name="EmailRep1" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="Representative2" class="form-label">NAME OF REPRESENTATIVE (2)</label>
                 <input type="text" class="form-control" id="Representative2" name="Representative2">
-              </div>
             </div>
-
-            <div class="row m-3 align-items-center">
-              <label for="MobileRep2" class="col-sm-2 col-form-label text-left">MOBILE NO.</label>
-              <div class="col-sm-4">
-                <input type="tel" class="form-control" id="MobileRep2" name="MobileRep2" maxlength="10">
-              </div>
-              <label for="EmailRep2" class="col-sm-2 col-form-label text-left">E – MAIL</label>
-              <div class="col-sm-4">
-                <input type="email" class="form-control" id="EmailRep2" name="EmailRep2">
-              </div>
+            <div class="col-md-6 form-group-column">
+                <label for="ImageRep2" class="form-label">Photo 2</label>
+                <input type="file" class="form-control" id="ImageRep2" name="ImageRep2">
             </div>
+            
+        </div>
 
-            <div class="row m-3 align-items-center">
-              <label for="photofiles" class="col-sm-2 col-form-label text-left">Photo 1</label>
-              <div class="col-sm-4">
-                <input type="file" class="form-control" id="photofiles" name="photofiles">
-              </div>
-              <label for="photofiles2" class="col-sm-2 col-form-label text-left">Photo 2</label>
-              <div class="col-sm-4">
-                <input type="file" class="form-control" id="photofiles2" name="photofiles2">
-              </div>
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="mobileRep2" class="form-label">MOBILE NO.</label>
+                <input type="tel" class="form-control" id="mobileRep2" name="mobileRep2">
             </div>
+            <div class="col-md-6 form-group-column">
+                <label for="emailRep2" class="form-label">E – MAIL</label>
+                <input type="email" class="form-control" id="emailRep2" name="emailRep2">
+            </div>
+            
+        </div>
 
-            <div class="row m-3 align-items-center">
-              <label for="gstfiles" class="col-sm-2 col-form-label text-left">GST Certificate</label>
-              <div class="col-sm-4">
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="gstfiles" class="form-label">GST Certificate / Gumasta</label>
                 <input type="file" class="form-control" id="gstfiles" name="gstfiles">
-              </div>
-              <label for="paymentfiles" class="col-sm-2 col-form-label text-left">Payment Attachment</label>
-              <div class="col-sm-4">
+            </div>
+            <div class="col-md-6 form-group-column">
+                <label for="paymentfiles" class="form-label">Payment Attachment</label>
                 <input type="file" class="form-control" id="paymentfiles" name="paymentfiles">
-              </div>
             </div>
-
-
-            <div class="row m-3">
-              <div class="col text-center">
-                <button type="submit" class="btn btn-primary px-5">Submit</button>
-              </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="website" class="form-label">Website</label>
+                <input type="url" class="form-control" id="website" name="website">
             </div>
+             <div class="col-md-6 form-group-column">
+                <label for="shopPhoto" class="form-label">Shop Photo</label>
+                <input type="file" class="form-control" id="shopPhoto" name="shopPhoto">
+            </div>
+            
+        </div>
 
-          </form>
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="geoLocation" class="form-label">Geo Location</label>
+                <input type="text" class="form-control" id="geoLocation" name="geoLocation">
+            </div>
+            <div class="col-md-6 form-group-column">
+                <label for="reference" class="form-label">Reference</label>
+                <input type="text" class="form-control" id="reference" name="reference">
+            </div>
+           
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6 form-group-column">
+                <label for="referenceMobile" class="form-label">Reference Mobile</label>
+                <input type="tel" class="form-control" id="referenceMobile" name="referenceMobile">
+            </div>
+            
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary px-5 py-2">Submit</button>
+        </div>
+    </form>
         </div>
       </div>
     </div>
