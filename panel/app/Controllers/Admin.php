@@ -6,6 +6,7 @@ use App\Models\RegistrationModel;
 use App\Models\CityModel; 
 use App\Models\GuesthouseModel; 
 use App\Models\BookingModel; 
+use App\Models\MembersModel; 
 
 class Admin extends BaseController
 {
@@ -563,5 +564,53 @@ class Admin extends BaseController
                 $list = $list.'</table>';
             echo $list;
     }
+
+    public function getMember($id)
+    {
+        $model = new MembersModel();
+        $member = $model->find($id);
+
+        if (!$member) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Member not found']);
+        }
+
+        // Base path for images/files
+        $uploadsPath = base_url('uploads/members/');
+
+        // Return selected fields with full URLs for images/files
+        $data = [
+            'MemberType'      => $member['MemberType'],
+            'FirmName'        => $member['FirmName'],
+            'Shop'            => $member['Shop'],
+            'Complex'         => $member['Complex'],
+            'Street'          => $member['Street'],
+            'DistrictName'    => $member['DistrictName'],
+            'CityName'        => $member['CityName'],
+            'AreaName'        => $member['AreaName'],
+            'PIN'             => $member['PIN'],
+            'STDCode'         => $member['STDCode'],
+            'MobileRep1'      => $member['MobileRep1'],
+            'MobileRep2'      => $member['MobileRep2'],
+            'GSTN'            => $member['GSTN'],
+            'GroupName'       => $member['GroupName'],
+            'Representative1' => $member['Representative1'],
+            'ImageRep1'       => !empty($member['ImageRep1']) ? $uploadsPath . $member['ImageRep1'] : null,
+            'EmailRep1'       => $member['EmailRep1'],
+            'Representative2' => $member['Representative2'],
+            'ImageRep2'       => !empty($member['ImageRep2']) ? $uploadsPath . $member['ImageRep2'] : null,
+            'MobileRep2'      => $member['MobileRep2'],
+            'EmailRep2'       => $member['EmailRep2'],
+            'gstfiles'        => !empty($member['gstfiles']) ? $uploadsPath . $member['gstfiles'] : null,
+            'paymentfiles'    => !empty($member['paymentfiles']) ? $uploadsPath . $member['paymentfiles'] : null,
+            'website'         => $member['website'],
+            'shopPhoto'       => !empty($member['shopPhoto']) ? $uploadsPath . $member['shopPhoto'] : null,
+            'geoLocation'     => $member['geoLocation'],
+            'reference'       => $member['reference'],
+            'referenceMobile' => $member['referenceMobile'],
+        ];
+
+        return $this->response->setJSON(['status' => 'success', 'data' => $data]);
+    }
+
     
 }

@@ -141,7 +141,40 @@
       </div>      
     </div>
 </div>
- 
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Image Preview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="previewImage" src="" class="img-fluid rounded shadow">
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- View Member Modal -->
+<div class="modal fade" id="viewMemberModal" tabindex="-1" aria-labelledby="viewMemberLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="viewMemberLabel">Member Details</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <tbody id="memberDetailsBody">
+            <!-- Filled by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
     function showacceptmodal(booking_id)
     { 
@@ -366,4 +399,73 @@ function updateStatus(memberId, newStatus) {
     });
 }
 </script>
+<script>
+function viewMember(id) {
+    $.ajax({
+        url: "<?= base_url('Admin/getMember/') ?>" + id,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+            if (response.status === 'success') {
+                let data = response.data;
+                
+                let html = `
+                    <tr><th>Member Type</th><td>${data.MemberType ?? ''}</td></tr>
+                    <tr><th>Firm Name</th><td>${data.FirmName ?? ''}</td></tr>
+                    <tr><th>Shop</th><td>${data.Shop ?? ''}</td></tr>
+                    <tr><th>Complex</th><td>${data.Complex ?? ''}</td></tr>
+                    <tr><th>Street</th><td>${data.Street ?? ''}</td></tr>
+                    <tr><th>District</th><td>${data.DistrictName ?? ''}</td></tr>
+                    <tr><th>City</th><td>${data.CityName ?? ''}</td></tr>
+                    <tr><th>Area</th><td>${data.AreaName ?? ''}</td></tr>
+                    <tr><th>PIN</th><td>${data.PIN ?? ''}</td></tr>
+                    <tr><th>STD Code</th><td>${data.STDCode ?? ''}</td></tr>
+                    <tr><th>GSTN</th><td>${data.GSTN ?? ''}</td></tr>
+                    <tr><th>Group</th><td>${data.GroupName ?? ''}</td></tr>
+                    <tr><th>Representative 1</th><td>${data.Representative1 ?? ''}</td></tr>
+                    <tr><th>Mobile Rep 1</th><td>${data.MobileRep1 ?? ''}</td></tr>
+                    <tr><th>Email Rep 1</th><td>${data.EmailRep1 ?? ''}</td></tr>
+                    <tr><th>Representative 2</th><td>${data.Representative2 ?? ''}</td></tr>
+                    <tr><th>Mobile Rep 2</th><td>${data.MobileRep2 ?? ''}</td></tr>
+                    <tr><th>Email Rep 2</th><td>${data.EmailRep2 ?? ''}</td></tr>
+                    <tr><th>Website</th><td>${data.website ?? ''}</td></tr>
+                    <tr><th>Reference</th><td>${data.reference ?? ''}</td></tr>
+                    <tr><th>Reference Mobile</th><td>${data.referenceMobile ?? ''}</td></tr>
+
+                    <tr><th>Representative 1 Photo</th>
+                        <td>${data.ImageRep1 ? `<img src="${data.ImageRep1}" class="img-thumbnail" width="80" style="cursor:pointer" onclick="openImageModal('${data.ImageRep1}')">` : 'No Image'}</td></tr>
+
+                    <tr><th>Representative 2 Photo</th>
+                        <td>${data.ImageRep2 ? `<img src="${data.ImageRep2}" class="img-thumbnail" width="80" style="cursor:pointer" onclick="openImageModal('${data.ImageRep2}')">` : 'No Image'}</td></tr>
+
+                    <tr><th>Shop Photo</th>
+                        <td>${data.shopPhoto ? `<img src="${data.shopPhoto}" class="img-thumbnail" width="80" style="cursor:pointer" onclick="openImageModal('${data.shopPhoto}')">` : 'No Image'}</td></tr>
+
+                    <tr><th>GST File</th>
+                        <td>${data.gstfiles ? `<a href="${data.gstfiles}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-file"></i> View</a>` : 'No File'}</td></tr>
+
+                    <tr><th>Payment File</th>
+                        <td>${data.paymentfiles ? `<a href="${data.paymentfiles}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-file"></i> View</a>` : 'No File'}</td></tr>
+                `;
+                
+                $('#memberDetailsBody').html(html);
+                $('#viewMemberModal').modal('show');
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function () {
+            alert("Error fetching member data.");
+        }
+    });
+}
+
+function openImageModal(imageUrl) {
+    document.getElementById('previewImage').src = imageUrl;
+    var myModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+    myModal.show();
+}
+</script>
+
+
 
