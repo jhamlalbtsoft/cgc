@@ -124,24 +124,34 @@ $db = new DBConnection();
             
         </div>
 
+       <div class="row mb-3">
+    <div class="col-md-6 form-group-column">
+        <label for="DistrictName" class="form-label">District</label>
+        <select class="form-select" id="DistrictName" name="DistrictName" required>
+            <option value="">Select District</option>
+            <?php
+            $stmt = $db->pdo->prepare("SELECT DistrictName FROM district ORDER BY DistrictName");
+            $stmt->execute();
+            $districts = $stmt->fetchAll();
+
+            foreach ($districts as $row) {
+                echo '<option value="' . htmlspecialchars($row['DistrictName']) . '">' . htmlspecialchars($row['DistrictName']) . '</option>';
+            }
+            ?>
+        </select>
+    </div>
+
+    <div class="col-md-6 form-group-column">
+        <label for="ekai_id" class="form-label">UNIT</label>
+        <select class="form-select" id="ekai_id" name="ekai_id" required>
+            <option value="">Select Unit</option>
+        </select>
+    </div>
+</div>
+
+
         <div class="row mb-3">
-            <div class="col-md-6 form-group-column">
-                <label for="DistrictName" class="form-label">District</label>
-                <select class="form-select" id="DistrictName" name="DistrictName" required>
-                    <option value="">Select District</option>
-                    <?php
-                              $stmt = $db->pdo->prepare("SELECT DistrictName FROM district order by DistrictName");
-                                  $stmt->execute();
-                                  $districts = $stmt->fetchAll();
-
-                                  foreach ($districts as $row) {
-                                      echo '<option value="' . htmlspecialchars($row['DistrictName']) . '">' . htmlspecialchars($row['DistrictName']) . '</option>';
-                                  }
-
-                          ?>
-                </select>
-            </div>
-            <div class="col-md-6 form-group-column">
+          <div class="col-md-6 form-group-column">
                 <label for="CityName" class="form-label">CITY / VILLAGE</label>
                 <select class="form-select" id="CityName" name="CityName" required>
                     <?php
@@ -156,11 +166,6 @@ $db = new DBConnection();
                           ?>
                 </select>
             </div>
-            
-            
-        </div>
-
-        <div class="row mb-3">
             <div class="col-md-6 form-group-column">
                 <label for="AreaName" class="form-label">AREA / MOHALLA</label>
                 <select class="form-select" id="AreaName" name="AreaName" required>
@@ -325,6 +330,34 @@ $db = new DBConnection();
     });
   });
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    $("#DistrictName").change(function () {
+    var district = $(this).val();
+
+    if (district !== "") {
+        $.ajax({
+            url: "getunits.php",
+            type: "POST",
+            data: { district: district },
+            success: function (response) {
+                $("#ekai_id").html(response);
+            },
+            error: function (xhr, status, error) {
+                console.log("AJAX Error:", status, error);
+                console.log("Response Text:", xhr.responseText);
+                alert("Error fetching units!");
+            }
+        });
+    } else {
+        $("#ekai_id").html('<option value="">Select Unit</option>');
+    }
+});
+
+});
+</script>
+
 
 </body>
 </html>

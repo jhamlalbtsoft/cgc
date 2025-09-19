@@ -49,6 +49,7 @@ $website          = $_POST['website'] ?? '';
 $geoLocation      = $_POST['geoLocation'] ?? '';
 $reference        = $_POST['reference'] ?? '';
 $referenceMobile  = $_POST['referenceMobile'] ?? '';
+$ekai_id          = $_POST['ekai_id'] ?? '';
 
 // Upload folder
 $upload_dir = __DIR__ . '/uploads/';
@@ -79,11 +80,11 @@ $shopPhoto    = upload_file('shopPhoto', 'shop_');
 $sql = "INSERT INTO members (
     MemberType,FirmName, Shop, Complex, Street, DistrictName, CityName, AreaName, PIN, STDCode, GSTN,
     GroupName, Representative1, ImageRep1, EmailRep1, Representative2, ImageRep2, mobileRep2, emailRep2,
-    gstfiles, paymentfiles, website, shopPhoto, geoLocation, reference, referenceMobile
+    gstfiles, paymentfiles, website, shopPhoto, geoLocation, reference, referenceMobile,ekai_id
 ) VALUES (
     :MemberType,:FirmName, :Shop, :Complex, :Street, :DistrictName, :CityName, :AreaName, :PIN, :STDCode, :GSTN,
     :GroupName, :Representative1, :ImageRep1, :EmailRep1, :Representative2, :ImageRep2, :mobileRep2, :emailRep2,
-    :gstfiles, :paymentfiles, :website, :shopPhoto, :geoLocation, :reference, :referenceMobile
+    :gstfiles, :paymentfiles, :website, :shopPhoto, :geoLocation, :reference, :referenceMobile,:ekai_id
 )";
 
 $stmt = $pdo->prepare($sql);
@@ -115,7 +116,8 @@ $success = $stmt->execute([
     ':shopPhoto'       => $shopPhoto,
     ':geoLocation'     => $geoLocation,
     ':reference'       => $reference,
-    ':referenceMobile' => $referenceMobile
+    ':referenceMobile' => $referenceMobile,
+    ':ekai_id'         =>$ekai_id
 ]);
 
 // Redirect with message
