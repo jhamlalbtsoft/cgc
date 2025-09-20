@@ -89,7 +89,7 @@ $db = new DBConnection();
         <div class="card-body">
             
             <!-- <h2>Coming Soon...</h2> -->
-          <form action="membersave.php" method="post" enctype="multipart/form-data">
+          <form action="memberupdate.php" method="post" enctype="multipart/form-data">
             <div class="row mb-3">
               <div class="col-md-6 form-group-column">
                   <label for="MobileRep1" class="form-label">MOBILE NO</label>
@@ -137,7 +137,7 @@ $db = new DBConnection();
        <div class="row mb-3">
     <div class="col-md-6 form-group-column">
         <label for="DistrictName" class="form-label">District</label>
-        <select class="form-select" id="DistrictName" name="DistrictName" required>
+        <select class="form-select" id="DistrictName" name="DistrictName" onchange="loadUnitsByDistrict(this.value, targetSelector = "#ekai_id")" required>
             <option value="">Select District</option>
             <?php
             $stmt = $db->pdo->prepare("SELECT DistrictName FROM district ORDER BY DistrictName");
@@ -319,6 +319,42 @@ $db = new DBConnection();
             
         </div>
 
+        <!-- Hidden Image Previews -->
+        <div class="row mb-3 d-none" id="imagePreviews">
+            <div class="col-md-4 text-center">
+                <label>Photo 1 Preview</label><br>
+                <img id="previewImageRep1" src="" alt="Image Rep1" class="img-thumbnail" style="max-height:150px; display:none;">
+            </div>
+            <div class="col-md-4 text-center">
+                <label>Photo 2 Preview</label><br>
+                <img id="previewImageRep2" src="" alt="Image Rep2" class="img-thumbnail" style="max-height:150px; display:none;">
+            </div>
+            <div class="col-md-4 text-center">
+                <label>GST / Gumasta Preview</label><br>
+                <img id="previewGST" src="" alt="GST Files" class="img-thumbnail" style="max-height:150px; display:none;">
+            </div>
+        </div>
+
+        <div class="row mb-3 d-none" id="otherPreviews">
+            <div class="col-md-6 text-center">
+                <label>Payment Attachment Preview</label><br>
+                <img id="previewPayment" src="" alt="Payment Files" class="img-thumbnail" style="max-height:150px; display:none;">
+            </div>
+            <div class="col-md-6 text-center">
+                <label>Shop Photo Preview</label><br>
+                <img id="previewShopPhoto" src="" alt="Shop Photo" class="img-thumbnail" style="max-height:150px; display:none;">
+            </div>
+        </div>
+
+        <!-- Hidden Inputs for Existing Files / Image Previews -->
+        <input type="hidden" id="hiddenpreviewImageRep1" name="previewImageRep1" value="">
+        <input type="hidden" id="hiddenpreviewImageRep2" name="previewImageRep2" value="">
+        <input type="hidden" id="hiddenpreviewGST" name="previewGST" value="">
+        <input type="hidden" id="hiddenpreviewPayment" name="previewPayment" value="">
+        <input type="hidden" id="member_id" name="member_id" value="">
+
+
+
         <div class="text-center mt-4">
             <button type="submit" class="btn btn-primary px-5 py-2">Submit</button>
         </div>
@@ -347,27 +383,9 @@ $(document).ready(function () {
   $('.showaftervalidate').hide();
   $('.showafterverify').hide();
   $('.showbeforevalidate').show();
-    $("#DistrictName").change(function () {
-    var district = $(this).val();
 
-    if (district !== "") {
-        $.ajax({
-            url: "getunits.php",
-            type: "POST",
-            data: { district: district },
-            success: function (response) {
-                $("#ekai_id").html(response);
-            },
-            error: function (xhr, status, error) {
-                console.log("AJAX Error:", status, error);
-                console.log("Response Text:", xhr.responseText);
-                alert("Error fetching units!");
-            }
-        });
-    } else {
-        $("#ekai_id").html('<option value="">Select Unit</option>');
-    }
-});
+
+
 
 });
 
@@ -383,7 +401,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: "sendotp.php",
+            url: "sendotpedit.php",
             type: "POST",
             data: { MobileRep1: MobileRep1 },
             cache: false,
@@ -426,8 +444,7 @@ $(document).ready(function () {
                    $('.showbeforevalidate').hide();
                     $('.showaftervalidate').show();
                     $('.showafterverify').hide();
-
-                  
+                    getrecord(MobileRep1);
                     // next step
                 } else {
                     alert("Invalid OTP. Please try again.");
@@ -442,7 +459,162 @@ $(document).ready(function () {
 });
 
 
+// Function to get member record by MobileRep1
+function getrecord(MobileRep1) {
+    if (!MobileRep1) {
+        alert("Mobile number is required!");
+        return;
+    }
 
+    console.log("Fetching member for MobileRep1:", MobileRep1);
+
+    $.ajax({
+        url: "get_member.php",
+        type: "POST",
+        data: { MobileRep1: MobileRep1 },
+        dataType: "json",
+        success: function (data) {
+            console.log("AJAX Response:", data);
+
+            if (data.success && data.member) {
+                let m = data.member;
+                loadUnitsByDistrict(m.DistrictName, targetSelector = "#ekai_id")
+                // Fill form fields
+                $("#member_id").val(m.MembersId || '');
+                $("#FirmName").val(m.FirmName || '');
+                $("#Shop").val(m.Shop || '');
+                $("#Complex").val(m.Complex || '');
+                $("#Street").val(m.Street || '');
+                $("#DistrictName").val(m.DistrictName || '');
+                $("#CityName").val(m.CityName || '');
+                $("#AreaName").val(m.AreaName || '');
+                $("#PIN").val(m.PIN || '');
+                $("#STDCode").val(m.STDCode || '');
+                $("#GSTN").val(m.GSTN || '');
+                $("#GroupName").val(m.GroupName || '');
+                $("#Representative1").val(m.Representative1 || '');
+                $("#EmailRep1").val(m.EmailRep1 || '');
+                $("#Representative2").val(m.Representative2 || '');
+                $("#mobileRep2").val(m.MobileRep2 || '');
+                $("#emailRep2").val(m.EmailRep2 || '');
+                $("#website").val(m.website || '');
+                $("#geoLocation").val(m.geoLocation || '');
+                $("#reference").val(m.reference || '');
+                $("#referenceMobile").val(m.referenceMobile || '');
+                
+                setUnitValue(m.ekai_id);
+                showImagePreviews(m);
+                setHiddenImageValues(m);
+
+                // Optional: show images
+                if (m.ImageRep1) $("#previewImageRep1").attr("src", m.ImageRep1).show();
+                if (m.ImageRep2) $("#previewImageRep2").attr("src", m.ImageRep2).show();
+                if (m.paymentfiles) $("#previewPayment").attr("src", m.paymentfiles).show();
+                if (m.gstfiles) $("#previewGST").attr("src", m.gstfiles).show();
+                if (m.shopPhoto) $("#previewShopPhoto").attr("src", m.shopPhoto).show();
+
+            } else {
+                alert(data.message || "No member record found.");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+            console.error("Response:", xhr.responseText);
+            alert("Error while fetching member record.");
+        }
+    });
+}
+
+// Function to fetch units based on district and populate a select element
+function loadUnitsByDistrict(district, targetSelector = "#ekai_id") {
+    if (!district) {
+        $(targetSelector).html('<option value="">Select Unit</option>');
+        return;
+    }
+
+    $.ajax({
+        url: "getunits.php",
+        type: "POST",
+        data: { district: district },
+        success: function (response) {
+            $(targetSelector).html(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+            console.error("Response Text:", xhr.responseText);
+            alert("Error fetching units!");
+        }
+    });
+}
+
+
+// Optional: show image previews if data exists
+function showImagePreviews(m) {
+    let anyImage = false;
+
+    if (m.ImageRep1) {
+        $("#previewImageRep1").attr("src", m.ImageRep1).show();
+        anyImage = true;
+    }
+    if (m.ImageRep2) {
+        $("#previewImageRep2").attr("src", m.ImageRep2).show();
+        anyImage = true;
+    }
+    if (m.paymentfiles) {
+        $("#previewPayment").attr("src", m.paymentfiles).show();
+        anyImage = true;
+    }
+    if (m.gstfiles) {
+        $("#previewGST").attr("src", m.gstfiles).show();
+        anyImage = true;
+    }
+    if (m.shopPhoto) {
+        $("#previewShopPhoto").attr("src", m.shopPhoto).show();
+        anyImage = true;
+    }
+
+    // Show the preview container if any image exists
+    if (anyImage) {
+        $("#imagePreviews").removeClass("d-none");
+        $("#otherPreviews").removeClass("d-none");
+    }
+}
+
+// Call this function after fetching member record
+// showImagePreviews(m);
+
+// Set hidden input values after fetching member data
+function setHiddenImageValues(m) {
+    if (m.ImageRep1) $("#hiddenpreviewImageRep1").val(m.ImageRep1);
+    if (m.ImageRep2) $("#hiddenpreviewImageRep2").val(m.ImageRep2);
+    if (m.gstfiles) $("#hiddenpreviewGST").val(m.gstfiles);
+    if (m.paymentfiles) $("#hiddenpreviewPayment").val(m.paymentfiles);
+    if (m.shopPhoto) $("#hiddenpreviewShopPhoto").val(m.shopPhoto);
+}
+
+// Call this function in getrecord() after fetching data
+
+// Wait until #ekai_id is populated, then set its value
+function setUnitValue(unitId) {
+    let attempts = 0;
+    const interval = setInterval(function() {
+        attempts++;
+
+        // Check if the select has options
+        if ($('#ekai_id option').length > 1) { // assuming first option is "Select Unit"
+            $('#ekai_id').val(unitId || '');
+            clearInterval(interval); // stop checking
+        }
+
+        // Safety: stop after 10 attempts (10 seconds)
+        if (attempts >= 10) {
+            clearInterval(interval);
+            console.warn("Could not set #ekai_id value: options not loaded.");
+        }
+    }, 1000); // check every 1 second
+}
+
+// Example usage after fetching member record:
 
 
 

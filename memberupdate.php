@@ -48,15 +48,23 @@ function upload_file($field_name, $prefix = '') {
     return '';
 }
 
-// Upload files
-$ImageRep1    = upload_file('ImageRep1', 'rep1_');
-$ImageRep2    = upload_file('ImageRep2', 'rep2_');
-$gstfiles     = upload_file('gstfiles', 'gst_');
-$paymentfiles = upload_file('paymentfiles', 'payment_');
-$shopPhoto    = upload_file('shopPhoto', 'shop_');
+// Assume hidden inputs are sent with form: previewImageRep1, previewImageRep2, etc.
+$prev_ImageRep1    = $_POST['previewImageRep1'] ?? '';
+$prev_ImageRep2    = $_POST['previewImageRep2'] ?? '';
+$prev_gstfiles     = $_POST['previewGST'] ?? '';
+$prev_paymentfiles = $_POST['previewPayment'] ?? '';
+$prev_shopPhoto    = $_POST['previewShopPhoto'] ?? '';
+
+// Upload files if new ones are provided, else use previous
+$ImageRep1    = upload_file('ImageRep1', 'rep1_') ?: $prev_ImageRep1;
+$ImageRep2    = upload_file('ImageRep2', 'rep2_') ?: $prev_ImageRep2;
+$gstfiles     = upload_file('gstfiles', 'gst_') ?: $prev_gstfiles;
+$paymentfiles = upload_file('paymentfiles', 'payment_') ?: $prev_paymentfiles;
+$shopPhoto    = upload_file('shopPhoto', 'shop_') ?: $prev_shopPhoto;
+
 
 // ✅ Check if MobileRep1 already exists
-$checkStmt = $pdo->prepare("SELECT MembersId FROM members WHERE MobileRep1 = ?");
+$checkStmt = $pdo->prepare("SELECT MembersId FROM members_edit WHERE MobileRep1 = ?");
 $checkStmt->execute([$MobileRep1]);
 $existingMember = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
@@ -64,7 +72,7 @@ $existingMember = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
 if ($existingMember) {
     // ✅ UPDATE EXISTING MEMBER
-    $sql = "UPDATE members SET 
+    $sql = "UPDATE members_edit SET 
         MemberType=:MemberType, FirmName=:FirmName, Shop=:Shop, Complex=:Complex, Street=:Street,
         DistrictName=:DistrictName, CityName=:CityName, AreaName=:AreaName, PIN=:PIN, STDCode=:STDCode,
         GSTN=:GSTN, GroupName=:GroupName, Representative1=:Representative1, ImageRep1=:ImageRep1,
@@ -107,57 +115,11 @@ if ($existingMember) {
     ]);
 
     // echo $success ? "updated" : "error";
-} else {
-    // ✅ INSERT NEW MEMBER
-    $sql = "INSERT INTO members (
-        MemberType,FirmName,Shop,Complex,Street,DistrictName,CityName,AreaName,PIN,STDCode,GSTN,
-        GroupName,Representative1,MobileRep1,ImageRep1,EmailRep1,Representative2,ImageRep2,mobileRep2,emailRep2,
-        gstfiles,paymentfiles,website,shopPhoto,geoLocation,reference,referenceMobile,ekai_id
-    ) VALUES (
-        :MemberType,:FirmName,:Shop,:Complex,:Street,:DistrictName,:CityName,:AreaName,:PIN,:STDCode,:GSTN,
-        :GroupName,:Representative1,:MobileRep1,:ImageRep1,:EmailRep1,:Representative2,:ImageRep2,:mobileRep2,:emailRep2,
-        :gstfiles,:paymentfiles,:website,:shopPhoto,:geoLocation,:reference,:referenceMobile,:ekai_id
-    )";
-
-    $stmt = $pdo->prepare($sql);
-    $success = $stmt->execute([
-        ':MemberType' => $MemberType,
-        ':FirmName' => $FirmName,
-        ':Shop' => $Shop,
-        ':Complex' => $Complex,
-        ':Street' => $Street,
-        ':DistrictName' => $DistrictName,
-        ':CityName' => $CityName,
-        ':AreaName' => $AreaName,
-        ':PIN' => $PIN,
-        ':STDCode' => $STDCode,
-        ':GSTN' => $GSTN,
-        ':GroupName' => $GroupName,
-        ':Representative1' => $Representative1,
-        ':MobileRep1' => $MobileRep1,
-        ':ImageRep1' => $ImageRep1,
-        ':EmailRep1' => $EmailRep1,
-        ':Representative2' => $Representative2,
-        ':ImageRep2' => $ImageRep2,
-        ':mobileRep2' => $mobileRep2,
-        ':emailRep2' => $emailRep2,
-        ':gstfiles' => $gstfiles,
-        ':paymentfiles' => $paymentfiles,
-        ':website' => $website,
-        ':shopPhoto' => $shopPhoto,
-        ':geoLocation' => $geoLocation,
-        ':reference' => $reference,
-        ':referenceMobile' => $referenceMobile,
-        ':ekai_id' => $ekai_id,
-    ]);
-
-    // echo $success ? "inserted" : "error";
-}
-
+} 
 
 // Redirect with message
 if ($success) {
-    echo "<script>alert('Form data saved successfully.'); window.location.href = 'MembersFormNew';</script>";
+    echo "<script>alert('Form data saved successfully.'); window.location.href = 'MembersFormEdit.php';</script>";
 } else {
     echo "<script>alert('Failed to save form data.'); window.history.back();</script>";
 }

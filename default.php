@@ -75,8 +75,13 @@
 				<br>
 				<a href="Image/merged/updation_form_Membership.pdf" target="_new"><span class="icon-file"></span>Membership Updation Form</a>
 				*/ ?>
-				 <a href="MembersFormNew" target="_new"><span class="icon-file"></span>Online Membership Registration </a><img src="Image/new-gif-image-14.gif" style="width: 10%;margin:-6px auto"/> 
-				<br>
+				<!--  <a href="MembersFormNew" target="_new"><span class="icon-file"></span>Online Membership Registration </a><img src="Image/new-gif-image-14.gif" style="width: 10%;margin:-6px auto"/> 
+				<br> -->
+				<a href="MembersFormNew.php" target="_new">
+				    <span class="icon-file"></span> Online Membership Registration
+				</a>
+				<img src="Image/new-gif-image-14.gif" style="width: 10%; margin:-6px auto"/><br>
+
 				<a href="MembersFormEdit" target="_new"><span class="icon-file"></span>Online Edit Membership Registration </a><img src="Image/new-gif-image-14.gif" style="width: 10%;margin:-6px auto"/> 
 				<br>
 				<a href="assets/pdfdoc/CCCI_membership_2021.pdf" target="_new"><span class="icon-file"></span>Membership Registration Form</a>
